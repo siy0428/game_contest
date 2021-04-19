@@ -1803,14 +1803,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Aoi
       objectReference: {fileID: 0}
-    - target: {fileID: 5522745113915133866, guid: 8046e492c92581f40a9d4cb667324250, type: 3}
-      propertyPath: m_Layer
-      value: 8
-      objectReference: {fileID: 0}
-    - target: {fileID: 5522745113915133866, guid: 8046e492c92581f40a9d4cb667324250, type: 3}
-      propertyPath: m_TagString
-      value: Player
-      objectReference: {fileID: 0}
     - target: {fileID: 5522745113915133871, guid: 8046e492c92581f40a9d4cb667324250, type: 3}
       propertyPath: m_RootOrder
       value: 2
@@ -2093,6 +2085,7 @@ MonoBehaviour:
   IsAlive: 
   StartPositon: []
   IsMove: 
+  JumpID: 0
   JumpFocre: 20000
   Bullet: {fileID: 3142873562492474777, guid: 64c9f48f6976bc2469fbcbbb08253b77, type: 3}
   BulletSpeed: 150
@@ -2167,47 +2160,8 @@ PrefabInstance:
       propertyPath: m_Name
       value: Akari
       objectReference: {fileID: 0}
-    - target: {fileID: 6482005678190899770, guid: 64bf2e141023b4a44b97bb1c6dcb08c3, type: 3}
-      propertyPath: m_Layer
-      value: 8
-      objectReference: {fileID: 0}
-    - target: {fileID: 6482005678190899770, guid: 64bf2e141023b4a44b97bb1c6dcb08c3, type: 3}
-      propertyPath: m_TagString
-      value: Player
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 64bf2e141023b4a44b97bb1c6dcb08c3, type: 3}
---- !u!1 &2091358231 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3142873562492474777, guid: 64c9f48f6976bc2469fbcbbb08253b77, type: 3}
-  m_PrefabInstance: {fileID: 3142873562324431652}
-  m_PrefabAsset: {fileID: 0}
---- !u!61 &2091358236
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2091358231}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1, y: 1}
-    newSize: {x: 1, y: 1}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1}
-  m_EdgeRadius: 0
 --- !u!1001 &3142873562324431652
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2215,21 +2169,9 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1855023594140300837, guid: 64c9f48f6976bc2469fbcbbb08253b77, type: 3}
-      propertyPath: m_Constraints
-      value: 4
-      objectReference: {fileID: 0}
     - target: {fileID: 3142873562492474777, guid: 64c9f48f6976bc2469fbcbbb08253b77, type: 3}
       propertyPath: m_Name
       value: bullet
-      objectReference: {fileID: 0}
-    - target: {fileID: 3142873562492474777, guid: 64c9f48f6976bc2469fbcbbb08253b77, type: 3}
-      propertyPath: m_Layer
-      value: 9
-      objectReference: {fileID: 0}
-    - target: {fileID: 3142873562492474777, guid: 64c9f48f6976bc2469fbcbbb08253b77, type: 3}
-      propertyPath: m_TagString
-      value: Bullet
       objectReference: {fileID: 0}
     - target: {fileID: 3142873562492474852, guid: 64c9f48f6976bc2469fbcbbb08253b77, type: 3}
       propertyPath: m_RootOrder
