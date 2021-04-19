@@ -35,21 +35,21 @@ public class MoveBottonCtr : MonoBehaviour
         moveValuePref = moveValue;
         moveValue = _LeftStick.ReadValue<Vector2>();
 
-        if(moveValue.x > 0.0f)
+        if(moveValue.x > 0.4f)
         {
             KeyDDown = 1;
         }
-        else if(moveValue.x < 0.0f)
+        else if(moveValue.x < -0.4f)
         {
             KeyADown = 1;
         }
 
-        if(moveValuePref.x > 0.0f && moveValue.x <= 0.0f)
+        if(moveValuePref.x > 0.4f && moveValue.x < 0.4f)
         {
             KeyDDown = -1;
         }
 
-        if(moveValuePref.x < 0.0f && moveValue.x >= 0.0f)
+        if(moveValuePref.x < -0.4f && moveValue.x > -0.4f)
         {
             KeyADown = -1;
         }      

@@ -108,14 +108,14 @@ public class PlayerController : MonoBehaviour
                         {
                             case 0:
                                 IsMove[savedata[i].PlayerID] = -1;
-                                PlayersForward[i] = new Vector3(-1.0f, 1.0f, 0.0f);
+                                PlayersForward[savedata[i].PlayerID] = new Vector3(-1.0f, 1.0f, 0.0f);
                                 break;
                             case 1:
                                 IsMove[savedata[i].PlayerID] = 0;
                                 break;
                             case 2:
                                 IsMove[savedata[i].PlayerID] = 1;
-                                PlayersForward[i] = new Vector3(1.0f, 1.0f, 0.0f);
+                                PlayersForward[savedata[i].PlayerID] = new Vector3(1.0f, 1.0f, 0.0f);
                                 break;
                             case 3:
                                 IsMove[savedata[i].PlayerID] = 0;
