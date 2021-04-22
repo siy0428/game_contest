@@ -14,9 +14,9 @@ public class Collision : MonoBehaviour
     // Update is called once per frame
     void OnTriggerEnter(Collider collider)
     {
-        if (Playerctr.IsJump[Playerctr.ControlPlayerID])
+        if (Playerctr.PlayersData[Playerctr.ControlPlayerID].IsJump)
         {
-            Playerctr.IsJump[Playerctr.ControlPlayerID] = false;
+            Playerctr.PlayersData[Playerctr.ControlPlayerID].IsJump = false;
         }
         
     }

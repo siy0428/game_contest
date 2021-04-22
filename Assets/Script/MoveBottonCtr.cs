@@ -155,17 +155,17 @@ public class MoveBottonCtr : MonoBehaviour
             }
 
             //移動距離計算
-            moveX = IsMove * _PlayerCtr.MoveSpeed * Time.deltaTime;
+            moveX = IsMove * _PlayerCtr.PlayersData[_PlayerCtr.ControlPlayerID].MoveSpeed * Time.deltaTime;
 
             //ジャンプキー判定
             //if (Input.GetKeyDown(KeyCode.W))
             if (KeyWDown > 0)
             {
                 //ジャンプしてない状態のみ、ジャンプできる
-                if (!_PlayerCtr.IsJump[_PlayerCtr.ControlPlayerID])
+                if (!_PlayerCtr.PlayersData[_PlayerCtr.ControlPlayerID].IsJump)
                 {
                     //ジャンプ状態更新
-                    _PlayerCtr.IsJump[_PlayerCtr.ControlPlayerID] = true;
+                    _PlayerCtr.PlayersData[_PlayerCtr.ControlPlayerID].IsJump = true;
 
                     //データ記録作成
                     KeyW.StartTime = _PlayerCtr.Timer;
