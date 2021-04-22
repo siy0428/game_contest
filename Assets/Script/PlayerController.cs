@@ -38,7 +38,7 @@ public class PlayerController : MonoBehaviour
     public PlayerBehaviourData RecordBehaviour = new PlayerBehaviourData();
 
     //ジャンプに使うｙ方向の力
-    public float JumpFocre = 30000.0f;
+    public float JumpFocre = 5500.0f;
 
     //操作しているキャラクターが死んだか
     private bool IsDead = false;
@@ -133,6 +133,11 @@ public class PlayerController : MonoBehaviour
                         Jump(i);
                     }
                 }
+
+                if(Players[i].GetComponent<Rigidbody2D>().velocity.y == 0)
+                {
+                    PlayersData[i].JumpedTimes = 0;
+                }
             }
 
             //次のループへのキー
@@ -208,7 +213,15 @@ public class PlayerController : MonoBehaviour
     //ジャンプ操作
     void Jump(int ID)
     {
-        Players[ID].GetComponent<Rigidbody2D>().AddForce(new Vector2(0, JumpFocre* Players[ID].GetComponent<Player>().JumpMass));
+        if(PlayersData[ID].JumpedTimes < 1)
+        {
+            Players[ID].GetComponent<Rigidbody2D>().velocity = new Vector2(Players[ID].GetComponent<Rigidbody2D>().velocity.x, Mathf.Sqrt(2 * 9.81f * Players[ID].GetComponent<Rigidbody2D>().gravityScale * JumpFocre * Players[ID].GetComponent<Player>().JumpMass));
+        }
+        else
+        {
+            Players[ID].GetComponent<Rigidbody2D>().velocity = new Vector2(Players[ID].GetComponent<Rigidbody2D>().velocity.x, Mathf.Sqrt(9.81f * Players[ID].GetComponent<Rigidbody2D>().gravityScale * JumpFocre * Players[ID].GetComponent<Player>().JumpMass));
+        }
+        PlayersData[ID].JumpedTimes+=1;
         PlayersData[ID].IsJump = false;
     }
 

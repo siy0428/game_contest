@@ -31,6 +31,9 @@ public class Player : MonoBehaviour
     //ジャンプ状態
     public bool IsJump;
 
+    //ジャンプした段数
+    public int JumpedTimes;
+
     //生存状態
     public bool IsAlive;
 
@@ -52,6 +55,7 @@ public class Player : MonoBehaviour
         IsMove = 0;
         IsJump = false;
         IsAlive = true;
+        JumpedTimes = 0;
         StartPoStartPositon = gameObject.GetComponent<Transform>().position;
         PlayersForward = gameObject.GetComponent<Transform>().localScale;
     }
