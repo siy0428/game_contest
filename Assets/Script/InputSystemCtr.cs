@@ -23,13 +23,13 @@ public class InputSystemCtr : MonoBehaviour
 
     private ShootBottonCtr m_ShootCtr;
 
-    private Player m_Player;
+    private PlayerController m_Player;
     public void Awake()
     {
         m_Input = m_InputObj.transform.GetComponent<PlayerInput>();
         m_MoveCtr = FindObjectOfType<MoveBottonCtr>();
         m_ShootCtr = FindObjectOfType<ShootBottonCtr>();
-        m_Player = FindObjectOfType<Player>();
+        m_Player = FindObjectOfType<PlayerController>();
 
         InputActionMap actionMap = m_Input.currentActionMap;
 

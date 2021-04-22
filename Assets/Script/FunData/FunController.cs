@@ -14,7 +14,7 @@ public class EnemyFunHit
     }
 }
 
-public class Player : MonoBehaviour
+public class FunController : MonoBehaviour
 {
     [SerializeField]
     private GameObject fun;

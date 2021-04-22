@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class RangeObject : MonoBehaviour
 {
@@ -9,7 +10,7 @@ public class RangeObject : MonoBehaviour
     /// </summary>
     [SerializeField, Range(0.0f, 360.0f)]
     private float m_Angle = 0.0f;
-    [SerializeField, Range(0.0f, 15.0f)]
+    [SerializeField]
     private float m_Radius = 0.0f;
     [SerializeField, Range(3, 32)]
     private int m_TriangleCount = 12;
@@ -25,6 +26,7 @@ public class RangeObject : MonoBehaviour
     private float m_RotateAngle = 0.0f;
     private Vector3 m_Dir = Vector3.up;
     private List<GameObject> WallList = new List<GameObject>();
+    private InputAction arrow;
 
     /// <summary>
     /// 他スクリプトから参照用メソッド
@@ -35,11 +37,20 @@ public class RangeObject : MonoBehaviour
     public Color Color { get { return m_Color; } }
     public float RotateAngle { get { return m_RotateAngle; } }
 
+    void Start()
+    {
+        PlayerInput _input = FindObjectOfType<PlayerInput>();
+        InputActionMap actionMap = _input.currentActionMap;
+        arrow = actionMap["Fun"];
+    }
+
     // Update is called once per frame
     void Update()
     {
+        var v = arrow.ReadValue<Vector2>();
+
         //入力した方向の取得
-        InputDir();
+        InputDir(v);
 
         //回転
         Rotation();
@@ -51,22 +62,22 @@ public class RangeObject : MonoBehaviour
     /// <summary>
     /// 入力した方向の取得
     /// </summary>
-    void InputDir()
+    void InputDir(Vector2 input)
     {
         //上方向
-        if (Input.GetKeyDown(KeyCode.UpArrow))
+        if (input.y > 0.5f)
         {
             m_Dir = Vector3.up;
             m_RotSpeed = m_MaxRotSpeed;
         }
         //下方向
-        else if (Input.GetKeyDown(KeyCode.DownArrow))
+        else if (input.y < -0.5f)
         {
             m_Dir = Vector3.down;
             m_RotSpeed = m_MaxRotSpeed;
         }
         //右方向
-        else if (Input.GetKeyDown(KeyCode.RightArrow))
+        else if (input.x > 0.5f)
         {
             //左方向を向いていたら
             if (m_Dir == Vector3.left)
@@ -80,7 +91,7 @@ public class RangeObject : MonoBehaviour
             m_Dir = Vector3.right;
         }
         //左方向
-        else if (Input.GetKeyDown(KeyCode.LeftArrow))
+        else if (input.x < -0.5f)
         {
             //右方向を向いていたら
             if (m_Dir == Vector3.right)

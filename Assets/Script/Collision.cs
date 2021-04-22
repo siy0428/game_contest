@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class Collision : MonoBehaviour
 {
-    private Player Playerctr;
+    private PlayerController Playerctr;
     // Start is called before the first frame update
     void Start()
     {
-        Playerctr = FindObjectOfType<Player>();
+        Playerctr = FindObjectOfType<PlayerController>();
     }
 
     // Update is called once per frame
