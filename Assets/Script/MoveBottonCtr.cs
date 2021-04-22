@@ -60,7 +60,7 @@ public class MoveBottonCtr : MonoBehaviour
         KeyWDown = 1;
     }
 
-    public void MoveBottonUse(PlayerController _PlayerCtr)
+    public void MoveBottonUse(Player _PlayerCtr)
     {
         //‹L˜^‚ª‹–‰Â‚ª‚ ‚éê‡‚Ì‚İA‘€ì‚Å‚«‚é
         if(_PlayerCtr.StartBehaviourRecord)
