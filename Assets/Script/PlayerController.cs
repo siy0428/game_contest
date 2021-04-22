@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
 {
@@ -8,6 +9,8 @@ public class PlayerController : MonoBehaviour
 
     //プレイヤーリスト
     public List<GameObject> Players = new List<GameObject>();
+
+    public List<Vector3> PlayersForward = new List<Vector3>();
 
     //今操作しているプレイヤー番号
     public int ControlPlayerID = 0;
@@ -61,6 +64,8 @@ public class PlayerController : MonoBehaviour
     //バレットのスピード
     public float BulletSpeed = 150.0f;
 
+    private bool IsDead = false;
+
     // Start is called before the first frame update
     public void Start()
     {
@@ -75,6 +80,9 @@ public class PlayerController : MonoBehaviour
             IsMove.Add(0);
             StartPositon.Add(Players[i].GetComponent<Transform>().position);
         }
+
+        PlayersForward.Add(new Vector3(1.0f, 1.0f, 0.0f));
+        PlayersForward.Add(new Vector3(-1.0f, 1.0f, 0.0f));
     }
 
     // Update is called once per frame
@@ -100,12 +108,14 @@ public class PlayerController : MonoBehaviour
                         {
                             case 0:
                                 IsMove[savedata[i].PlayerID] = -1;
+                                PlayersForward[savedata[i].PlayerID] = new Vector3(-1.0f, 1.0f, 0.0f);
                                 break;
                             case 1:
                                 IsMove[savedata[i].PlayerID] = 0;
                                 break;
                             case 2:
                                 IsMove[savedata[i].PlayerID] = 1;
+                                PlayersForward[savedata[i].PlayerID] = new Vector3(1.0f, 1.0f, 0.0f);
                                 break;
                             case 3:
                                 IsMove[savedata[i].PlayerID] = 0;
@@ -133,7 +143,7 @@ public class PlayerController : MonoBehaviour
                 {
                     Vector2 pos = Players[i].GetComponent<Transform>().position;
                     Players[i].GetComponent<Transform>().position = new Vector2(pos.x + IsMove[i] * MoveSpeed * Time.deltaTime, pos.y);
-
+                    Players[i].GetComponent<Transform>().localScale = PlayersForward[i];
                     if(IsJump[i])
                     {
                         Jump(i);
@@ -152,9 +162,11 @@ public class PlayerController : MonoBehaviour
             }
 
             //次のループへのキー
-            if (Input.GetKeyDown(KeyCode.U))
+            
+            if (IsDead)
             {
                 IsAlive[ControlPlayerID] = false;
+                IsDead = false;
             }
 
             //タイマー累加
@@ -224,5 +236,16 @@ public class PlayerController : MonoBehaviour
     {
         Players[ID].GetComponent<Rigidbody2D>().AddForce(new Vector2(0, JumpFocre));
         IsJump[ID] = false;
+    }
+
+    public void ToNextIsDown(InputAction.CallbackContext obj)
+    {
+        IsDead = true;
+    }
+
+    public void SetScale(int ID,Vector3 _Scale)
+    {
+        PlayersForward[ID] = _Scale;
+        Players[ID].GetComponent<Transform>().localScale = _Scale;
     }
 }
