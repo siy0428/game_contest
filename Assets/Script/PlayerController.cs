@@ -234,7 +234,7 @@ public class PlayerController : MonoBehaviour
     //ƒWƒƒƒ“ƒv‘€ì
     void Jump(int ID)
     {
-        Players[ID].GetComponent<Rigidbody2D>().AddForce(new Vector2(0, JumpFocre));
+        Players[ID].GetComponent<Rigidbody2D>().AddForce(new Vector2(0, JumpFocre* Players[ID].GetComponent<Player>().JumpMass));
         IsJump[ID] = false;
     }
 
