@@ -56,6 +56,7 @@ public class PlayerController : MonoBehaviour
         for (int i = 0; i<Players.Count;i++)
         {
             PlayersData.Add(Players[i].GetComponent<Player>());//キャラクターデータ取得
+            PlayersData[i].PlayerID = i;
         }
     }
 
@@ -112,32 +113,35 @@ public class PlayerController : MonoBehaviour
             //全てのプレイヤーの動きを更新する
             for(int i =0; i<Players.Count;i++)
             {
-                //非操作対象
-                if(i!= ControlPlayerID)
+                if(PlayersData[i].IsAlive)
                 {
-                    Vector2 pos = Players[i].GetComponent<Transform>().position;
-                    Players[i].GetComponent<Transform>().position = new Vector2(pos.x + PlayersData[i].IsMove * PlayersData[i].MoveSpeed * Time.deltaTime, pos.y);
-                    Players[i].GetComponent<Transform>().localScale = PlayersData[i].PlayersForward;
-                    if(PlayersData[i].IsJump)
+                    //非操作対象
+                    if (i != ControlPlayerID)
                     {
-                        Jump(i);
+                        Vector2 pos = Players[i].GetComponent<Transform>().position;
+                        Players[i].GetComponent<Transform>().position = new Vector2(pos.x + PlayersData[i].IsMove * PlayersData[i].MoveSpeed * Time.deltaTime, pos.y);
+                        Players[i].GetComponent<Transform>().localScale = PlayersData[i].PlayersForward;
+                        if (PlayersData[i].IsJump)
+                        {
+                            Jump(i);
+                        }
+
+                    }
+                    else if (i == ControlPlayerID)//操作対象
+                    {
+                        MoveCtr.MoveBottonUse(this);
+                        ShootCtr.ShootKeyDown(this, i);
+                        if (PlayersData[i].IsJump)
+                        {
+                            Jump(i);
+                        }
                     }
 
-                }
-                else//操作対象
-                {
-                    MoveCtr.MoveBottonUse(this);
-                    ShootCtr.ShootKeyDown(this,i);
-                    if (PlayersData[i].IsJump)
+                    if (Players[i].GetComponent<Rigidbody2D>().velocity.y == 0)
                     {
-                        Jump(i);
+                        PlayersData[i].JumpedTimes = 0;
                     }
-                }
-
-                if(Players[i].GetComponent<Rigidbody2D>().velocity.y == 0)
-                {
-                    PlayersData[i].JumpedTimes = 0;
-                }
+                }              
             }
 
             //次のループへのキー
@@ -184,7 +188,15 @@ public class PlayerController : MonoBehaviour
                 PlayersData[i].IsJump =false;
                 PlayersData[i].IsAlive = true;
                 Players[i].GetComponent<Transform>().position = PlayersData[i].StartPoStartPositon;
+                Players[i].SetActive(true);
             }
+
+            for(int i = 0; i<ShootCtr.m_BulletsList.Count;i++)
+            {
+                GameObject.Destroy(ShootCtr.m_BulletsList[i]);
+            }
+
+            ShootCtr.m_BulletsList.Clear();
 
             //操作対象変更
             ControlPlayerID++;

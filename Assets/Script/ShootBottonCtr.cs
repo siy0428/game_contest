@@ -14,6 +14,8 @@ public class ShootBottonCtr : MonoBehaviour
 
     int KeyShootDown = 0;
 
+    public List<GameObject> m_BulletsList = new List<GameObject>();
+
     public void ShootBottonIsDown(InputAction.CallbackContext obj)
     {
         KeyShootDown = 1;
@@ -52,6 +54,9 @@ public class ShootBottonCtr : MonoBehaviour
             _PlayerCtr.RecordBehaviour.AddBehaviour(KeyShoot);
 
             KeyShootDown = -1;
+
+            clone.GetComponent<Collision>().PlayerID = ID;
+            m_BulletsList.Add(clone);
         }
         else if(ID != _PlayerCtr.ControlPlayerID)//îÒëÄçÏëŒè€ÇÃèàóù
         {
@@ -63,6 +68,9 @@ public class ShootBottonCtr : MonoBehaviour
 
             // íeÇ…ë¨ìxÇó^Ç¶ÇÈ
             clone.GetComponent<Rigidbody2D>().velocity = shotForward * _PlayerCtr.PlayersData[_PlayerCtr.ControlPlayerID].BulletSpeed;
+
+            clone.GetComponent<Collision>().PlayerID = ID;
+            m_BulletsList.Add(clone);
         }
     }
 
