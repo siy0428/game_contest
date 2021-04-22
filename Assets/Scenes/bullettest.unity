@@ -1748,6 +1748,32 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
+--- !u!114 &571841448
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 571841445}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 54433ebaf24a5bd498eadb9ab0735e6c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  HP: 0
+  ATK: 0
+  DEF: 0
+  MoveSpeed: 100
+  JumpStep: 1
+  JumpMass: 3
+  SkillIDs: 
+  IsMove: 0
+  IsJump: 0
+  IsAlive: 0
+  StartPoStartPositon: {x: 0, y: 0}
+  PlayersForward: {x: -1, y: 1, z: 0}
+  Bullet: {fileID: 3142873562492474777, guid: 64c9f48f6976bc2469fbcbbb08253b77, type: 3}
+  BulletSpeed: 150
 --- !u!1 &666485051
 GameObject:
   m_ObjectHideFlags: 0
@@ -1915,7 +1941,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5522745113915133871, guid: 8046e492c92581f40a9d4cb667324250, type: 3}
       propertyPath: m_LocalScale.x
-      value: 1
+      value: -1
       objectReference: {fileID: 0}
     - target: {fileID: 5522745113915133871, guid: 8046e492c92581f40a9d4cb667324250, type: 3}
       propertyPath: m_LocalPosition.x
@@ -2047,6 +2073,32 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 6482005678190899770, guid: 64bf2e141023b4a44b97bb1c6dcb08c3, type: 3}
   m_PrefabInstance: {fileID: 2007321924}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1504537290
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1504537289}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 54433ebaf24a5bd498eadb9ab0735e6c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  HP: 0
+  ATK: 0
+  DEF: 0
+  MoveSpeed: 100
+  JumpStep: 1
+  JumpMass: 3
+  SkillIDs: 
+  IsMove: 0
+  IsJump: 0
+  IsAlive: 0
+  StartPoStartPositon: {x: 0, y: 0}
+  PlayersForward: {x: 1, y: 1, z: 0}
+  Bullet: {fileID: 3142873562492474777, guid: 64c9f48f6976bc2469fbcbbb08253b77, type: 3}
+  BulletSpeed: 150
 --- !u!50 &1504537294
 Rigidbody2D:
   serializedVersion: 4
@@ -2187,20 +2239,15 @@ MonoBehaviour:
   Players:
   - {fileID: 1504537289}
   - {fileID: 571841445}
-  PlayersForward: []
   ControlPlayerID: 0
   StartBehaviourRecord: 1
   StartFallBack: 0
   FallBackSpeed: 5
-  MoveSpeed: 100
-  IsJump: 
   Timer: 0
-  IsAlive: 
-  StartPositon: []
-  IsMove: 
-  JumpFocre: 20000
+  JumpFocre: 5500
   Bullet: {fileID: 3142873562492474777, guid: 64c9f48f6976bc2469fbcbbb08253b77, type: 3}
   BulletSpeed: 150
+  PlayersData: []
 --- !u!4 &1880378539
 Transform:
   m_ObjectHideFlags: 0
