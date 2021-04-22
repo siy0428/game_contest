@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
+    //キャラクターの認識番号
+    public int PlayerID;
+
     //キャラクタ－のヘルスポイント
     public float HP;
 

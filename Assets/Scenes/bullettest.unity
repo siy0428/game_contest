@@ -1847,6 +1847,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 54433ebaf24a5bd498eadb9ab0735e6c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  PlayerID: 0
   HP: 0
   ATK: 0
   DEF: 0
@@ -2025,6 +2026,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5522745113915133866, guid: 8046e492c92581f40a9d4cb667324250, type: 3}
       propertyPath: m_TagString
+      value: Player
       value: Enemy
       objectReference: {fileID: 0}
     - target: {fileID: 5522745113915133871, guid: 8046e492c92581f40a9d4cb667324250, type: 3}
@@ -2177,6 +2179,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 54433ebaf24a5bd498eadb9ab0735e6c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  PlayerID: 0
   HP: 0
   ATK: 0
   DEF: 0
@@ -2318,6 +2321,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ShootCD: 0.2
   ShootCDTimer: 0
+  m_BulletsList: []
 --- !u!1 &1880378537
 GameObject:
   m_ObjectHideFlags: 0
@@ -2431,6 +2435,10 @@ PrefabInstance:
     - target: {fileID: 6482005678190899770, guid: 64bf2e141023b4a44b97bb1c6dcb08c3, type: 3}
       propertyPath: m_Name
       value: Akari
+      objectReference: {fileID: 0}
+    - target: {fileID: 6482005678190899770, guid: 64bf2e141023b4a44b97bb1c6dcb08c3, type: 3}
+      propertyPath: m_TagString
+      value: Player
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 64bf2e141023b4a44b97bb1c6dcb08c3, type: 3}
