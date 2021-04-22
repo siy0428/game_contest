@@ -22,7 +22,7 @@ public class ShootBottonCtr : MonoBehaviour
 
 
     //ID‚Í“®ì‚Ìå
-    public void ShootKeyDown(PlayerController _PlayerCtr,int ID,Vector2 _ShootDir = new Vector2())
+    public void ShootKeyDown(Player _PlayerCtr,int ID,Vector2 _ShootDir = new Vector2())
     {
         
         if (KeyShootDown > 0 && ID == _PlayerCtr.ControlPlayerID)//‘€ì‘ÎÛ‚Ìˆ—
