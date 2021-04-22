@@ -162,7 +162,7 @@ public class MoveBottonCtr : MonoBehaviour
             if (KeyWDown > 0)
             {
                 //ジャンプしてない状態のみ、ジャンプできる
-                if (!_PlayerCtr.PlayersData[_PlayerCtr.ControlPlayerID].IsJump)
+                if (!_PlayerCtr.PlayersData[_PlayerCtr.ControlPlayerID].IsJump && _PlayerCtr.PlayersData[_PlayerCtr.ControlPlayerID].JumpedTimes < _PlayerCtr.PlayersData[_PlayerCtr.ControlPlayerID].JumpStep)
                 {
                     //ジャンプ状態更新
                     _PlayerCtr.PlayersData[_PlayerCtr.ControlPlayerID].IsJump = true;

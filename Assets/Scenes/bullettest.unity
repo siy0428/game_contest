@@ -2244,9 +2244,7 @@ MonoBehaviour:
   StartFallBack: 0
   FallBackSpeed: 5
   Timer: 0
-  JumpFocre: 5500
-  Bullet: {fileID: 3142873562492474777, guid: 64c9f48f6976bc2469fbcbbb08253b77, type: 3}
-  BulletSpeed: 150
+  JumpFocre: 38
   PlayersData: []
 --- !u!4 &1880378539
 Transform:
