@@ -10,6 +10,8 @@ public class PlayerController : MonoBehaviour
     //プレイヤーリスト
     public List<GameObject> Players = new List<GameObject>();
 
+    public List<Vector3> PlayersForward = new List<Vector3>();
+
     //今操作しているプレイヤー番号
     public int ControlPlayerID = 0;
 
@@ -22,11 +24,18 @@ public class PlayerController : MonoBehaviour
     //バックアップのスピード倍率(今使っていない）
     public float FallBackSpeed = 5.0f;
 
+    //移動速度
+    public float MoveSpeed = 5.0f;
+
     //移動のスクリプトポイント
     private MoveBottonCtr MoveCtr;
 
     //シュートのスクリプトポイント
     private ShootBottonCtr ShootCtr;
+
+    //プレイヤークラス作っていないので、必要の機能をそのまま、リストにしちゃった
+    //ジャンプ状態リスト
+    public List<bool> IsJump = new List<bool>();
 
     //一回のループ内のタイマー
     public float Timer = 0.0f;
@@ -37,14 +46,25 @@ public class PlayerController : MonoBehaviour
     //記録用データ
     public PlayerBehaviourData RecordBehaviour = new PlayerBehaviourData();
 
+    //生存状態リスト
+    public List<bool> IsAlive = new List<bool>();
+
+    //バックアップ用初期位置リスト
+    public List<Vector2> StartPositon = new List<Vector2>();
+
+    //移動状態リスト
+    public List<int> IsMove = new List<int>();
+
     //ジャンプに使うｙ方向の力
-    public float JumpFocre = 5500.0f;
+    public float JumpFocre = 30000.0f;
 
-    //操作しているキャラクターが死んだか
+    //バレットのインスタンスサンプル
+    public GameObject Bullet;
+
+    //バレットのスピード
+    public float BulletSpeed = 150.0f;
+
     private bool IsDead = false;
-
-    //取得したキャラクターのデータ
-    public List<Player> PlayersData = new List<Player>();
 
     // Start is called before the first frame update
     public void Start()
@@ -55,8 +75,14 @@ public class PlayerController : MonoBehaviour
         //初期化
         for (int i = 0; i<Players.Count;i++)
         {
-            PlayersData.Add(Players[i].GetComponent<Player>());//キャラクターデータ取得
+            IsJump.Add(false);
+            IsAlive.Add(true);
+            IsMove.Add(0);
+            StartPositon.Add(Players[i].GetComponent<Transform>().position);
         }
+
+        PlayersForward.Add(new Vector3(1.0f, 1.0f, 0.0f));
+        PlayersForward.Add(new Vector3(-1.0f, 1.0f, 0.0f));
     }
 
     // Update is called once per frame
@@ -81,21 +107,21 @@ public class PlayerController : MonoBehaviour
                         switch (savedata[i].BottonID)
                         {
                             case 0:
-                                PlayersData[savedata[i].PlayerID].IsMove = -1;
-                                PlayersData[savedata[i].PlayerID].PlayersForward = new Vector3(-1.0f, 1.0f, 0.0f);
+                                IsMove[savedata[i].PlayerID] = -1;
+                                PlayersForward[savedata[i].PlayerID] = new Vector3(-1.0f, 1.0f, 0.0f);
                                 break;
                             case 1:
-                                PlayersData[savedata[i].PlayerID].IsMove = 0;
+                                IsMove[savedata[i].PlayerID] = 0;
                                 break;
                             case 2:
-                                PlayersData[savedata[i].PlayerID].IsMove = 1;
-                                PlayersData[savedata[i].PlayerID].PlayersForward = new Vector3(1.0f, 1.0f, 0.0f);
+                                IsMove[savedata[i].PlayerID] = 1;
+                                PlayersForward[savedata[i].PlayerID] = new Vector3(1.0f, 1.0f, 0.0f);
                                 break;
                             case 3:
-                                PlayersData[savedata[i].PlayerID].IsMove = 0;
+                                IsMove[savedata[i].PlayerID] = 0;
                                 break;
                             case 4:
-                                PlayersData[savedata[i].PlayerID].IsJump = true;
+                                IsJump[savedata[i].PlayerID] = true;
                                 break;
                             case 5://シュートだけ、直接シュートする
                                 ShootCtr.ShootKeyDown(this, savedata[i].PlayerID, savedata[i].ShootDir);
@@ -116,9 +142,9 @@ public class PlayerController : MonoBehaviour
                 if(i!= ControlPlayerID)
                 {
                     Vector2 pos = Players[i].GetComponent<Transform>().position;
-                    Players[i].GetComponent<Transform>().position = new Vector2(pos.x + PlayersData[i].IsMove * PlayersData[i].MoveSpeed * Time.deltaTime, pos.y);
-                    Players[i].GetComponent<Transform>().localScale = PlayersData[i].PlayersForward;
-                    if(PlayersData[i].IsJump)
+                    Players[i].GetComponent<Transform>().position = new Vector2(pos.x + IsMove[i] * MoveSpeed * Time.deltaTime, pos.y);
+                    Players[i].GetComponent<Transform>().localScale = PlayersForward[i];
+                    if(IsJump[i])
                     {
                         Jump(i);
                     }
@@ -128,15 +154,10 @@ public class PlayerController : MonoBehaviour
                 {
                     MoveCtr.MoveBottonUse(this);
                     ShootCtr.ShootKeyDown(this,i);
-                    if (PlayersData[i].IsJump)
+                    if (IsJump[i])
                     {
                         Jump(i);
                     }
-                }
-
-                if(Players[i].GetComponent<Rigidbody2D>().velocity.y == 0)
-                {
-                    PlayersData[i].JumpedTimes = 0;
                 }
             }
 
@@ -144,7 +165,7 @@ public class PlayerController : MonoBehaviour
             
             if (IsDead)
             {
-                PlayersData[ControlPlayerID].IsAlive = false;
+                IsAlive[ControlPlayerID] = false;
                 IsDead = false;
             }
 
@@ -152,14 +173,14 @@ public class PlayerController : MonoBehaviour
             Timer += Time.deltaTime;
 
             //ループ終了判定
-            if (PlayersData[ControlPlayerID].IsAlive)
+            if (IsAlive[ControlPlayerID])
             {
                 //相手全員死だ
-                for (int i = 0; i < PlayersData.Count; i++)
+                for (int i = 0; i < IsAlive.Count; i++)
                 {
                     if (i != ControlPlayerID)
                     {
-                        if (PlayersData[i].IsAlive)
+                        if (IsAlive[i])
                         {
                             return;
                         }
@@ -181,9 +202,9 @@ public class PlayerController : MonoBehaviour
             Timer = 0.0f;
             for (int i = 0; i < Players.Count; i++)
             {
-                PlayersData[i].IsJump =false;
-                PlayersData[i].IsAlive = true;
-                Players[i].GetComponent<Transform>().position = PlayersData[i].StartPoStartPositon;
+                IsJump[i] =false;
+                IsAlive[i] = true;
+                Players[i].GetComponent<Transform>().position =  StartPositon[i];
             }
 
             //操作対象変更
@@ -213,16 +234,8 @@ public class PlayerController : MonoBehaviour
     //ジャンプ操作
     void Jump(int ID)
     {
-        if(PlayersData[ID].JumpedTimes < 1)
-        {
-            Players[ID].GetComponent<Rigidbody2D>().velocity = new Vector2(Players[ID].GetComponent<Rigidbody2D>().velocity.x, Mathf.Sqrt(2 * 9.81f * Players[ID].GetComponent<Rigidbody2D>().gravityScale * JumpFocre * Players[ID].GetComponent<Player>().JumpMass));
-        }
-        else
-        {
-            Players[ID].GetComponent<Rigidbody2D>().velocity = new Vector2(Players[ID].GetComponent<Rigidbody2D>().velocity.x, Mathf.Sqrt(9.81f * Players[ID].GetComponent<Rigidbody2D>().gravityScale * JumpFocre * Players[ID].GetComponent<Player>().JumpMass));
-        }
-        PlayersData[ID].JumpedTimes+=1;
-        PlayersData[ID].IsJump = false;
+        Players[ID].GetComponent<Rigidbody2D>().AddForce(new Vector2(0, JumpFocre));
+        IsJump[ID] = false;
     }
 
     public void ToNextIsDown(InputAction.CallbackContext obj)
@@ -232,7 +245,7 @@ public class PlayerController : MonoBehaviour
 
     public void SetScale(int ID,Vector3 _Scale)
     {
-        PlayersData[ID].PlayersForward = _Scale;
+        PlayersForward[ID] = _Scale;
         Players[ID].GetComponent<Transform>().localScale = _Scale;
     }
 }
