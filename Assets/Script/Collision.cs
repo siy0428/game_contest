@@ -4,19 +4,19 @@ using UnityEngine;
 
 public class Collision : MonoBehaviour
 {
-    private Player Playerctr;
+    private PlayerController Playerctr;
     // Start is called before the first frame update
     void Start()
     {
-        Playerctr = FindObjectOfType<Player>();
+        Playerctr = FindObjectOfType<PlayerController>();
     }
 
     // Update is called once per frame
     void OnTriggerEnter(Collider collider)
     {
-        if (Playerctr.IsJump[Playerctr.ControlPlayerID])
+        if (Playerctr.PlayersData[Playerctr.ControlPlayerID].IsJump)
         {
-            Playerctr.IsJump[Playerctr.ControlPlayerID] = false;
+            Playerctr.PlayersData[Playerctr.ControlPlayerID].IsJump = false;
         }
         
     }
