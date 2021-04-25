@@ -15,9 +15,9 @@ public class RangeObject : MonoBehaviour
     [SerializeField, Range(3, 32)]
     private int m_TriangleCount = 12;
     [SerializeField]
-    private Color m_Color = new Color(1.0f, 0.0f, 0.0f, 1.0f);
-    [SerializeField]
     private float m_MaxRotSpeed;
+    [SerializeField]
+    private Material _mat;
 
     /// <summary>
     /// プライベート変数
@@ -25,7 +25,6 @@ public class RangeObject : MonoBehaviour
     private float m_RotSpeed = 1.0f;
     private float m_RotateAngle = 0.0f;
     private Vector3 m_Dir = Vector3.up;
-    private List<GameObject> WallList = new List<GameObject>();
     private InputAction arrow;
 
     /// <summary>
@@ -34,7 +33,6 @@ public class RangeObject : MonoBehaviour
     public float Angle { get { return m_Angle; } }
     public float Radius { get { return m_Radius; } }
     public int TriangleCount { get { return m_TriangleCount; } }
-    public Color Color { get { return m_Color; } }
     public float RotateAngle { get { return m_RotateAngle; } }
 
     void Start()
@@ -57,6 +55,9 @@ public class RangeObject : MonoBehaviour
 
         //当たり判定のサイズ変更
         ColliderFlexible();
+
+        //扇メッシュの描画
+        DrawFunMesh();
     }
 
     /// <summary>
@@ -143,14 +144,100 @@ public class RangeObject : MonoBehaviour
     }
 
     /// <summary>
-    /// 2Dの当たり判定
+    /// 扇頂点作成
     /// </summary>
-    /// <param name="collision"></param>
-    void OnTriggerEnter2D(Collider2D collision)
+    /// <param name="angle">角度</param>
+    /// <param name="triangleCount">頂点数</param>
+    /// <returns></returns>
+    private Vector3[] CreateFanVertices(float angle, int triangleCount)
     {
-        if (collision.gameObject.tag == "Wall")
+        //エラー設定
+        if (angle <= 0.0f)
         {
-            Debug.Log(collision.gameObject.name);
+            throw new System.ArgumentException(string.Format("角度がおかしい！ angle={0}", angle));
         }
+        if (triangleCount <= 0)
+        {
+            throw new System.ArgumentException(string.Format("数がおかしい！ triangleCount={0}", triangleCount));
+        }
+
+        angle = Mathf.Min(angle, 360.0f);
+
+        var vertices = new List<Vector3>(triangleCount + 2);
+
+        // 始点
+        vertices.Add(Vector3.zero);
+
+        // Mathf.Sin()とMathf.Cos()で使用するのは角度ではなくラジアンなので変換しておく。
+        float radian = angle * Mathf.Deg2Rad;
+        float startRad = -radian / 2;
+        float incRad = radian / triangleCount;
+
+        for (int i = 0; i < triangleCount + 1; ++i)
+        {
+            float currentRad = startRad + (incRad * i);
+
+            Vector3 vertex = new Vector3(Mathf.Sin(currentRad), Mathf.Cos(currentRad), 0.0f);
+            vertices.Add(vertex);
+        }
+
+        return vertices.ToArray();
+    }
+
+    /// <summary>
+    /// 三角形の作成
+    /// </summary>
+    /// <param name="angle">角度</param>
+    /// <param name="triangleCount">頂点数</param>
+    /// <returns></returns>
+    private Mesh CreateFunMesh(float angle, int triangleCount)
+    {
+        var mesh = new Mesh();
+
+        var vertices = CreateFanVertices(angle, triangleCount);
+
+        var triangleIndexes = new List<int>(triangleCount * 3);
+
+        for (int i = 0; i < triangleCount; ++i)
+        {
+            triangleIndexes.Add(0);
+            triangleIndexes.Add(i + 1);
+            triangleIndexes.Add(i + 2);
+        }
+
+        mesh.vertices = vertices;
+        mesh.triangles = triangleIndexes.ToArray();
+
+        mesh.RecalculateNormals();
+
+        return mesh;
+    }
+
+    /// <summary>
+    /// 扇形メッシュの描画
+    /// </summary>
+    private void DrawFunMesh()
+    {
+        if (Radius <= 0.0f)
+        {
+            return;
+        }
+
+        Transform transform = this.transform;
+        Vector3 scale = Vector3.one * Radius;
+
+        this.transform.localScale = scale;
+
+        if (Angle > 0.0f)
+        {
+            Mesh fanMesh = CreateFunMesh(Angle, TriangleCount);
+
+            var meshFilter = GetComponent<MeshFilter>();
+
+            meshFilter.mesh = fanMesh;
+        }
+
+        var renderer = GetComponent<MeshRenderer>();
+        renderer.material = _mat;
     }
 }
