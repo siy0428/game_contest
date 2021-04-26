@@ -69,12 +69,6 @@ public class akari_Contoroller : MonoBehaviour
             }
         }
 
-        // 空中にいるかどうかの判定。上下の速度(rigidbody.velocity)が一定の値を超えている場合、空中とみなす
-        if (Mathf.Abs(rb.velocity.y) > jumpThreshold)
-        {
-            isGround = false;
-        }
-
         // 左右の移動。一定の速度に達するまではAddforceで力を加え、それ以降はtransform.positionを直接書き換えて同一速度で移動する
         float speedX = Mathf.Abs(this.rb.velocity.x);
         if (speedX < this.runThreshold)
@@ -104,5 +98,4 @@ public class akari_Contoroller : MonoBehaviour
                 isGround = true;
         }
     }
-
 }

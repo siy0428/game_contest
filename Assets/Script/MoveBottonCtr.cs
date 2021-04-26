@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.InputSystem;
 
 //機能　　キー　     保存番号
 //左　　　　A      down 0 up 1
@@ -25,6 +25,41 @@ public class MoveBottonCtr : MonoBehaviour
     //キーの状態　　　W
     BehaviorData KeyW = new BehaviorData();
 
+    int KeyADown = 0;
+    int KeyDDown = 0;
+    int KeyWDown = 0;
+    Vector2 moveValue = new Vector2();
+    Vector2 moveValuePref = new Vector2();
+    public void LeftStickIsUse(InputAction _LeftStick)
+    {
+        moveValuePref = moveValue;
+        moveValue = _LeftStick.ReadValue<Vector2>();
+
+        if(moveValue.x > 0.4f)
+        {
+            KeyDDown = 1;
+        }
+        else if(moveValue.x < -0.4f)
+        {
+            KeyADown = 1;
+        }
+
+        if(moveValuePref.x > 0.4f && moveValue.x < 0.4f)
+        {
+            KeyDDown = -1;
+        }
+
+        if(moveValuePref.x < -0.4f && moveValue.x > -0.4f)
+        {
+            KeyADown = -1;
+        }      
+    }
+
+    public void JumpBottonIsDown(InputAction.CallbackContext obj)
+    {
+        KeyWDown = 1;
+    }
+
     public void MoveBottonUse(PlayerController _PlayerCtr)
     {
         //記録が許可がある場合のみ、操作できる
@@ -34,14 +69,16 @@ public class MoveBottonCtr : MonoBehaviour
             float moveX = 0.0f;
 
             //左が押したら
-            if (Input.GetKeyDown(KeyCode.A))
+            //if (Input.GetKeyDown(KeyCode.A))
+            if (KeyADown > 0)
             {
                 //左と右が同時に押したことの記入を防ぐため、止まる状態じゃなければ反応しない
                 if(IsMove == 0)
                 {
                     //移動状態更新
                     IsMove = -1;
-
+                    _PlayerCtr.SetScale(_PlayerCtr.ControlPlayerID,new Vector3(-1.0f, 1.0f, 0.0f));
+                    
                     //データ記録作成
                     KeyA.StartTime = _PlayerCtr.Timer;
                     KeyA.BottonID = 0;
@@ -53,13 +90,15 @@ public class MoveBottonCtr : MonoBehaviour
             }
 
             //右が押したら
-            if (Input.GetKeyDown(KeyCode.D))
+            //if (Input.GetKeyDown(KeyCode.D))
+            if (KeyDDown > 0)
             {
                 //左と右が同時に押したことの記入を防ぐため、止まる状態じゃなければ反応しない
                 if (IsMove == 0)
                 {
                     //移動状態更新
                     IsMove = 1;
+                    _PlayerCtr.SetScale(_PlayerCtr.ControlPlayerID, new Vector3(1.0f, 1.0f, 0.0f));
 
                     //データ記録作成
                     KeyD.StartTime = _PlayerCtr.Timer;
@@ -73,7 +112,8 @@ public class MoveBottonCtr : MonoBehaviour
             }
 
             //左が離されたら
-            if (Input.GetKeyUp(KeyCode.A))
+            //if (Input.GetKeyUp(KeyCode.A))
+            if (KeyADown < 0)
             {
                 //上と同じ、正しいく記録するため、左へ移動中しか止まらない
                 if (IsMove == -1)
@@ -89,10 +129,13 @@ public class MoveBottonCtr : MonoBehaviour
                     //記録リストに追加
                     _PlayerCtr.RecordBehaviour.AddBehaviour(KeyA);
                 }
+
+                KeyADown = 0;
             }
 
             //右が離されたら
-            if (Input.GetKeyUp(KeyCode.D))
+            //if (Input.GetKeyUp(KeyCode.D))
+            if (KeyDDown < 0)
             {
                 //上と同じ、正しいく記録するため、右へ移動中しか止まらない
                 if (IsMove == 1)
@@ -108,19 +151,21 @@ public class MoveBottonCtr : MonoBehaviour
                     //記録リストに追加
                     _PlayerCtr.RecordBehaviour.AddBehaviour(KeyD);
                 }
+                KeyDDown = 0;
             }
 
             //移動距離計算
-            moveX = IsMove * _PlayerCtr.MoveSpeed * Time.deltaTime;
+            moveX = IsMove * _PlayerCtr.PlayersData[_PlayerCtr.ControlPlayerID].MoveSpeed * Time.deltaTime;
 
             //ジャンプキー判定
-            if (Input.GetKeyDown(KeyCode.W))
+            //if (Input.GetKeyDown(KeyCode.W))
+            if (KeyWDown > 0)
             {
                 //ジャンプしてない状態のみ、ジャンプできる
-                if (!_PlayerCtr.IsJump[_PlayerCtr.ControlPlayerID])
+                if (!_PlayerCtr.PlayersData[_PlayerCtr.ControlPlayerID].IsJump && _PlayerCtr.PlayersData[_PlayerCtr.ControlPlayerID].JumpedTimes < _PlayerCtr.PlayersData[_PlayerCtr.ControlPlayerID].JumpStep)
                 {
                     //ジャンプ状態更新
-                    _PlayerCtr.IsJump[_PlayerCtr.ControlPlayerID] = true;
+                    _PlayerCtr.PlayersData[_PlayerCtr.ControlPlayerID].IsJump = true;
 
                     //データ記録作成
                     KeyW.StartTime = _PlayerCtr.Timer;
@@ -129,8 +174,8 @@ public class MoveBottonCtr : MonoBehaviour
 
                     //記録リストに追加
                     _PlayerCtr.RecordBehaviour.AddBehaviour(KeyW);
-
                 }
+                KeyWDown = 0;
             }
 
             //プレイヤーの座標取得
