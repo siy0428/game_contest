@@ -18,6 +18,7 @@ public class FunController : MonoBehaviour
 {
     [SerializeField]
     private GameObject fun;
+
     private RangeObject _object;
     private EnemyFunHit enemyFunHit;
 
@@ -49,6 +50,12 @@ public class FunController : MonoBehaviour
         //扇に当たっている敵の取得
         foreach (GameObject enemy in enemys)
         {
+            //敵の色を白に設定
+            enemy.GetComponent<Renderer>().material.color = Color.white;
+
+            //敵とプレイヤーのベクトル
+            Vector3 dir = enemy.transform.position - this.transform.position;
+
             CircleCollider2D rad = enemy.GetComponent<CircleCollider2D>();
             Vector2 enemyPos = enemy.transform.position;
             Vector2 center = this.transform.position;
@@ -57,12 +64,25 @@ public class FunController : MonoBehaviour
             float radius = _object.Radius;
             bool funHit = MathUtils.IsInsideOfSector(enemyPos, center, startDeg, endDeg, radius, rad.radius);
 
+            //プレイヤーから敵に伸びるベクトル
+            RaycastHit2D hit = Physics2D.Linecast(transform.position, enemyPos, 1);
+            Debug.DrawLine(transform.position, enemyPos, Color.red, 1);
+
+            //nullでなければ
+            if (hit)
+            {
+                if (hit.collider.gameObject.tag == "Ground")
+                {
+                    continue;
+                }
+            }
+
             //扇に当たっている場合
             if (funHit)
             {
                 Vector3 dist = enemyPos - center;
                 //比較対象がまだない場合暫定で敵のオブジェクトを格納
-                if (enemyFunHit.enemy == null)
+                if (!enemyFunHit.enemy)
                 {
                     enemyFunHit.enemy = enemy;
                     enemyFunHit.distance = dist.magnitude;
@@ -77,13 +97,12 @@ public class FunController : MonoBehaviour
                     }
                 }
             }
-            //敵の色を白に設定
-            enemy.GetComponent<Renderer>().material.color = Color.white;
-        }
-        //扇範囲内の敵は赤色
-        if (enemyFunHit.enemy != null)
-        {
-            enemyFunHit.enemy.GetComponent<Renderer>().material.color = Color.red;
+
+            //扇範囲内の敵は赤色
+            if (enemyFunHit.enemy)
+            {
+                enemyFunHit.enemy.GetComponent<Renderer>().material.color = Color.red;
+            }
         }
     }
 }

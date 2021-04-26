@@ -34,6 +34,7 @@ public class RangeObject : MonoBehaviour
     public float Radius { get { return m_Radius; } }
     public int TriangleCount { get { return m_TriangleCount; } }
     public float RotateAngle { get { return m_RotateAngle; } }
+    public Vector3 Direction { get { return m_Dir; } }
 
     void Start()
     {
@@ -52,9 +53,6 @@ public class RangeObject : MonoBehaviour
 
         //回転
         Rotation();
-
-        //当たり判定のサイズ変更
-        ColliderFlexible();
 
         //扇メッシュの描画
         DrawFunMesh();
@@ -230,11 +228,11 @@ public class RangeObject : MonoBehaviour
 
         if (Angle > 0.0f)
         {
-            Mesh fanMesh = CreateFunMesh(Angle, TriangleCount);
+            Mesh funMesh = CreateFunMesh(Angle, TriangleCount);
 
             var meshFilter = GetComponent<MeshFilter>();
 
-            meshFilter.mesh = fanMesh;
+            meshFilter.mesh = funMesh;
         }
 
         var renderer = GetComponent<MeshRenderer>();
