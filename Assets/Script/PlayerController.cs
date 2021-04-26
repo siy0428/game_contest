@@ -158,7 +158,7 @@ public class PlayerController : MonoBehaviour
             //ループ終了判定
             if (PlayersData[ControlPlayerID].IsAlive)
             {
-                //相手全員死だ
+                //相手全員死んだ
                 for (int i = 0; i < PlayersData.Count; i++)
                 {
                     if (i != ControlPlayerID)
