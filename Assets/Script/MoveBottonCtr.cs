@@ -6,8 +6,11 @@ using UnityEngine.InputSystem;
 //機能　　キー　     保存番号
 //左　　　　A      down 0 up 1
 //右　　　　D      down 2 up 3
-//ジャンプ　W           4
+//ジャンプ　Space       4
 //シュート　マオス　　　5
+//上        W      down 6 up 7
+//下        S      down 8 up 9
+
 public class MoveBottonCtr : MonoBehaviour
 {
     //プレイヤーの座標を取得する用
@@ -22,12 +25,15 @@ public class MoveBottonCtr : MonoBehaviour
     //キーの状態　　　D
     BehaviorData KeyD = new BehaviorData();
 
-    //キーの状態　　　W
-    BehaviorData KeyW = new BehaviorData();
+    //キーの状態　　　Space
+    BehaviorData KeySpace = new BehaviorData();
 
     int KeyADown = 0;
     int KeyDDown = 0;
-    int KeyWDown = 0;
+    int KeySpaceDown = 0;
+    int keyWDown = 0;
+    int keySDown = 0;
+
     Vector2 moveValue = new Vector2();
     Vector2 moveValuePref = new Vector2();
     public void LeftStickIsUse(InputAction _LeftStick)
@@ -44,6 +50,15 @@ public class MoveBottonCtr : MonoBehaviour
             KeyADown = 1;
         }
 
+        if(moveValue.y > 0.4f)
+        {
+            keyWDown = 1;
+        }
+        else if(moveValue.y < -0.4f)
+        {
+            keySDown = 1;
+        }
+
         if(moveValuePref.x > 0.4f && moveValue.x < 0.4f)
         {
             KeyDDown = -1;
@@ -52,12 +67,22 @@ public class MoveBottonCtr : MonoBehaviour
         if(moveValuePref.x < -0.4f && moveValue.x > -0.4f)
         {
             KeyADown = -1;
-        }      
+        }
+
+        if (moveValuePref.y > 0.4f && moveValue.y < 0.4f)
+        {
+            keyWDown = -1;
+        }
+
+        if(moveValuePref.y < -0.4f && moveValue.y > -0.4f)
+        {
+            keySDown = -1;
+        }
     }
 
     public void JumpBottonIsDown(InputAction.CallbackContext obj)
     {
-        KeyWDown = 1;
+        KeySpaceDown = 1;
     }
 
     public void MoveBottonUse(PlayerController _PlayerCtr)
@@ -69,7 +94,6 @@ public class MoveBottonCtr : MonoBehaviour
             float moveX = 0.0f;
 
             //左が押したら
-            //if (Input.GetKeyDown(KeyCode.A))
             if (KeyADown > 0)
             {
                 //左と右が同時に押したことの記入を防ぐため、止まる状態じゃなければ反応しない
@@ -90,7 +114,6 @@ public class MoveBottonCtr : MonoBehaviour
             }
 
             //右が押したら
-            //if (Input.GetKeyDown(KeyCode.D))
             if (KeyDDown > 0)
             {
                 //左と右が同時に押したことの記入を防ぐため、止まる状態じゃなければ反応しない
@@ -112,7 +135,6 @@ public class MoveBottonCtr : MonoBehaviour
             }
 
             //左が離されたら
-            //if (Input.GetKeyUp(KeyCode.A))
             if (KeyADown < 0)
             {
                 //上と同じ、正しいく記録するため、左へ移動中しか止まらない
@@ -134,7 +156,6 @@ public class MoveBottonCtr : MonoBehaviour
             }
 
             //右が離されたら
-            //if (Input.GetKeyUp(KeyCode.D))
             if (KeyDDown < 0)
             {
                 //上と同じ、正しいく記録するため、右へ移動中しか止まらない
@@ -158,8 +179,7 @@ public class MoveBottonCtr : MonoBehaviour
             moveX = IsMove * _PlayerCtr.PlayersData[_PlayerCtr.ControlPlayerID].MoveSpeed * Time.deltaTime;
 
             //ジャンプキー判定
-            //if (Input.GetKeyDown(KeyCode.W))
-            if (KeyWDown > 0)
+            if (KeySpaceDown > 0)
             {
                 //ジャンプしてない状態のみ、ジャンプできる
                 if (!_PlayerCtr.PlayersData[_PlayerCtr.ControlPlayerID].IsJump && _PlayerCtr.PlayersData[_PlayerCtr.ControlPlayerID].JumpedTimes < _PlayerCtr.PlayersData[_PlayerCtr.ControlPlayerID].JumpStep)
@@ -168,21 +188,76 @@ public class MoveBottonCtr : MonoBehaviour
                     _PlayerCtr.PlayersData[_PlayerCtr.ControlPlayerID].IsJump = true;
 
                     //データ記録作成
-                    KeyW.StartTime = _PlayerCtr.Timer;
-                    KeyW.BottonID = 4;
-                    KeyW.PlayerID = _PlayerCtr.ControlPlayerID;
+                    KeySpace.StartTime = _PlayerCtr.Timer;
+
+                    if(_PlayerCtr.PlayersData[_PlayerCtr.ControlPlayerID].CheakSkill(SkillID.JUMPSMARSH))
+                    {
+                        if(_PlayerCtr.PlayersData[_PlayerCtr.ControlPlayerID].JumpedTimes == 1 && (KeyDDown >0 || KeyADown>0 || keyWDown> 0 || keySDown > 0))
+                        {
+                            if (KeyDDown > 0)
+                            {
+                                KeySpace.BottonID = 41;
+                                _PlayerCtr.SkillDataCtr.JumpSmarshDir = new Vector2(1,0);
+                            }
+                            else if(KeyADown > 0)
+                            {
+                                KeySpace.BottonID = 42;
+                                _PlayerCtr.SkillDataCtr.JumpSmarshDir = new Vector2(-1,0);
+                            }
+                            else if(keyWDown > 0)
+                            {
+                                KeySpace.BottonID = 43;
+                                _PlayerCtr.SkillDataCtr.JumpSmarshDir = new Vector2(0, 1);
+
+                            }
+                            else if(keySDown > 0)
+                            {
+                                KeySpace.BottonID = 44;
+                                _PlayerCtr.SkillDataCtr.JumpSmarshDir = new Vector2(0, -1);
+                            }
+                            _PlayerCtr.SkillDataCtr.UseJumpSmarsh = true;
+                        }
+                        else if(_PlayerCtr.PlayersData[_PlayerCtr.ControlPlayerID].JumpedTimes == 0)
+                        {
+                            KeySpace.BottonID = 4;
+                        }
+                    }
+                    else
+                    {
+                        KeySpace.BottonID = 4;
+                    }
+                    _PlayerCtr.PlayersData[_PlayerCtr.ControlPlayerID].OnBox = false;
+                    KeySpace.PlayerID = _PlayerCtr.ControlPlayerID;
 
                     //記録リストに追加
-                    _PlayerCtr.RecordBehaviour.AddBehaviour(KeyW);
+                    _PlayerCtr.RecordBehaviour.AddBehaviour(KeySpace);
                 }
-                KeyWDown = 0;
+                KeySpaceDown = 0;
+            }
+
+            if(keyWDown > 0)
+            {
+                keyWDown = 0;
+            }
+
+            if (keyWDown < 0)
+            {
+                keyWDown = 0;
+            }
+
+            if (keySDown < 0)
+            {
+                keySDown = 0;
             }
 
             //プレイヤーの座標取得
             playerpostion = _PlayerCtr.Players[_PlayerCtr.ControlPlayerID].GetComponent<Transform>().position;
 
             //座標変更
-            _PlayerCtr.Players[_PlayerCtr.ControlPlayerID].GetComponent<Transform>().position = new Vector2(playerpostion.x + moveX, playerpostion.y);           
+            if(!_PlayerCtr.CheakJumpSmarsh(_PlayerCtr.ControlPlayerID))
+            {
+                _PlayerCtr.Players[_PlayerCtr.ControlPlayerID].GetComponent<Transform>().position = new Vector2(playerpostion.x + moveX, playerpostion.y);
+            }            
         }
     }
 }
