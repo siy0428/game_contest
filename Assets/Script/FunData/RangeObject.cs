@@ -238,7 +238,7 @@ public class RangeObject : MonoBehaviour
         DrawFunMesh();
 
         //敵の扇当たり判定
-        GameObject hit_enemy = EnemyFunCollision();
+        GameObject hit_player = PlayerFunCollision();
     }
 
     /// <summary>
@@ -270,42 +270,42 @@ public class RangeObject : MonoBehaviour
     }
 
     /// <summary>
-    /// 敵と扇の当たり判定
+    /// プレイヤーと扇の当たり判定
     /// </summary>
-    /// <returns>当たった敵のGameObjectを返す(ない場合はNULL)</returns>
-    GameObject EnemyFunCollision()
+    /// <returns>当たったプレイヤーのGameObjectを返す(ない場合はNULL)</returns>
+    GameObject PlayerFunCollision()
     {
-        GameObject hit_enemy = null;
+        GameObject hit_player = null;
 
         //エネミーの取得
-        GameObject[] enemys = GameObject.FindGameObjectsWithTag("Player");
+        GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
 
         //扇に当たっている敵の取得
-        foreach (GameObject enemy in enemys)
+        foreach (GameObject player in players)
         {
             //敵の色を白に設定
-            enemy.GetComponent<Renderer>().material.color = Color.white;
+            player.GetComponent<Renderer>().material.color = Color.white;
 
             //敵の名前と操作しているプレイヤーが同じだったら次の処理
-            if (enemy.name == m_Player.name)
+            if (player.name == m_Player.name)
             {
                 continue;
             }
 
             //敵とプレイヤーのベクトル
-            Vector3 dir = enemy.transform.position - this.transform.position;
+            Vector3 dir = player.transform.position - this.transform.position;
 
-            CircleCollider2D rad = enemy.GetComponent<CircleCollider2D>();
-            Vector2 enemyPos = enemy.transform.position;
+            CircleCollider2D rad = player.GetComponent<CircleCollider2D>();
+            Vector2 playerPos = player.transform.position;
             Vector2 center = this.transform.position;
             float startDeg = RotateAngle + (90.0f - Angle / 2);
             float endDeg = startDeg + Angle;
             float radius = Radius;
-            bool funHit = MathUtils.IsInsideOfSector(enemyPos, center, startDeg, endDeg, radius, rad.radius);
+            bool funHit = MathUtils.IsInsideOfSector(playerPos, center, startDeg, endDeg, radius, rad.radius);
 
             //プレイヤーから敵に伸びるベクトル
-            RaycastHit2D hit = Physics2D.Linecast(transform.position, enemyPos, 1);
-            //Debug.DrawLine(transform.position, enemyPos, Color.red, 1);
+            RaycastHit2D hit = Physics2D.Linecast(transform.position, playerPos, 1);
+            //Debug.DrawLine(transform.position, playerPos, Color.red, 1);
 
             //nullでなければ
             if (hit)
@@ -320,24 +320,24 @@ public class RangeObject : MonoBehaviour
             //扇に当たっている場合
             if (funHit)
             {
-                Vector3 dist = enemyPos - center;
+                Vector3 dist = playerPos - center;
                 //比較対象がまだない場合暫定で敵のオブジェクトを格納
-                if(!hit_enemy)
+                if(!hit_player)
                 {
-                    hit_enemy = enemy;
+                    hit_player = player;
                 }
                 else
                 {
-                    var dist2 = (Vector2)hit_enemy.transform.position - center;
+                    var dist2 = (Vector2)hit_player.transform.position - center;
                     //現在比較している敵との距離の方が短い場合
                     if (dist.magnitude < dist2.magnitude)
                     {
-                        hit_enemy = enemy;
+                        hit_player = player;
                     }
                 }
             }
         }
 
-        return hit_enemy;
+        return hit_player;
     }
 }
