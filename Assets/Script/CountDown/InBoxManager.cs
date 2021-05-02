@@ -10,7 +10,8 @@ public class InBoxManager : MonoBehaviour
     private GameObject RangeBox;
     [SerializeField]
     private CountDownManager cdm;
-
+    
+    private InBoxCreate ibc;
     private Color DefaultColor;
     private float Alpha;
     private bool DecAlpha;
@@ -23,6 +24,7 @@ public class InBoxManager : MonoBehaviour
         DefaultColor = RangeBox.GetComponent<Renderer>().material.GetColor("_Color");
         Alpha = 0.5f;
         DecAlpha = false;
+        ibc = FindObjectOfType<InBoxCreate>();
 
         Create();
         cdm.CountStart();
@@ -44,6 +46,7 @@ public class InBoxManager : MonoBehaviour
             if (Alpha <= 0.0f)
             {
                 DecAlpha = false;
+                ibc.SetIsCraete(false);
             }
         }
     }
