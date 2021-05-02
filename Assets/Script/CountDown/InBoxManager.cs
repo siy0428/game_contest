@@ -9,11 +9,13 @@ public class InBoxManager : MonoBehaviour
     [SerializeField]
     private GameObject RangeBox;
     [SerializeField]
-    private CountDownManager Timer;
+    private CountDownManager cdm;
 
     private Color DefaultColor;
     private float Alpha;
     private bool DecAlpha;
+
+    public float GetAlpha { get { return Alpha; } }
 
     void Start()
     {
@@ -23,7 +25,7 @@ public class InBoxManager : MonoBehaviour
         DecAlpha = false;
 
         Create();
-        Timer.CountStart();
+        cdm.CountStart();
     }
 
     void Update()
@@ -76,10 +78,10 @@ public class InBoxManager : MonoBehaviour
     /// <param name="limit">âΩïbä‘å„Ç…é¿çsÇ∑ÇÈÇ©éwíË</param>
     private void TimeUp(float limit)
     {
-        if (Timer.GetTime > limit)
+        if (cdm.GetTime > limit)
         {
-            Timer.CountStop();
-            Timer.CountReset();
+            cdm.CountStop();
+            cdm.CountReset();
             Delete();
         }
     }
