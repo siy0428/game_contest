@@ -4,56 +4,60 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    //ƒLƒƒƒ‰ƒNƒ^[‚Ì”F¯”Ô†
+    //ã‚­ãƒ£ãƒ©ã‚¯ã‚¿ãƒ¼ã®èªè­˜ç•ªå·
     public int PlayerID;
 
-    //ƒLƒƒƒ‰ƒNƒ^|‚Ìƒwƒ‹ƒXƒ|ƒCƒ“ƒg
+    //ã‚­ãƒ£ãƒ©ã‚¯ã‚¿ï¼ã®ãƒ˜ãƒ«ã‚¹ãƒã‚¤ãƒ³ãƒˆ
     public float HP;
 
-    //ƒLƒƒƒ‰ƒNƒ^[‚É‚æ‚éUŒ‚—Í‚ÌC³’l
+    //ã‚­ãƒ£ãƒ©ã‚¯ã‚¿ãƒ¼ã«ã‚ˆã‚‹æ”»æ’ƒåŠ›ã®ä¿®æ­£å€¤
     public float ATK;
 
-    //ƒLƒƒƒ‰ƒNƒ^[‚É‚æ‚éƒ_ƒ[ƒWŒ¸­‚ÌC³’l
+    //ã‚­ãƒ£ãƒ©ã‚¯ã‚¿ãƒ¼ã«ã‚ˆã‚‹ãƒ€ãƒ¡ãƒ¼ã‚¸æ¸›å°‘ã®ä¿®æ­£å€¤
     public float DEF;
 
-    //ˆÚ“®‘¬“x
+    //ç§»å‹•é€Ÿåº¦
     public float MoveSpeed;
 
-    //ƒWƒƒƒ“ƒv‚Ì’i”
+    //ã‚¸ãƒ£ãƒ³ãƒ—ã®æ®µæ•°
     public int JumpStep;
 
-    //ƒWƒƒƒ“ƒv‚ÌŠî–{ƒ}ƒX”
+    //ã‚¸ãƒ£ãƒ³ãƒ—ã®åŸºæœ¬ãƒã‚¹æ•°
     public int JumpMass;
 
-    //ƒLƒƒƒ‰ƒNƒ^[‚ª‚Ä‚¢‚éƒXƒLƒ‹”Ô†
+    //ã‚­ãƒ£ãƒ©ã‚¯ã‚¿ãƒ¼ãŒæŒã¦ã„ã‚‹ã‚¹ã‚­ãƒ«ç•ªå·
     public List<SkillID> SkillIDs;
 
-    //ˆÚ“®ó‘Ô
+    //ç§»å‹•çŠ¶æ…‹
     public int IsMove;
 
-    //ƒWƒƒƒ“ƒvó‘Ô
+    public bool OnBox = true;
+
+    //ã‚¸ãƒ£ãƒ³ãƒ—çŠ¶æ…‹
     public bool IsJump;
 
-    //ƒWƒƒƒ“ƒv‚µ‚½’i”
+    //ã‚¸ãƒ£ãƒ³ãƒ—ã—ãŸæ®µæ•°
     public int JumpedTimes;
 
-    //¶‘¶ó‘Ô
+    //ç”Ÿå­˜çŠ¶æ…‹
     public bool IsAlive;
 
-    //ƒLƒƒƒ‰ƒNƒ^[‚Ì‰ŠúˆÊ’u
+    //ã‚­ãƒ£ãƒ©ã‚¯ã‚¿ãƒ¼ã®åˆæœŸä½ç½®
     public Vector2 StartPoStartPositon;
 
-    //ƒLƒƒƒ‰ƒNƒ^[‚ÌŒü‚«•ûŒü
+    //ã‚­ãƒ£ãƒ©ã‚¯ã‚¿ãƒ¼ã®å‘ãæ–¹å‘
     public Vector3 PlayersForward;
 
-    //ƒoƒŒƒbƒg‚ÌƒCƒ“ƒXƒ^ƒ“ƒXƒTƒ“ƒvƒ‹
+    //ãƒãƒ¬ãƒƒãƒˆã®ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ã‚µãƒ³ãƒ—ãƒ«
     public GameObject Bullet;
 
-    //ƒoƒŒƒbƒg‚ÌƒXƒs[ƒh
+    //ãƒãƒ¬ãƒƒãƒˆã®ã‚¹ãƒ”ãƒ¼ãƒ‰
     public float BulletSpeed = 150.0f;
 
-    //ƒvƒŒƒCƒ„[‚ÌˆÊ’uiƒIƒuƒWƒFƒNƒg—pj
+    //ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®ä½ç½®ï¼ˆã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆç”¨ï¼‰
     public Vector3 ObjectDefaultPosition;
+    //ã‚·ãƒ¥ãƒ¼ãƒˆã®é–“éš”æ™‚é–“
+    public float ShootCD = 0.5f;
 
     // Start is called before the first frame update
     void Start()
@@ -72,9 +76,29 @@ public class Player : MonoBehaviour
         
     }
 
-    //Å‰‚ÌêŠ‚É–ß‚é
+    //æœ€åˆã®å ´æ‰€ã«æˆ»ã‚‹
     public void RespawnPosition()
     {
         transform.position = StartPoStartPositon;
+
+    public bool CheakSkill(SkillID _SkillID)
+    {
+        for(int i = 0; i<SkillIDs.Count;i++)
+        {
+            if(SkillIDs[i] == _SkillID)
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    public void OnCollisionEnter2D(UnityEngine.Collision2D collision)
+    {
+        if(collision.gameObject.tag == "Ground")
+        {
+            OnBox = true;
+        }
     }
 }

@@ -29,8 +29,11 @@ public class ShootBottonCtr : MonoBehaviour
         
         if (KeyShootDown > 0 && ID == _PlayerCtr.ControlPlayerID)//操作対象の処理
         {
-           // 弾（ゲームオブジェクト）の生成
-           GameObject clone = Instantiate(_PlayerCtr.PlayersData[_PlayerCtr.ControlPlayerID].Bullet, _PlayerCtr.Players[ID].GetComponent<Transform>().position, Quaternion.identity);
+            //操作キャラクターのシュートの間隔を取得する
+            ShootCD = _PlayerCtr.PlayersData[_PlayerCtr.ControlPlayerID].ShootCD;
+            
+            // 弾（ゲームオブジェクト）の生成
+            GameObject clone = Instantiate(_PlayerCtr.PlayersData[_PlayerCtr.ControlPlayerID].Bullet, _PlayerCtr.Players[ID].GetComponent<Transform>().position, Quaternion.identity);
 
             // クリックした座標の取得（スクリーン座標からワールド座標に変換）
             //Vector3 mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
