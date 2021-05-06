@@ -28,6 +28,9 @@ public class PlayerController : MonoBehaviour
     //シュートのスクリプトポイント
     private ShootBottonCtr ShootCtr;
 
+    //スキルの設定データを取得用
+    public SkillData SkillDataCtr;
+
     //一回のループ内のタイマー
     public float Timer = 0.0f;
 
@@ -51,13 +54,22 @@ public class PlayerController : MonoBehaviour
     {
         //スクリプト取得
         GetBottonCtr();
-        
+        SkillDataCtr = FindObjectOfType<SkillData>();
         //初期化
         for (int i = 0; i<Players.Count;i++)
         {
             PlayersData.Add(Players[i].GetComponent<Player>());//キャラクターデータ取得
             PlayersData[i].PlayerID = i;
+            if(i==ControlPlayerID)
+            {
+                Players[i].GetComponent<SpriteRenderer>().sortingOrder = 1;
+            }
+            else
+            {
+                Players[i].GetComponent<SpriteRenderer>().sortingOrder = 0;
+            }
         }
+       
     }
 
     // Update is called once per frame
@@ -96,9 +108,38 @@ public class PlayerController : MonoBehaviour
                                 break;
                             case 4:
                                 PlayersData[savedata[i].PlayerID].IsJump = true;
+                                PlayersData[savedata[i].PlayerID].OnBox = false;
                                 break;
                             case 5://シュートだけ、直接シュートする
                                 ShootCtr.ShootKeyDown(this, savedata[i].PlayerID, savedata[i].ShootDir);
+                                break;
+                            case 41:
+                                SkillDataCtr.JumpSmarshDir = new Vector2(1, 0);
+                                PlayersData[savedata[i].PlayerID].PlayersForward = new Vector3(1.0f, 1.0f, 0.0f);
+                                PlayersData[savedata[i].PlayerID].IsJump = true;
+                                PlayersData[savedata[i].PlayerID].OnBox = false;
+                                SkillDataCtr.UseJumpSmarsh = true;
+                                break;
+                            case 42:
+                                SkillDataCtr.JumpSmarshDir = new Vector2(-1,0);
+                                PlayersData[savedata[i].PlayerID].PlayersForward = new Vector3(-1.0f, 1.0f, 0.0f);
+                                PlayersData[savedata[i].PlayerID].IsJump = true;
+                                PlayersData[savedata[i].PlayerID].OnBox = false;
+                                SkillDataCtr.UseJumpSmarsh = true;
+                                break;
+                            case 43:
+                                SkillDataCtr.JumpSmarshDir = new Vector2(0, 1);
+                                PlayersData[savedata[i].PlayerID].PlayersForward = new Vector3(-1.0f, 1.0f, 0.0f);
+                                PlayersData[savedata[i].PlayerID].IsJump = true;
+                                PlayersData[savedata[i].PlayerID].OnBox = false;
+                                SkillDataCtr.UseJumpSmarsh = true;
+                                break;
+                            case 44:
+                                SkillDataCtr.JumpSmarshDir = new Vector2(0, -1);
+                                PlayersData[savedata[i].PlayerID].PlayersForward = new Vector3(-1.0f, 1.0f, 0.0f);
+                                PlayersData[savedata[i].PlayerID].IsJump = true;
+                                PlayersData[savedata[i].PlayerID].OnBox = false;
+                                SkillDataCtr.UseJumpSmarsh = true;
                                 break;
                             default:
                                 break;
@@ -117,8 +158,11 @@ public class PlayerController : MonoBehaviour
                     //非操作対象
                     if (i != ControlPlayerID)
                     {
-                        Vector2 pos = Players[i].GetComponent<Transform>().position;
-                        Players[i].GetComponent<Transform>().position = new Vector2(pos.x + PlayersData[i].IsMove * PlayersData[i].MoveSpeed * Time.deltaTime, pos.y);
+                        if(!CheakJumpSmarsh(i))
+                        {
+                            Vector2 pos = Players[i].GetComponent<Transform>().position;
+                            Players[i].GetComponent<Transform>().position = new Vector2(pos.x + PlayersData[i].IsMove * PlayersData[i].MoveSpeed * Time.deltaTime, pos.y);
+                        }
                         Players[i].GetComponent<Transform>().localScale = PlayersData[i].PlayersForward;
                         if (PlayersData[i].IsJump)
                         {
@@ -135,6 +179,8 @@ public class PlayerController : MonoBehaviour
                             Jump(i);
                         }
                     }
+
+                    JumpSmarsh(i);
 
                     if (Players[i].GetComponent<Rigidbody2D>().velocity.y == 0)
                     {
@@ -198,8 +244,10 @@ public class PlayerController : MonoBehaviour
             ShootCtr.m_BulletsList.Clear();
 
             //操作対象変更
+            Players[ControlPlayerID].GetComponent<SpriteRenderer>().sortingOrder = 0;
             ControlPlayerID++;
             ControlPlayerID %= Players.Count;
+            Players[ControlPlayerID].GetComponent<SpriteRenderer>().sortingOrder = 1;
 
             StartFallBack = false;
 
@@ -230,7 +278,15 @@ public class PlayerController : MonoBehaviour
         }
         else
         {
-            Players[ID].GetComponent<Rigidbody2D>().velocity = new Vector2(Players[ID].GetComponent<Rigidbody2D>().velocity.x, Mathf.Sqrt(9.81f * Players[ID].GetComponent<Rigidbody2D>().gravityScale * JumpFocre * Players[ID].GetComponent<Player>().JumpMass));
+            if(!PlayersData[ID].CheakSkill(SkillID.JUMPSMARSH))
+            {
+                Players[ID].GetComponent<Rigidbody2D>().velocity = new Vector2(Players[ID].GetComponent<Rigidbody2D>().velocity.x, Mathf.Sqrt(9.81f * Players[ID].GetComponent<Rigidbody2D>().gravityScale * JumpFocre * Players[ID].GetComponent<Player>().JumpMass));
+            }
+            else
+            {
+                Players[ID].GetComponent<Rigidbody2D>().velocity = new Vector3(SkillDataCtr.JumpSmarshDir.x * SkillDataCtr.JumpSmarshSpeed, Players[ID].GetComponent<Rigidbody2D>().velocity.y + SkillDataCtr.JumpSmarshDir.y * SkillDataCtr.JumpSmarshSpeed, 0.0f);
+
+            }
         }
         PlayersData[ID].JumpedTimes+=1;
         PlayersData[ID].IsJump = false;
@@ -245,5 +301,30 @@ public class PlayerController : MonoBehaviour
     {
         PlayersData[ID].PlayersForward = _Scale;
         Players[ID].GetComponent<Transform>().localScale = _Scale;
+    }
+
+    public bool CheakJumpSmarsh(int ID)
+    {
+        if(PlayersData[ID].CheakSkill(SkillID.JUMPSMARSH) && SkillDataCtr.UseJumpSmarsh)
+        {
+            return true;
+        }
+        return false;
+    }
+
+    private void JumpSmarsh(int ID)
+    {
+        if(CheakJumpSmarsh(ID))
+        {
+            if(!PlayersData[ID].OnBox)
+            {
+                Players[ID].GetComponent<Rigidbody2D>().velocity = new Vector3(Players[ID].GetComponent<Rigidbody2D>().velocity.x - SkillDataCtr.JumpSmarshDir.x * SkillDataCtr.JumpSmarshAngular, Players[ID].GetComponent<Rigidbody2D>().velocity.y - SkillDataCtr.JumpSmarshDir.y * SkillDataCtr.JumpSmarshAngular, 0.0f);
+            }
+            else
+            {
+                Players[ID].GetComponent<Rigidbody2D>().velocity = new Vector3(0.0f,0.0f, 0.0f);
+            }
+            SkillDataCtr.JumpSmarsh();          
+        }
     }
 }
