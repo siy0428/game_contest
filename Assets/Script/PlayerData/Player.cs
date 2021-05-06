@@ -4,59 +4,57 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    //ã‚­ãƒ£ãƒ©ã‚¯ã‚¿ãƒ¼ã®èªè­˜ç•ªå·
+    //ƒLƒƒƒ‰ƒNƒ^[‚Ì”F¯”Ô†
     public int PlayerID;
 
-    //ã‚­ãƒ£ãƒ©ã‚¯ã‚¿ï¼ã®ãƒ˜ãƒ«ã‚¹ãƒã‚¤ãƒ³ãƒˆ
+    //ƒLƒƒƒ‰ƒNƒ^|‚Ìƒwƒ‹ƒXƒ|ƒCƒ“ƒg
     public float HP;
 
-    //ã‚­ãƒ£ãƒ©ã‚¯ã‚¿ãƒ¼ã«ã‚ˆã‚‹æ”»æ’ƒåŠ›ã®ä¿®æ­£å€¤
+    //ƒLƒƒƒ‰ƒNƒ^[‚É‚æ‚éUŒ‚—Í‚ÌC³’l
     public float ATK;
 
-    //ã‚­ãƒ£ãƒ©ã‚¯ã‚¿ãƒ¼ã«ã‚ˆã‚‹ãƒ€ãƒ¡ãƒ¼ã‚¸æ¸›å°‘ã®ä¿®æ­£å€¤
+    //ƒLƒƒƒ‰ƒNƒ^[‚É‚æ‚éƒ_ƒ[ƒWŒ¸­‚ÌC³’l
     public float DEF;
 
-    //ç§»å‹•é€Ÿåº¦
+    //ˆÚ“®‘¬“x
     public float MoveSpeed;
 
-    //ã‚¸ãƒ£ãƒ³ãƒ—ã®æ®µæ•°
+    //ƒWƒƒƒ“ƒv‚Ì’i”
     public int JumpStep;
 
-    //ã‚¸ãƒ£ãƒ³ãƒ—ã®åŸºæœ¬ãƒã‚¹æ•°
+    //ƒWƒƒƒ“ƒv‚ÌŠî–{ƒ}ƒX”
     public int JumpMass;
 
-    //ã‚­ãƒ£ãƒ©ã‚¯ã‚¿ãƒ¼ãŒæŒã¦ã„ã‚‹ã‚¹ã‚­ãƒ«ç•ªå·
+    //ƒLƒƒƒ‰ƒNƒ^[‚ª‚Ä‚¢‚éƒXƒLƒ‹”Ô†
     public List<SkillID> SkillIDs;
 
-    //ç§»å‹•çŠ¶æ…‹
+    //ˆÚ“®ó‘Ô
     public int IsMove;
 
     public bool OnBox = true;
 
-    //ã‚¸ãƒ£ãƒ³ãƒ—çŠ¶æ…‹
+    //ƒWƒƒƒ“ƒvó‘Ô
     public bool IsJump;
 
-    //ã‚¸ãƒ£ãƒ³ãƒ—ã—ãŸæ®µæ•°
+    //ƒWƒƒƒ“ƒv‚µ‚½’i”
     public int JumpedTimes;
 
-    //ç”Ÿå­˜çŠ¶æ…‹
+    //¶‘¶ó‘Ô
     public bool IsAlive;
 
-    //ã‚­ãƒ£ãƒ©ã‚¯ã‚¿ãƒ¼ã®åˆæœŸä½ç½®
+    //ƒLƒƒƒ‰ƒNƒ^[‚Ì‰ŠúˆÊ’u
     public Vector2 StartPoStartPositon;
 
-    //ã‚­ãƒ£ãƒ©ã‚¯ã‚¿ãƒ¼ã®å‘ãæ–¹å‘
+    //ƒLƒƒƒ‰ƒNƒ^[‚ÌŒü‚«•ûŒü
     public Vector3 PlayersForward;
 
-    //ãƒãƒ¬ãƒƒãƒˆã®ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ã‚µãƒ³ãƒ—ãƒ«
+    //ƒoƒŒƒbƒg‚ÌƒCƒ“ƒXƒ^ƒ“ƒXƒTƒ“ƒvƒ‹
     public GameObject Bullet;
 
-    //ãƒãƒ¬ãƒƒãƒˆã®ã‚¹ãƒ”ãƒ¼ãƒ‰
+    //ƒoƒŒƒbƒg‚ÌƒXƒs[ƒh
     public float BulletSpeed = 150.0f;
 
-    //ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®ä½ç½®ï¼ˆã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆç”¨ï¼‰
-    public Vector3 ObjectDefaultPosition;
-    //ã‚·ãƒ¥ãƒ¼ãƒˆã®é–“éš”æ™‚é–“
+    //ƒVƒ…[ƒg‚ÌŠÔŠuŠÔ
     public float ShootCD = 0.5f;
 
     // Start is called before the first frame update
@@ -75,11 +73,6 @@ public class Player : MonoBehaviour
     {
         
     }
-
-    //æœ€åˆã®å ´æ‰€ã«æˆ»ã‚‹
-    public void RespawnPosition()
-    {
-        transform.position = StartPoStartPositon;
 
     public bool CheakSkill(SkillID _SkillID)
     {

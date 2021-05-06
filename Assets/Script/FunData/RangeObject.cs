@@ -9,36 +9,36 @@ public class RangeObject : MonoBehaviour
     /// エディタ上で編集可能な変数
     /// </summary>
     [SerializeField, Range(0.0f, 360.0f)]
-    private float Angle = 0.0f;
+    private float m_Angle = 0.0f;
     [SerializeField]
-    private float Radius = 0.0f;
+    private float m_Radius = 0.0f;
     [SerializeField, Range(3, 32)]
-    private int TriangleCount = 12;
+    private int m_TriangleCount = 12;
     [SerializeField]
-    private float MaxRotSpeed;
+    private float m_MaxRotSpeed;
     [SerializeField]
-    private Material Material;
+    private Material m_Material;
     [SerializeField]
-    private PlayerController PlayerController;
+    private PlayerController m_PlayerController;
     [SerializeField]
-    private GameObject Player;
+    private GameObject m_Player;
 
     /// <summary>
     /// プライベート変数
     /// </summary>
-    private float RotSpeed = 1.0f;
-    private float RotateAngle = 0.0f;
-    private Vector3 Dir = Vector3.up;
+    private float m_RotSpeed = 1.0f;
+    private float m_RotateAngle = 0.0f;
+    private Vector3 m_Dir = Vector3.up;
     private InputAction arrow;
 
     /// <summary>
     /// 他スクリプトから参照用メソッド
     /// </summary>
-    public float GetAngle { get { return Angle; } }
-    public float GetRadius { get { return Radius; } }
-    public int GetTriangleCount { get { return TriangleCount; } }
-    public float GetRotateAngle { get { return RotateAngle; } }
-    public Vector3 Direction { get { return Dir; } }
+    public float Angle { get { return m_Angle; } }
+    public float Radius { get { return m_Radius; } }
+    public int TriangleCount { get { return m_TriangleCount; } }
+    public float RotateAngle { get { return m_RotateAngle; } }
+    public Vector3 Direction { get { return m_Dir; } }
 
     void Start()
     {
@@ -68,45 +68,45 @@ public class RangeObject : MonoBehaviour
         //上方向
         if (input.y > 0.5f)
         {
-            Dir = Vector3.up;
-            RotSpeed = MaxRotSpeed;
+            m_Dir = Vector3.up;
+            m_RotSpeed = m_MaxRotSpeed;
         }
         //下方向
         else if (input.y < -0.5f)
         {
-            Dir = Vector3.down;
-            RotSpeed = MaxRotSpeed;
+            m_Dir = Vector3.down;
+            m_RotSpeed = m_MaxRotSpeed;
         }
         //右方向
         else if (input.x > 0.5f)
         {
             //左方向を向いていたら
-            if (Dir == Vector3.left)
+            if (m_Dir == Vector3.left)
             {
-                RotateAngle = 270.0f;
+                m_RotateAngle = 270.0f;
             }
             else
             {
-                RotSpeed = MaxRotSpeed;
+                m_RotSpeed = m_MaxRotSpeed;
             }
-            Dir = Vector3.right;
+            m_Dir = Vector3.right;
         }
         //左方向
         else if (input.x < -0.5f)
         {
             //右方向を向いていたら
-            if (Dir == Vector3.right)
+            if (m_Dir == Vector3.right)
             {
-                RotateAngle = 90.0f;
+                m_RotateAngle = 90.0f;
             }
             else
             {
-                RotSpeed = MaxRotSpeed;
+                m_RotSpeed = m_MaxRotSpeed;
             }
-            Dir = Vector3.left;
+            m_Dir = Vector3.left;
         }
 
-        Dir.Normalize();
+        m_Dir.Normalize();
     }
 
     /// <summary>
@@ -115,22 +115,22 @@ public class RangeObject : MonoBehaviour
     void Rotation()
     {
         //外積のZ成分を確認して、最短回転方向で少しづつ回転させる
-        if (Vector3.Cross(this.transform.up, Dir).z > 0.0f)
+        if (Vector3.Cross(this.transform.up, m_Dir).z > 0.0f)
         {
-            RotateAngle += RotSpeed;
+            m_RotateAngle += m_RotSpeed;
         }
-        else if (Vector3.Cross(this.transform.up, Dir).z <= 0.0f)
+        else if (Vector3.Cross(this.transform.up, m_Dir).z <= 0.0f)
         {
-            RotateAngle -= RotSpeed;
+            m_RotateAngle -= m_RotSpeed;
         }
 
         //回転速度の減衰
-        if (Vector3.Dot(this.transform.up, Dir) > 0.9f)
+        if (Vector3.Dot(this.transform.up, m_Dir) > 0.9f)
         {
-            RotSpeed *= 0.9f;
+            m_RotSpeed *= 0.9f;
         }
 
-        this.transform.rotation = Quaternion.Euler(0.0f, 0.0f, RotateAngle);
+        this.transform.rotation = Quaternion.Euler(0.0f, 0.0f, m_RotateAngle);
     }
 
     /// <summary>
@@ -141,7 +141,7 @@ public class RangeObject : MonoBehaviour
     {
         BoxCollider2D collider = GetComponent<BoxCollider2D>();
 
-        collider.size = new Vector2(Radius * 2, Radius * 2);
+        collider.size = new Vector2(m_Radius * 2, m_Radius * 2);
     }
 
     /// <summary>
@@ -220,18 +220,18 @@ public class RangeObject : MonoBehaviour
     private void FunUpdate()
     {
         var renderer = GetComponent<MeshRenderer>();
-        int id = PlayerController.ControlPlayerID;
+        int id = m_PlayerController.ControlPlayerID;
 
         //操作していないプレイヤーの扇は描画しない
-        if (PlayerController.Players[id].gameObject.name != Player.name)
+        if (m_PlayerController.Players[id].gameObject.name != m_Player.name)
         {
-            renderer.material = Material;
+            renderer.material = m_Material;
             renderer.enabled = false;
             return;
         }
 
         //扇の描画
-        renderer.material = Material;
+        renderer.material = m_Material;
         renderer.enabled = true;
 
         //扇メッシュの描画
@@ -266,7 +266,7 @@ public class RangeObject : MonoBehaviour
         }
 
         var renderer = GetComponent<MeshRenderer>();
-        renderer.material = Material;
+        renderer.material = m_Material;
     }
 
     /// <summary>
@@ -287,7 +287,7 @@ public class RangeObject : MonoBehaviour
             player.GetComponent<Renderer>().material.color = Color.white;
 
             //敵の名前と操作しているプレイヤーが同じだったら次の処理
-            if (player.name == Player.name)
+            if (player.name == m_Player.name)
             {
                 continue;
             }
