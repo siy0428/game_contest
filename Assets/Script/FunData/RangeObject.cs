@@ -19,16 +19,13 @@ public class RangeObject : MonoBehaviour
     [SerializeField]
     private Material Material;
     [SerializeField]
-    private PlayerController PlayerController;
-    [SerializeField]
     private GameObject Player;
 
     /// <summary>
     /// プライベート変数
     /// </summary>
+    private PlayerController pc;
     private float RotSpeed = 1.0f;
-    private float RotateAngle = 0.0f;
-    private Vector3 Dir = Vector3.up;
     private InputAction arrow;
 
     /// <summary>
@@ -37,14 +34,15 @@ public class RangeObject : MonoBehaviour
     public float GetAngle { get { return Angle; } }
     public float GetRadius { get { return Radius; } }
     public int GetTriangleCount { get { return TriangleCount; } }
-    public float GetRotateAngle { get { return RotateAngle; } }
-    public Vector3 Direction { get { return Dir; } }
+    public float GetRotateAngle { get; private set; } = 0.0f;
+    public Vector3 Direction { get; private set; } = Vector3.up;
 
     void Start()
     {
         PlayerInput _input = FindObjectOfType<PlayerInput>();
         InputActionMap actionMap = _input.currentActionMap;
         arrow = actionMap["Fun"];
+        pc = FindObjectOfType<PlayerController>();
     }
 
     // Update is called once per frame
@@ -68,45 +66,45 @@ public class RangeObject : MonoBehaviour
         //上方向
         if (input.y > 0.5f)
         {
-            Dir = Vector3.up;
+            Direction = Vector3.up;
             RotSpeed = MaxRotSpeed;
         }
         //下方向
         else if (input.y < -0.5f)
         {
-            Dir = Vector3.down;
+            Direction = Vector3.down;
             RotSpeed = MaxRotSpeed;
         }
         //右方向
         else if (input.x > 0.5f)
         {
             //左方向を向いていたら
-            if (Dir == Vector3.left)
+            if (Direction == Vector3.left)
             {
-                RotateAngle = 270.0f;
+                GetRotateAngle = 270.0f;
             }
             else
             {
                 RotSpeed = MaxRotSpeed;
             }
-            Dir = Vector3.right;
+            Direction = Vector3.right;
         }
         //左方向
         else if (input.x < -0.5f)
         {
             //右方向を向いていたら
-            if (Dir == Vector3.right)
+            if (Direction == Vector3.right)
             {
-                RotateAngle = 90.0f;
+                GetRotateAngle = 90.0f;
             }
             else
             {
                 RotSpeed = MaxRotSpeed;
             }
-            Dir = Vector3.left;
+            Direction = Vector3.left;
         }
 
-        Dir.Normalize();
+        Direction.Normalize();
     }
 
     /// <summary>
@@ -115,22 +113,22 @@ public class RangeObject : MonoBehaviour
     void Rotation()
     {
         //外積のZ成分を確認して、最短回転方向で少しづつ回転させる
-        if (Vector3.Cross(this.transform.up, Dir).z > 0.0f)
+        if (Vector3.Cross(this.transform.up, Direction).z > 0.0f)
         {
-            RotateAngle += RotSpeed;
+            GetRotateAngle += RotSpeed;
         }
-        else if (Vector3.Cross(this.transform.up, Dir).z <= 0.0f)
+        else if (Vector3.Cross(this.transform.up, Direction).z <= 0.0f)
         {
-            RotateAngle -= RotSpeed;
+            GetRotateAngle -= RotSpeed;
         }
 
         //回転速度の減衰
-        if (Vector3.Dot(this.transform.up, Dir) > 0.9f)
+        if (Vector3.Dot(this.transform.up, Direction) > 0.9f)
         {
             RotSpeed *= 0.9f;
         }
 
-        this.transform.rotation = Quaternion.Euler(0.0f, 0.0f, RotateAngle);
+        this.transform.rotation = Quaternion.Euler(0.0f, 0.0f, GetRotateAngle);
     }
 
     /// <summary>
@@ -220,10 +218,10 @@ public class RangeObject : MonoBehaviour
     private void FunUpdate()
     {
         var renderer = GetComponent<MeshRenderer>();
-        int id = PlayerController.ControlPlayerID;
+        int id = pc.ControlPlayerID;
 
         //操作していないプレイヤーの扇は描画しない
-        if (PlayerController.Players[id].gameObject.name != Player.name)
+        if (pc.Players[id].gameObject.name != Player.name)
         {
             renderer.material = Material;
             renderer.enabled = false;
@@ -298,7 +296,7 @@ public class RangeObject : MonoBehaviour
             CircleCollider2D rad = player.GetComponent<CircleCollider2D>();
             Vector2 playerPos = player.transform.position;
             Vector2 center = this.transform.position;
-            float startDeg = RotateAngle + (90.0f - Angle / 2);
+            float startDeg = GetRotateAngle + (90.0f - Angle / 2);
             float endDeg = startDeg + Angle;
             float radius = Radius;
             bool funHit = MathUtils.IsInsideOfSector(playerPos, center, startDeg, endDeg, radius, rad.radius);

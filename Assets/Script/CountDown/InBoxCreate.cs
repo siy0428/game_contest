@@ -5,12 +5,11 @@ using UnityEngine;
 public class InBoxCreate : MonoBehaviour
 {
     [SerializeField]
-    private GameObject InBox;
+    private InBoxManager InBox;
     [SerializeField]
     private Player[] Players;
-    [SerializeField]
-    private PlayerController PlayerController;
 
+    private PlayerController pc;
     private bool IsCreate;
 
     public void SetIsCraete(bool set) { IsCreate = set; }
@@ -19,24 +18,46 @@ public class InBoxCreate : MonoBehaviour
     void Start()
     {
         IsCreate = false;
+        pc = FindObjectOfType<PlayerController>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        foreach (var player in Players)
+        foreach (var a_player in Players)
         {
-            //プレイヤーが死んでボックスが生成されていなければ
-            if (!player.IsAlive && !IsCreate)
+            //生きてたら次の処理
+            if (a_player.IsAlive)
             {
-                Create(player.ObjectDefaultPosition);
+                continue;
+            }
+
+            //すでに生成していたら次の処理
+            if (IsCreate)
+            {
+                continue;
+            }
+
+            foreach (var player in Players)
+            {
+                float a = (player.IsAlive) ? 0.0f : 0.5f;
+                Create(InBox.gameObject, player.ObjectDefaultPosition, a);
             }
         }
     }
 
-    public void Create(Vector3 pos)
+    public void Create(GameObject obj, Vector3 pos)
     {
-        Instantiate(InBox, pos, Quaternion.identity);
+        Instantiate(obj, pos, Quaternion.identity);
+        IsCreate = true;
+    }
+
+    public void Create(GameObject obj, Vector3 pos, float alpha)
+    {
+        var box = Instantiate(obj, pos, Quaternion.identity);
+        var ibm = box.GetComponent<InBoxManager>();
+        ibm.SetAlpha(alpha);
+
         IsCreate = true;
     }
 }

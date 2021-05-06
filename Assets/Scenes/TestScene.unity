@@ -336,7 +336,6 @@ MonoBehaviour:
   TriangleCount: 12
   MaxRotSpeed: 5
   Material: {fileID: 2100000, guid: 35e257e63baf6234c97c5f723b239c5c, type: 2}
-  PlayerController: {fileID: 1880378538}
   Player: {fileID: 1504537289}
 --- !u!4 &336447369
 Transform:
@@ -522,7 +521,6 @@ MonoBehaviour:
   TriangleCount: 12
   MaxRotSpeed: 5
   Material: {fileID: 2100000, guid: 35e257e63baf6234c97c5f723b239c5c, type: 2}
-  PlayerController: {fileID: 1880378538}
   Player: {fileID: 571841445}
 --- !u!1 &571841445 stripped
 GameObject:
@@ -594,7 +592,7 @@ MonoBehaviour:
   PlayersForward: {x: -1, y: 1, z: 0}
   Bullet: {fileID: 3142873562492474777, guid: 64c9f48f6976bc2469fbcbbb08253b77, type: 3}
   BulletSpeed: 150
-  ObjectDefaultPosition: {x: 383, y: -5, z: 0}
+  ObjectDefaultPosition: {x: 333, y: -5, z: 10}
 --- !u!4 &571841451 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5522745113915133871, guid: 8046e492c92581f40a9d4cb667324250, type: 3}
@@ -1428,7 +1426,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5522745113915133871, guid: 8046e492c92581f40a9d4cb667324250, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 39
+      value: 37
       objectReference: {fileID: 0}
     - target: {fileID: 5522745113915133871, guid: 8046e492c92581f40a9d4cb667324250, type: 3}
       propertyPath: m_LocalPosition.z
@@ -1580,7 +1578,7 @@ MonoBehaviour:
   PlayersForward: {x: 1, y: 1, z: 0}
   Bullet: {fileID: 3142873562492474777, guid: 64c9f48f6976bc2469fbcbbb08253b77, type: 3}
   BulletSpeed: 150
-  ObjectDefaultPosition: {x: -104, y: -5, z: 0}
+  ObjectDefaultPosition: {x: -154, y: -5, z: 10}
 --- !u!4 &1504537293 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6482005678190899768, guid: 64bf2e141023b4a44b97bb1c6dcb08c3, type: 3}
@@ -1740,11 +1738,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c763636ed4aa9ee4a83b2f6dc2d25c9b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  InBox: {fileID: 2242141632788354588, guid: 878911790880c294da2c60d187bf7523, type: 3}
+  InBox: {fileID: 8567452497001204840, guid: 54a77107361b8654eb109ec4a0b71609, type: 3}
   Players:
   - {fileID: 1504537290}
   - {fileID: 571841448}
-  PlayerController: {fileID: 1880378538}
 --- !u!4 &1810547944
 Transform:
   m_ObjectHideFlags: 0

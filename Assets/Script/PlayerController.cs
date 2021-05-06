@@ -63,7 +63,6 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
         if(!StartFallBack)
         {
             //最初のループ内相手が動いていないので、下記の操作をジャンプする
