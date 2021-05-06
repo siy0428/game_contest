@@ -26,10 +26,10 @@ public class InBoxCreate : MonoBehaviour
     {
         foreach (var player in Players)
         {
+            //プレイヤーが死んでボックスが生成されていなければ
             if (!player.IsAlive && !IsCreate)
             {
-                Create(player.transform.position);
-                Debug.Log(player.transform.position);
+                Create(player.ObjectDefaultPosition);
             }
         }
     }

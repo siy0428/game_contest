@@ -52,6 +52,9 @@ public class Player : MonoBehaviour
     //バレットのスピード
     public float BulletSpeed = 150.0f;
 
+    //プレイヤーの位置（オブジェクト用）
+    public Vector3 ObjectDefaultPosition;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -67,5 +70,11 @@ public class Player : MonoBehaviour
     void Update()
     {
         
+    }
+
+    //最初の場所に戻る
+    public void RespawnPosition()
+    {
+        transform.position = StartPoStartPositon;
     }
 }
