@@ -10,7 +10,9 @@ public class InBoxManager : MonoBehaviour
     private GameObject RangeBox;
     [SerializeField]
     private CountDownManager cdm;
-
+    
+    private InBoxCreate ibc;
+    private PlayerController pc;
     private Color DefaultColor;
     private float Alpha;
     private bool DecAlpha;
@@ -23,8 +25,9 @@ public class InBoxManager : MonoBehaviour
         DefaultColor = RangeBox.GetComponent<Renderer>().material.GetColor("_Color");
         Alpha = 0.5f;
         DecAlpha = false;
+        ibc = FindObjectOfType<InBoxCreate>();
+        pc = FindObjectOfType<PlayerController>();
 
-        Create();
         cdm.CountStart();
     }
 
@@ -41,23 +44,14 @@ public class InBoxManager : MonoBehaviour
         if(DecAlpha)
         {
             Alpha -= 0.01f;
+            //行動範囲制限終了処理
             if (Alpha <= 0.0f)
             {
                 DecAlpha = false;
+                ibc.SetIsCraete(false);
+                Destroy(gameObject);
             }
         }
-    }
-
-    /// <summary>
-    /// 初期位置当たり判定生成
-    /// </summary>
-    public void Create()
-    {
-        foreach(GameObject box in InBoxs)
-        {
-            box.SetActive(true);
-        }
-        DecAlpha = false;
     }
 
     /// <summary>
@@ -65,11 +59,16 @@ public class InBoxManager : MonoBehaviour
     /// </summary>
     public void Delete()
     {
+        //ボックスの当たり判定だけ削除
         foreach (GameObject box in InBoxs)
         {
             box.SetActive(false);
         }
+        //カウントダウンを徐々に透明化
         DecAlpha = true;
+        //プレイヤーを初期位置に
+        int id = pc.ControlPlayerID;
+        pc.PlayersData[id].RespawnPosition();
     }
 
     /// <summary>
