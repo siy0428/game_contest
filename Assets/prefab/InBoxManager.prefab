@@ -95,9 +95,10 @@ GameObject:
   m_Component:
   - component: {fileID: 249094558432469972}
   - component: {fileID: 249094558432469979}
+  - component: {fileID: 1752285953667574775}
   m_Layer: 0
   m_Name: InBox
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -142,6 +143,27 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 10, y: 100}
   m_EdgeRadius: 0
+--- !u!50 &1752285953667574775
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 249094558432469978}
+  m_BodyType: 1
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
 --- !u!1 &249094558767912747
 GameObject:
   m_ObjectHideFlags: 0
@@ -152,9 +174,10 @@ GameObject:
   m_Component:
   - component: {fileID: 249094558767912741}
   - component: {fileID: 249094558767912740}
+  - component: {fileID: 4839038506774835060}
   m_Layer: 0
   m_Name: InBox (2)
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -199,6 +222,27 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 300, y: 10}
   m_EdgeRadius: 0
+--- !u!50 &4839038506774835060
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 249094558767912747}
+  m_BodyType: 1
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
 --- !u!1 &249094558848132656
 GameObject:
   m_ObjectHideFlags: 0
@@ -209,9 +253,10 @@ GameObject:
   m_Component:
   - component: {fileID: 249094558848132658}
   - component: {fileID: 249094558848132657}
+  - component: {fileID: 8291820831352037340}
   m_Layer: 0
   m_Name: InBox (1)
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -256,6 +301,27 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 10, y: 100}
   m_EdgeRadius: 0
+--- !u!50 &8291820831352037340
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 249094558848132656}
+  m_BodyType: 1
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
 --- !u!1 &3315528879018357189
 GameObject:
   m_ObjectHideFlags: 0

@@ -345,7 +345,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 336447365}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 5, y: -9, z: 0}
+  m_LocalPosition: {x: -0.2, y: 29.1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1504537293}
@@ -585,6 +585,7 @@ MonoBehaviour:
   JumpMass: 3
   SkillIDs: 
   IsMove: 0
+  OnBox: 1
   IsJump: 0
   JumpedTimes: 0
   IsAlive: 0
@@ -592,6 +593,7 @@ MonoBehaviour:
   PlayersForward: {x: -1, y: 1, z: 0}
   Bullet: {fileID: 3142873562492474777, guid: 64c9f48f6976bc2469fbcbbb08253b77, type: 3}
   BulletSpeed: 150
+  ShootCD: 0.5
   ObjectDefaultPosition: {x: 333, y: -5, z: 10}
 --- !u!4 &571841451 stripped
 Transform:
@@ -1426,7 +1428,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5522745113915133871, guid: 8046e492c92581f40a9d4cb667324250, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 37
+      value: 36
       objectReference: {fileID: 0}
     - target: {fileID: 5522745113915133871, guid: 8046e492c92581f40a9d4cb667324250, type: 3}
       propertyPath: m_LocalPosition.z
@@ -1571,6 +1573,7 @@ MonoBehaviour:
   JumpMass: 3
   SkillIDs: 
   IsMove: 0
+  OnBox: 1
   IsJump: 0
   JumpedTimes: 0
   IsAlive: 0
@@ -1578,6 +1581,7 @@ MonoBehaviour:
   PlayersForward: {x: 1, y: 1, z: 0}
   Bullet: {fileID: 3142873562492474777, guid: 64c9f48f6976bc2469fbcbbb08253b77, type: 3}
   BulletSpeed: 150
+  ShootCD: 0.5
   ObjectDefaultPosition: {x: -154, y: -5, z: 10}
 --- !u!4 &1504537293 stripped
 Transform:
@@ -1618,10 +1622,10 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.92692566, y: -27.344376}
+  m_Offset: {x: -0.92692566, y: 3.34438}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
+    pivot: {x: 0.5, y: 0}
     oldSize: {x: 32, y: 64}
     newSize: {x: 32, y: 64}
     adaptiveTilingThreshold: 0.5
@@ -1644,7 +1648,7 @@ CapsuleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0, y: 30}
   m_Size: {x: 32, y: 64}
   m_Direction: 0
 --- !u!58 &1504537297
@@ -1660,7 +1664,7 @@ CircleCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0, y: 30}
   serializedVersion: 2
   m_Radius: 32
 --- !u!1 &1716031040
@@ -1792,6 +1796,7 @@ MonoBehaviour:
   StartBehaviourRecord: 1
   StartFallBack: 0
   FallBackSpeed: 5
+  SkillDataCtr: {fileID: 0}
   Timer: 0
   JumpFocre: 38
   PlayersData: []
@@ -1832,7 +1837,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6482005678190899768, guid: 64bf2e141023b4a44b97bb1c6dcb08c3, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 37
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 6482005678190899768, guid: 64bf2e141023b4a44b97bb1c6dcb08c3, type: 3}
       propertyPath: m_LocalPosition.z
