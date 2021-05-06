@@ -13,7 +13,7 @@ public class CountDownManager : MonoBehaviour
     public void CountReset() { m_Time = 0.0f; }     //ŠÔƒŠƒZƒbƒg
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         m_Time = 0.0f;
         m_Start = false;
