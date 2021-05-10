@@ -3,18 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class EnemyFunHit
-{
-    public GameObject enemy;
-    public float distance;
-
-    public void Reset()
-    {
-        enemy = null;
-        distance = 0.0f;
-    }
-}
-
 public class RangeObject : MonoBehaviour
 {
     /// <summary>
@@ -42,7 +30,6 @@ public class RangeObject : MonoBehaviour
     private float m_RotateAngle = 0.0f;
     private Vector3 m_Dir = Vector3.up;
     private InputAction arrow;
-    private EnemyFunHit enemyFunHit;
 
     /// <summary>
     /// 他スクリプトから参照用メソッド
@@ -58,8 +45,6 @@ public class RangeObject : MonoBehaviour
         PlayerInput _input = FindObjectOfType<PlayerInput>();
         InputActionMap actionMap = _input.currentActionMap;
         arrow = actionMap["Fun"];
-
-        enemyFunHit = new EnemyFunHit();
     }
 
     // Update is called once per frame
@@ -129,7 +114,7 @@ public class RangeObject : MonoBehaviour
     /// </summary>
     void Rotation()
     {
-        //少しづつ回転させる
+        //外積のZ成分を確認して、最短回転方向で少しづつ回転させる
         if (Vector3.Cross(this.transform.up, m_Dir).z > 0.0f)
         {
             m_RotateAngle += m_RotSpeed;
@@ -149,6 +134,7 @@ public class RangeObject : MonoBehaviour
     }
 
     /// <summary>
+    /// ※現在使用していない
     /// 当たり判定のサイズ変更
     /// </summary>
     void ColliderFlexible()
@@ -252,7 +238,7 @@ public class RangeObject : MonoBehaviour
         DrawFunMesh();
 
         //敵の扇当たり判定
-        EnemyFunCollision();
+        GameObject hit_player = PlayerFunCollision();
     }
 
     /// <summary>
@@ -284,46 +270,47 @@ public class RangeObject : MonoBehaviour
     }
 
     /// <summary>
-    /// 敵と扇の当たり判定
+    /// プレイヤーと扇の当たり判定
     /// </summary>
-    void EnemyFunCollision()
+    /// <returns>当たったプレイヤーのGameObjectを返す(ない場合はNULL)</returns>
+    GameObject PlayerFunCollision()
     {
-        //扇の中で一番近い敵の情報のリセット
-        enemyFunHit.Reset();
+        GameObject hit_player = null;
 
         //エネミーの取得
-        GameObject[] enemys = GameObject.FindGameObjectsWithTag("Player");
+        GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
 
         //扇に当たっている敵の取得
-        foreach (GameObject enemy in enemys)
+        foreach (GameObject player in players)
         {
             //敵の色を白に設定
-            enemy.GetComponent<Renderer>().material.color = Color.white;
+            player.GetComponent<Renderer>().material.color = Color.white;
 
             //敵の名前と操作しているプレイヤーが同じだったら次の処理
-            if (enemy.name == m_Player.name)
+            if (player.name == m_Player.name)
             {
                 continue;
             }
 
             //敵とプレイヤーのベクトル
-            Vector3 dir = enemy.transform.position - this.transform.position;
+            Vector3 dir = player.transform.position - this.transform.position;
 
-            CircleCollider2D rad = enemy.GetComponent<CircleCollider2D>();
-            Vector2 enemyPos = enemy.transform.position;
+            CircleCollider2D rad = player.GetComponent<CircleCollider2D>();
+            Vector2 playerPos = player.transform.position;
             Vector2 center = this.transform.position;
             float startDeg = RotateAngle + (90.0f - Angle / 2);
             float endDeg = startDeg + Angle;
             float radius = Radius;
-            bool funHit = MathUtils.IsInsideOfSector(enemyPos, center, startDeg, endDeg, radius, rad.radius);
+            bool funHit = MathUtils.IsInsideOfSector(playerPos, center, startDeg, endDeg, radius, rad.radius);
 
             //プレイヤーから敵に伸びるベクトル
-            RaycastHit2D hit = Physics2D.Linecast(transform.position, enemyPos, 1);
-            Debug.DrawLine(transform.position, enemyPos, Color.red, 1);
+            RaycastHit2D hit = Physics2D.Linecast(transform.position, playerPos, 1);
+            //Debug.DrawLine(transform.position, playerPos, Color.red, 1);
 
             //nullでなければ
             if (hit)
             {
+                //敵とプレイヤーの間に地面があれば判定を行わない
                 if (hit.collider.gameObject.tag == "Ground")
                 {
                     continue;
@@ -333,29 +320,24 @@ public class RangeObject : MonoBehaviour
             //扇に当たっている場合
             if (funHit)
             {
-                Vector3 dist = enemyPos - center;
+                Vector3 dist = playerPos - center;
                 //比較対象がまだない場合暫定で敵のオブジェクトを格納
-                if (!enemyFunHit.enemy)
+                if(!hit_player)
                 {
-                    enemyFunHit.enemy = enemy;
-                    enemyFunHit.distance = dist.magnitude;
+                    hit_player = player;
                 }
                 else
                 {
+                    var dist2 = (Vector2)hit_player.transform.position - center;
                     //現在比較している敵との距離の方が短い場合
-                    if (dist.magnitude < enemyFunHit.distance)
+                    if (dist.magnitude < dist2.magnitude)
                     {
-                        enemyFunHit.enemy = enemy;
-                        enemyFunHit.distance = dist.magnitude;
+                        hit_player = player;
                     }
                 }
             }
-
-            //扇範囲内の敵は赤色
-            if (enemyFunHit.enemy)
-            {
-                enemyFunHit.enemy.GetComponent<Renderer>().material.color = Color.red;
-            }
         }
+
+        return hit_player;
     }
 }
