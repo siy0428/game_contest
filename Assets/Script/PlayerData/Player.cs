@@ -31,6 +31,8 @@ public class Player : MonoBehaviour
     //移動状態
     public int IsMove;
 
+    public bool OnBox = true;
+
     //ジャンプ状態
     public bool IsJump;
 
@@ -52,6 +54,11 @@ public class Player : MonoBehaviour
     //バレットのスピード
     public float BulletSpeed = 150.0f;
 
+    //シュートの間隔時間
+    public float ShootCD = 0.5f;
+
+    public Vector3 ObjectDefaultPosition;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -67,5 +74,31 @@ public class Player : MonoBehaviour
     void Update()
     {
         
+    }
+
+    public void RespawnPosition()
+    {
+        transform.position = StartPoStartPositon;
+    }
+
+    public bool CheakSkill(SkillID _SkillID)
+    {
+        for(int i = 0; i<SkillIDs.Count;i++)
+        {
+            if(SkillIDs[i] == _SkillID)
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    public void OnCollisionEnter2D(UnityEngine.Collision2D collision)
+    {
+        if(collision.gameObject.tag == "Ground")
+        {
+            OnBox = true;
+        }
     }
 }
