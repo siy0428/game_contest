@@ -57,6 +57,8 @@ public class Player : MonoBehaviour
     //ÉVÉÖÅ[ÉgÇÃä‘äuéûä‘
     public float ShootCD = 0.5f;
 
+    public Vector3 ObjectDefaultPosition;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -72,6 +74,11 @@ public class Player : MonoBehaviour
     void Update()
     {
         
+    }
+
+    public void RespawnPosition()
+    {
+        transform.position = StartPoStartPositon;
     }
 
     public bool CheakSkill(SkillID _SkillID)

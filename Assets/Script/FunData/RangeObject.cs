@@ -9,42 +9,40 @@ public class RangeObject : MonoBehaviour
     /// エディタ上で編集可能な変数
     /// </summary>
     [SerializeField, Range(0.0f, 360.0f)]
-    private float m_Angle = 0.0f;
+    private float Angle = 0.0f;
     [SerializeField]
-    private float m_Radius = 0.0f;
+    private float Radius = 0.0f;
     [SerializeField, Range(3, 32)]
-    private int m_TriangleCount = 12;
+    private int TriangleCount = 12;
     [SerializeField]
-    private float m_MaxRotSpeed;
+    private float MaxRotSpeed;
     [SerializeField]
-    private Material m_Material;
+    private Material Material;
     [SerializeField]
-    private PlayerController m_PlayerController;
-    [SerializeField]
-    private GameObject m_Player;
+    private GameObject Player;
 
     /// <summary>
     /// プライベート変数
     /// </summary>
-    private float m_RotSpeed = 1.0f;
-    private float m_RotateAngle = 0.0f;
-    private Vector3 m_Dir = Vector3.up;
+    private PlayerController pc;
+    private float RotSpeed = 1.0f;
     private InputAction arrow;
 
     /// <summary>
     /// 他スクリプトから参照用メソッド
     /// </summary>
-    public float Angle { get { return m_Angle; } }
-    public float Radius { get { return m_Radius; } }
-    public int TriangleCount { get { return m_TriangleCount; } }
-    public float RotateAngle { get { return m_RotateAngle; } }
-    public Vector3 Direction { get { return m_Dir; } }
+    public float GetAngle { get { return Angle; } }
+    public float GetRadius { get { return Radius; } }
+    public int GetTriangleCount { get { return TriangleCount; } }
+    public float GetRotateAngle { get; private set; } = 0.0f;
+    public Vector3 Direction { get; private set; } = Vector3.up;
 
     void Start()
     {
         PlayerInput _input = FindObjectOfType<PlayerInput>();
         InputActionMap actionMap = _input.currentActionMap;
         arrow = actionMap["Fun"];
+        pc = FindObjectOfType<PlayerController>();
     }
 
     // Update is called once per frame
@@ -68,45 +66,45 @@ public class RangeObject : MonoBehaviour
         //上方向
         if (input.y > 0.5f)
         {
-            m_Dir = Vector3.up;
-            m_RotSpeed = m_MaxRotSpeed;
+            Direction = Vector3.up;
+            RotSpeed = MaxRotSpeed;
         }
         //下方向
         else if (input.y < -0.5f)
         {
-            m_Dir = Vector3.down;
-            m_RotSpeed = m_MaxRotSpeed;
+            Direction = Vector3.down;
+            RotSpeed = MaxRotSpeed;
         }
         //右方向
         else if (input.x > 0.5f)
         {
             //左方向を向いていたら
-            if (m_Dir == Vector3.left)
+            if (Direction == Vector3.left)
             {
-                m_RotateAngle = 270.0f;
+                GetRotateAngle = 270.0f;
             }
             else
             {
-                m_RotSpeed = m_MaxRotSpeed;
+                RotSpeed = MaxRotSpeed;
             }
-            m_Dir = Vector3.right;
+            Direction = Vector3.right;
         }
         //左方向
         else if (input.x < -0.5f)
         {
             //右方向を向いていたら
-            if (m_Dir == Vector3.right)
+            if (Direction == Vector3.right)
             {
-                m_RotateAngle = 90.0f;
+                GetRotateAngle = 90.0f;
             }
             else
             {
-                m_RotSpeed = m_MaxRotSpeed;
+                RotSpeed = MaxRotSpeed;
             }
-            m_Dir = Vector3.left;
+            Direction = Vector3.left;
         }
 
-        m_Dir.Normalize();
+        Direction.Normalize();
     }
 
     /// <summary>
@@ -115,22 +113,22 @@ public class RangeObject : MonoBehaviour
     void Rotation()
     {
         //外積のZ成分を確認して、最短回転方向で少しづつ回転させる
-        if (Vector3.Cross(this.transform.up, m_Dir).z > 0.0f)
+        if (Vector3.Cross(this.transform.up, Direction).z > 0.0f)
         {
-            m_RotateAngle += m_RotSpeed;
+            GetRotateAngle += RotSpeed;
         }
-        else if (Vector3.Cross(this.transform.up, m_Dir).z <= 0.0f)
+        else if (Vector3.Cross(this.transform.up, Direction).z <= 0.0f)
         {
-            m_RotateAngle -= m_RotSpeed;
+            GetRotateAngle -= RotSpeed;
         }
 
         //回転速度の減衰
-        if (Vector3.Dot(this.transform.up, m_Dir) > 0.9f)
+        if (Vector3.Dot(this.transform.up, Direction) > 0.9f)
         {
-            m_RotSpeed *= 0.9f;
+            RotSpeed *= 0.9f;
         }
 
-        this.transform.rotation = Quaternion.Euler(0.0f, 0.0f, m_RotateAngle);
+        this.transform.rotation = Quaternion.Euler(0.0f, 0.0f, GetRotateAngle);
     }
 
     /// <summary>
@@ -141,7 +139,7 @@ public class RangeObject : MonoBehaviour
     {
         BoxCollider2D collider = GetComponent<BoxCollider2D>();
 
-        collider.size = new Vector2(m_Radius * 2, m_Radius * 2);
+        collider.size = new Vector2(Radius * 2, Radius * 2);
     }
 
     /// <summary>
@@ -220,25 +218,26 @@ public class RangeObject : MonoBehaviour
     private void FunUpdate()
     {
         var renderer = GetComponent<MeshRenderer>();
-        int id = m_PlayerController.ControlPlayerID;
+        int id = pc.ControlPlayerID;
 
         //操作していないプレイヤーの扇は描画しない
-        if (m_PlayerController.Players[id].gameObject.name != m_Player.name)
+        if (pc.Players[id].gameObject.name != Player.name)
         {
-            renderer.material = m_Material;
+            renderer.material = Material;
             renderer.enabled = false;
             return;
         }
 
         //扇の描画
-        renderer.material = m_Material;
+        renderer.material = Material;
         renderer.enabled = true;
 
         //扇メッシュの描画
         DrawFunMesh();
 
         //敵の扇当たり判定
-        GameObject hit_player = PlayerFunCollision();
+        GameObject hit_enemy = PlayerFunCollision();
+        //Debug.Log(hit_enemy);
     }
 
     /// <summary>
@@ -266,39 +265,39 @@ public class RangeObject : MonoBehaviour
         }
 
         var renderer = GetComponent<MeshRenderer>();
-        renderer.material = m_Material;
+        renderer.material = Material;
     }
 
     /// <summary>
     /// プレイヤーと扇の当たり判定
     /// </summary>
     /// <returns>当たったプレイヤーのGameObjectを返す(ない場合はNULL)</returns>
-    GameObject PlayerFunCollision()
+    public GameObject PlayerFunCollision()
     {
         GameObject hit_player = null;
 
         //エネミーの取得
-        GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
+        GameObject[] enemys = GameObject.FindGameObjectsWithTag("Enemy");
 
         //扇に当たっている敵の取得
-        foreach (GameObject player in players)
+        foreach (GameObject enemy in enemys)
         {
             //敵の色を白に設定
-            player.GetComponent<Renderer>().material.color = Color.white;
+            enemy.GetComponent<Renderer>().material.color = Color.white;
 
             //敵の名前と操作しているプレイヤーが同じだったら次の処理
-            if (player.name == m_Player.name)
+            if (enemy.name == Player.name)
             {
                 continue;
             }
 
             //敵とプレイヤーのベクトル
-            Vector3 dir = player.transform.position - this.transform.position;
+            Vector3 dir = enemy.transform.position - this.transform.position;
 
-            CircleCollider2D rad = player.GetComponent<CircleCollider2D>();
-            Vector2 playerPos = player.transform.position;
+            CircleCollider2D rad = enemy.GetComponent<CircleCollider2D>();
+            Vector2 playerPos = enemy.transform.position;
             Vector2 center = this.transform.position;
-            float startDeg = RotateAngle + (90.0f - Angle / 2);
+            float startDeg = GetRotateAngle + (90.0f - Angle / 2);
             float endDeg = startDeg + Angle;
             float radius = Radius;
             bool funHit = MathUtils.IsInsideOfSector(playerPos, center, startDeg, endDeg, radius, rad.radius);
@@ -324,7 +323,7 @@ public class RangeObject : MonoBehaviour
                 //比較対象がまだない場合暫定で敵のオブジェクトを格納
                 if(!hit_player)
                 {
-                    hit_player = player;
+                    hit_player = enemy;
                 }
                 else
                 {
@@ -332,7 +331,7 @@ public class RangeObject : MonoBehaviour
                     //現在比較している敵との距離の方が短い場合
                     if (dist.magnitude < dist2.magnitude)
                     {
-                        hit_player = player;
+                        hit_player = enemy;
                     }
                 }
             }
