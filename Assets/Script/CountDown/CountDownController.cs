@@ -37,7 +37,7 @@ public class CountDownController : MonoBehaviour
                 count = 0.0f;
                 NextSprite();
             }
-            float a = inbox.GetAlpha;
+            float a = inbox.Alpha;
             myRenderer.color = new Color(1.0f, 1.0f, 1.0f, a);
         }
     }
