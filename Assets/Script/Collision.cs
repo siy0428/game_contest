@@ -29,9 +29,18 @@ public class Collision : MonoBehaviour
 
         if(collider.gameObject.tag == "Ground")
         {
-            ShootBottonCtr sbc = FindObjectOfType<ShootBottonCtr>();
-            sbc.m_BulletsList.Remove(this.gameObject);
-            GameObject.Destroy(this.gameObject);
+            BulletData bd = gameObject.GetComponent<BulletData>();
+            if (bd.CheakRebound())
+            {
+                bd.ReboundedTimes++;
+                //bd.
+            }
+            else
+            {
+                ShootBottonCtr sbc = FindObjectOfType<ShootBottonCtr>();
+                sbc.m_BulletsList.Remove(this.gameObject);
+                GameObject.Destroy(this.gameObject);
+            }
         }
 
         if (collider.gameObject.tag == "Bullet")
