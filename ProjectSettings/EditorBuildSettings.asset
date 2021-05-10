@@ -8,7 +8,6 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/bullettest.unity
     guid: 4bdaa93df95f3f245bd3f1fd5057d9b8
-  - enabled: 1
-    path: Assets/Scenes/TestScene.unity
-    guid: 3b0b00411e42e7d4b83b154f71d4e261
-  m_configObjects: {}
+  m_configObjects:
+    com.unity.input.settings: {fileID: 11400000, guid: 42d457d492dda9f44a76f9e6ee41583c, type: 2}
+
