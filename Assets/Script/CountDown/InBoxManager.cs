@@ -11,7 +11,6 @@ public class InBoxManager : MonoBehaviour
     [SerializeField]
     private CountDownManager cdm;
 
-    private string test;
     private InBoxCreate ibc;
     private PlayerController pc;
     private Color DefaultColor;
@@ -57,7 +56,7 @@ public class InBoxManager : MonoBehaviour
     /// <summary>
     /// 初期位置当たり判定削除
     /// </summary>
-    public void Delete()
+    private void Finish()
     {
         //ボックスの当たり判定だけ削除
         foreach (GameObject box in InBoxs)
@@ -81,7 +80,21 @@ public class InBoxManager : MonoBehaviour
         {
             cdm.CountStop();
             cdm.CountReset();
-            Delete();
+            Finish();
         }
+    }
+
+    /// <summary>
+    /// 行動制限の削除
+    /// </summary>
+    public void Delete()
+    {
+        cdm.CountStop();
+        cdm.CountReset();
+        Finish();
+        Alpha = 0.0f;
+        IsDecAlpha = false;
+        ibc.SetIsCraete(false);
+        Destroy(gameObject);
     }
 }

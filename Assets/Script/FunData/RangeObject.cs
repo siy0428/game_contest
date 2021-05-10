@@ -236,7 +236,8 @@ public class RangeObject : MonoBehaviour
         DrawFunMesh();
 
         //敵の扇当たり判定
-        GameObject hit_player = PlayerFunCollision();
+        GameObject hit_enemy = PlayerFunCollision();
+        //Debug.Log(hit_enemy);
     }
 
     /// <summary>
@@ -271,30 +272,30 @@ public class RangeObject : MonoBehaviour
     /// プレイヤーと扇の当たり判定
     /// </summary>
     /// <returns>当たったプレイヤーのGameObjectを返す(ない場合はNULL)</returns>
-    GameObject PlayerFunCollision()
+    public GameObject PlayerFunCollision()
     {
         GameObject hit_player = null;
 
         //エネミーの取得
-        GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
+        GameObject[] enemys = GameObject.FindGameObjectsWithTag("Enemy");
 
         //扇に当たっている敵の取得
-        foreach (GameObject player in players)
+        foreach (GameObject enemy in enemys)
         {
             //敵の色を白に設定
-            player.GetComponent<Renderer>().material.color = Color.white;
+            enemy.GetComponent<Renderer>().material.color = Color.white;
 
             //敵の名前と操作しているプレイヤーが同じだったら次の処理
-            if (player.name == Player.name)
+            if (enemy.name == Player.name)
             {
                 continue;
             }
 
             //敵とプレイヤーのベクトル
-            Vector3 dir = player.transform.position - this.transform.position;
+            Vector3 dir = enemy.transform.position - this.transform.position;
 
-            CircleCollider2D rad = player.GetComponent<CircleCollider2D>();
-            Vector2 playerPos = player.transform.position;
+            CircleCollider2D rad = enemy.GetComponent<CircleCollider2D>();
+            Vector2 playerPos = enemy.transform.position;
             Vector2 center = this.transform.position;
             float startDeg = GetRotateAngle + (90.0f - Angle / 2);
             float endDeg = startDeg + Angle;
@@ -322,7 +323,7 @@ public class RangeObject : MonoBehaviour
                 //比較対象がまだない場合暫定で敵のオブジェクトを格納
                 if(!hit_player)
                 {
-                    hit_player = player;
+                    hit_player = enemy;
                 }
                 else
                 {
@@ -330,7 +331,7 @@ public class RangeObject : MonoBehaviour
                     //現在比較している敵との距離の方が短い場合
                     if (dist.magnitude < dist2.magnitude)
                     {
-                        hit_player = player;
+                        hit_player = enemy;
                     }
                 }
             }

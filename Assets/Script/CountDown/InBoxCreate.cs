@@ -40,8 +40,15 @@ public class InBoxCreate : MonoBehaviour
 
             foreach (var player in Players)
             {
-                float a = (player.IsAlive) ? 0.0f : 0.5f;
-                Create(InBox.gameObject, player.ObjectDefaultPosition, a);
+                int id = pc.ControlPlayerID;    //åªç›ëÄçÏÇµÇƒÇ¢ÇÈÉvÉåÉCÉÑÅ[ÇÃID
+                float alpha = 0.0f;
+
+                if (pc.Players[id].gameObject.name != player.name)
+                {
+                    alpha = 0.5f;
+                }
+
+                Create(InBox.gameObject, player.ObjectDefaultPosition, alpha);
             }
         }
     }
