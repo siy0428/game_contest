@@ -6,16 +6,13 @@ public class EnemyCreate : MonoBehaviour
 {
     [SerializeField]
     private Enemy enemy;
-    [SerializeField]
-    private List<Vector3> spawns;
 
     private EnemyManager em;
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         em = FindObjectOfType<EnemyManager>();
-        Create();
     }
 
     // Update is called once per frame
@@ -24,12 +21,9 @@ public class EnemyCreate : MonoBehaviour
 
     }
 
-    public void Create()
+    public void Create(Vector3 pos)
     {
-        foreach (var spawn in spawns)
-        {
-            var obj = Instantiate(enemy.gameObject, spawn, Quaternion.identity);
-            em.AddEnemy(obj);
-        }
+        var obj = Instantiate(enemy.gameObject, pos, Quaternion.identity);
+        em.AddEnemy(obj);
     }
 }

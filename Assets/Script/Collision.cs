@@ -6,12 +6,15 @@ public class Collision : MonoBehaviour
 {
     public int PlayerID;
     private PlayerController PlayerCtr;
-    private EnemyCreate ec;
+    private EnemyManager em;
+    private LoopManager lm;
+
     // Start is called before the first frame update
     void Start()
     {
         PlayerCtr = FindObjectOfType<PlayerController>();
-        ec = FindObjectOfType<EnemyCreate>();
+        em = FindObjectOfType<EnemyManager>();
+        lm = FindObjectOfType<LoopManager>();
     }
 
     // Update is called once per frame
@@ -58,6 +61,15 @@ public class Collision : MonoBehaviour
             //敵の削除
             sbc.m_BulletsList.Remove(collider.gameObject);
             GameObject.Destroy(collider.gameObject);
+
+            //リストから敵の削除
+            em.DestroyEnemy(collider.gameObject);
+
+            //操作しているプレイヤーが倒したかどうか
+            if (PlayerID == PlayerCtr.ControlPlayerID)
+            {
+                lm.AddDefeat();
+            }
         }
     }
 }
