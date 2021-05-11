@@ -235,9 +235,20 @@ public class RangeObject : MonoBehaviour
         //扇メッシュの描画
         DrawFunMesh();
 
-        //敵の扇当たり判定
-        GameObject hit_enemy = PlayerFunCollision();
-        //Debug.Log(hit_enemy);
+        ShootBottonCtr sbc = FindObjectOfType<ShootBottonCtr>();
+        GameObject enemy = EnemyFunCollision();
+
+        //扇に敵が入っていた場合
+        if (enemy)
+        {
+            sbc.SetCanShot(true);
+            sbc.SetShotPos(enemy.transform.position);
+        }
+        //扇に敵がいない場合
+        else
+        {
+            sbc.SetCanShot(false);
+        }
     }
 
     /// <summary>
@@ -269,12 +280,12 @@ public class RangeObject : MonoBehaviour
     }
 
     /// <summary>
-    /// プレイヤーと扇の当たり判定
+    /// 敵と扇の当たり判定
     /// </summary>
-    /// <returns>当たったプレイヤーのGameObjectを返す(ない場合はNULL)</returns>
-    public GameObject PlayerFunCollision()
+    /// <returns>当たった敵のGameObjectを返す(ない場合はNULL)</returns>
+    public GameObject EnemyFunCollision()
     {
-        GameObject hit_player = null;
+        GameObject hit_enemy = null;
 
         //エネミーの取得
         GameObject[] enemys = GameObject.FindGameObjectsWithTag("Enemy");
@@ -321,22 +332,22 @@ public class RangeObject : MonoBehaviour
             {
                 Vector3 dist = playerPos - center;
                 //比較対象がまだない場合暫定で敵のオブジェクトを格納
-                if(!hit_player)
+                if (!hit_enemy)
                 {
-                    hit_player = enemy;
+                    hit_enemy = enemy;
                 }
                 else
                 {
-                    var dist2 = (Vector2)hit_player.transform.position - center;
+                    var dist2 = (Vector2)hit_enemy.transform.position - center;
                     //現在比較している敵との距離の方が短い場合
                     if (dist.magnitude < dist2.magnitude)
                     {
-                        hit_player = enemy;
+                        hit_enemy = enemy;
                     }
                 }
             }
         }
 
-        return hit_player;
+        return hit_enemy;
     }
 }

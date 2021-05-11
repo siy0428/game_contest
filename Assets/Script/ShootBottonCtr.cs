@@ -21,47 +21,63 @@ public class ShootBottonCtr : MonoBehaviour
         KeyShootDown = 1;
     }
 
+    private Vector3 ShotPos;
 
+    public void SetShotPos(Vector3 pos)
+    {
+        ShotPos = pos;
+    }
+
+    private bool CanShot;
+
+    public void SetCanShot(bool can)
+    {
+        CanShot = can;
+    }
 
     //IDは動作の主
-    public void ShootKeyDown(PlayerController _PlayerCtr,int ID,Vector2 _ShootDir = new Vector2())
+    public void ShootKeyDown(PlayerController _PlayerCtr, int ID, Vector2 _ShootDir = new Vector2())
     {
-        
         if (KeyShootDown > 0 && ID == _PlayerCtr.ControlPlayerID)//操作対象の処理
         {
-            //操作キャラクターのシュートの間隔を取得する
-            ShootCD = _PlayerCtr.PlayersData[_PlayerCtr.ControlPlayerID].ShootCD;
-            
-            // 弾（ゲームオブジェクト）の生成
-            GameObject clone = Instantiate(_PlayerCtr.PlayersData[_PlayerCtr.ControlPlayerID].Bullet, _PlayerCtr.Players[ID].GetComponent<Transform>().position + _PlayerCtr.Players[ID].GetComponent<Player>().ShootFixPostion, Quaternion.identity);
+            //射撃可能な場合
+            if (CanShot)
+            {
+                //操作キャラクターのシュートの間隔を取得する
+                ShootCD = _PlayerCtr.PlayersData[_PlayerCtr.ControlPlayerID].ShootCD;
 
-            // クリックした座標の取得（スクリーン座標からワールド座標に変換）
-            //Vector3 mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                // 弾（ゲームオブジェクト）の生成
+                GameObject clone = Instantiate(_PlayerCtr.PlayersData[_PlayerCtr.ControlPlayerID].Bullet, _PlayerCtr.Players[ID].GetComponent<Transform>().position + _PlayerCtr.Players[ID].GetComponent<Player>().ShootFixPostion, Quaternion.identity);
+                clone.GetComponent<BulletData>().SetTarget(ShotPos);    //弾の方向
 
-            // 向きの生成（Z成分の除去と正規化）
-            //Vector3 shotForward = Vector3.Scale((mouseWorldPos - _PlayerCtr.Players[ID].GetComponent<Transform>().position), new Vector3(1, 1, 0)).normalized;
-            Vector3 shotForward = new Vector3(_PlayerCtr.PlayersData[_PlayerCtr.ControlPlayerID].PlayersForward.x, 0.0f, 0.0f);
-            // 弾に速度を与える
-            //clone.GetComponent<Rigidbody2D>().velocity = shotForward * _PlayerCtr.PlayersData[_PlayerCtr.ControlPlayerID].BulletSpeed;
+                // クリックした座標の取得（スクリーン座標からワールド座標に変換）
+                //Vector3 mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 
-            //データ記録生成
-            KeyShoot.PlayerID = _PlayerCtr.ControlPlayerID;
+                // 向きの生成（Z成分の除去と正規化）
+                //Vector3 shotForward = Vector3.Scale((mouseWorldPos - _PlayerCtr.Players[ID].GetComponent<Transform>().position), new Vector3(1, 1, 0)).normalized;
+                Vector3 shotForward = new Vector3(_PlayerCtr.PlayersData[_PlayerCtr.ControlPlayerID].PlayersForward.x, 0.0f, 0.0f);
+                // 弾に速度を与える
+                //clone.GetComponent<Rigidbody2D>().velocity = shotForward * _PlayerCtr.PlayersData[_PlayerCtr.ControlPlayerID].BulletSpeed;
 
-            KeyShoot.BottonID = 5;
+                //データ記録生成
+                KeyShoot.PlayerID = _PlayerCtr.ControlPlayerID;
 
-            KeyShoot.StartTime = _PlayerCtr.Timer;
+                KeyShoot.BottonID = 5;
 
-            KeyShoot.ShootDir = shotForward;
+                KeyShoot.StartTime = _PlayerCtr.Timer;
 
-            //記録に追加
-            _PlayerCtr.RecordBehaviour.AddBehaviour(KeyShoot);
+                KeyShoot.ShootDir = shotForward;
 
-            KeyShootDown = -1;
+                //記録に追加
+                _PlayerCtr.RecordBehaviour.AddBehaviour(KeyShoot);
 
-            clone.GetComponent<Collision>().PlayerID = ID;
-            m_BulletsList.Add(clone);
+                KeyShootDown = -1;
+
+                clone.GetComponent<Collision>().PlayerID = ID;
+                m_BulletsList.Add(clone);
+            }
         }
-        else if(ID != _PlayerCtr.ControlPlayerID)//非操作対象の処理
+        else if (ID != _PlayerCtr.ControlPlayerID)//非操作対象の処理
         {
             // 弾（ゲームオブジェクト）の生成
             GameObject clone = Instantiate(_PlayerCtr.PlayersData[ID].Bullet, _PlayerCtr.Players[ID].GetComponent<Transform>().position + _PlayerCtr.Players[ID].GetComponent<Player>().ShootFixPostion, Quaternion.identity);
@@ -77,14 +93,20 @@ public class ShootBottonCtr : MonoBehaviour
         }
     }
 
+    private void Start()
+    {
+        ShotPos = new Vector3(0.0f, 0.0f, 0.0f);
+        CanShot = false;
+    }
+
     private void Update()
     {
-        if(KeyShootDown < 0)
+        if (KeyShootDown < 0)
         {
             ShootCDTimer += Time.deltaTime;
         }
 
-        if(ShootCDTimer>= ShootCD)
+        if (ShootCDTimer >= ShootCD)
         {
             KeyShootDown = 0;
             ShootCDTimer = 0.0f;

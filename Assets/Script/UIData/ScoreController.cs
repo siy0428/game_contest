@@ -11,7 +11,7 @@ public class ScoreController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        this.textComponent = GameObject.Find("Text").GetComponent<Text>();
+        this.textComponent = GameObject.Find("score").GetComponent<Text>();
         this.textComponent.text = "ÉXÉRÉA " + score.ToString();
     }
 
