@@ -9,44 +9,82 @@ public class LoopManager : MonoBehaviour
 
     private int loop_id;        //現在のループの段階
     private int defeat_player;  //操作しているプレイヤーが倒した敵の数
+    private float time;         //ループごとの時間制限
 
     // Start is called before the first frame update
     void Start()
     {
         loop_id = 0;
         defeat_player = 0;
-        loops[loop_id].Create();  //1つ目のループ生成
+        loops[loop_id].Create();            //1つ目のループ生成
+        time = loops[loop_id].GetTime();    //1つ目のループの時間取得
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        //ボックス生成中は処理を行わない
+        if(loops[loop_id].IsCreate())
+        {
+            return;
+        }
+
+        //制限時間後の判定
+        Finish();
+
+        time -= Time.deltaTime;
     }
 
     /// <summary>
-    /// 現在のループの目標撃破数に到達しているか
+    /// 制限時間後の判定
     /// </summary>
     public void Finish()
     {
-        //目標撃破数に到達していた場合次のループ
-        if (defeat_player >= loops[loop_id].GetDefeatCount())
+        //タイムオーバーであれば
+        if (time <= 0.0f)
         {
-            loop_id++;
-            defeat_player = 0;
-            loops[loop_id].Create();    //次のループ生成
-        }
+            //目標撃破数に到達していた場合次のループ
+            if (defeat_player >= loops[loop_id].GetDefeatCount())
+            {
+                loop_id++;
+                defeat_player = 0;
+                loops[loop_id].Create();            //次のループ生成
+                time = loops[loop_id].GetTime();    //次のループの時間取得
+            }
 
-        //撃破目標に到達出来なかった場合同じループ
-        else
-        {
-            defeat_player = 0;
-            loops[loop_id].Create();    //同じ部分
+            //撃破目標に到達出来なかった場合同じループ
+            else
+            {
+                defeat_player = 0;
+                loops[loop_id].Create();            //同じループの生成
+                time = loops[loop_id].GetTime();    //同じループの時間取得
+            }
         }
     }
 
+    /// <summary>
+    /// 撃破カウントプラス
+    /// </summary>
     public void AddDefeat()
     {
         defeat_player++;
+    }
+
+    /// <summary>
+    /// 現在のループの制限時間取得
+    /// </summary>
+    /// <returns></returns>
+    public float GetLimitTime()
+    {
+        return loops[loop_id].GetTime();
+    }
+
+    /// <summary>
+    /// 現在の経過時間取得
+    /// </summary>
+    /// <returns></returns>
+    public float GetNowTime()
+    {
+        return time;
     }
 }
