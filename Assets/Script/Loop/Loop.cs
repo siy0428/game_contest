@@ -14,6 +14,8 @@ public class Loop : MonoBehaviour
     private int enemy_count;    //1ループで出現する敵の数
     private EnemyCreate ec;
     private EnemyManager em;
+    private InBoxCreate ibc;
+    private PlayerController pc;
 
     // Start is called before the first frame update
     void Awake()
@@ -22,6 +24,8 @@ public class Loop : MonoBehaviour
         enemy_count = spawns.Length;
         ec = FindObjectOfType<EnemyCreate>();
         em = FindObjectOfType<EnemyManager>();
+        ibc = FindObjectOfType<InBoxCreate>();
+        pc = FindObjectOfType<PlayerController>();
     }
 
     // Update is called once per frame
@@ -37,6 +41,13 @@ public class Loop : MonoBehaviour
     {
         //敵リストの削除
         em.AllDestroyEnemy();
+
+        ibc.Create();
+
+        foreach(var player in pc.PlayersData)
+        {
+            player.RespawnPosition();
+        }
 
         foreach (var spawn in spawns)
         {
@@ -60,5 +71,10 @@ public class Loop : MonoBehaviour
     public float GetTime()
     {
         return time_limit;
+    }
+
+    public bool IsCreate()
+    {
+        return ibc.GetIsCreate();
     }
 }

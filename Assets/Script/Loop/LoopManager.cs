@@ -10,7 +10,6 @@ public class LoopManager : MonoBehaviour
     private int loop_id;        //現在のループの段階
     private int defeat_player;  //操作しているプレイヤーが倒した敵の数
     private float time;         //ループごとの時間制限
-    private EnemyManager em;
 
     // Start is called before the first frame update
     void Start()
@@ -24,6 +23,12 @@ public class LoopManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //ボックス生成中は処理を行わない
+        if(loops[loop_id].IsCreate())
+        {
+            return;
+        }
+
         //制限時間後の判定
         Finish();
 
