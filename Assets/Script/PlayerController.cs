@@ -244,10 +244,7 @@ public class PlayerController : MonoBehaviour
             ShootCtr.m_BulletsList.Clear();
 
             //ëÄçÏëŒè€ïœçX
-            Players[ControlPlayerID].GetComponent<SpriteRenderer>().sortingOrder = 0;
-            ControlPlayerID++;
-            ControlPlayerID %= Players.Count;
-            Players[ControlPlayerID].GetComponent<SpriteRenderer>().sortingOrder = 1;
+            ChangePlayer();
 
             StartFallBack = false;
 
@@ -326,5 +323,13 @@ public class PlayerController : MonoBehaviour
             }
             SkillDataCtr.JumpSmarsh();          
         }
+    }
+
+    public void ChangePlayer()
+    {
+        Players[ControlPlayerID].GetComponent<SpriteRenderer>().sortingOrder = 0;
+        ControlPlayerID++;
+        ControlPlayerID %= Players.Count;
+        Players[ControlPlayerID].GetComponent<SpriteRenderer>().sortingOrder = 1;
     }
 }
