@@ -66,7 +66,7 @@ public class ShootBottonCtr : MonoBehaviour
 
                 KeyShoot.StartTime = _PlayerCtr.Timer;
 
-                KeyShoot.ShootDir = shotForward;
+                KeyShoot.ShootDir = ShotPos;// (ShotPos - _PlayerCtr.PlayersData[_PlayerCtr.ControlPlayerID].transform.position).normalized;
 
                 //ãLò^Ç…í«â¡
                 _PlayerCtr.RecordBehaviour.AddBehaviour(KeyShoot);
@@ -84,9 +84,10 @@ public class ShootBottonCtr : MonoBehaviour
 
             //íºê⁄ï˚å¸ÇéÊìæ
             Vector3 shotForward = _ShootDir;
+            clone.GetComponent<BulletData>().SetTarget(_ShootDir);
 
             // íeÇ…ë¨ìxÇó^Ç¶ÇÈ
-            clone.GetComponent<Rigidbody2D>().velocity = shotForward * _PlayerCtr.PlayersData[_PlayerCtr.ControlPlayerID].BulletSpeed;
+            //clone.GetComponent<Rigidbody2D>().velocity = shotForward * _PlayerCtr.PlayersData[_PlayerCtr.ControlPlayerID].BulletSpeed;
 
             clone.GetComponent<Collision>().PlayerID = ID;
             m_BulletsList.Add(clone);
