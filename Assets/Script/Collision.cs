@@ -27,6 +27,7 @@ public class Collision : MonoBehaviour
                 ShootBottonCtr sbc = FindObjectOfType<ShootBottonCtr>();
                 sbc.m_BulletsList.Remove(this.gameObject);
                 GameObject.Destroy(this.gameObject);
+                collider.gameObject.SetActive(false);
                 if (PlayerID != PlayerCtr.ControlPlayerID)
                 {
                     PlayerCtr.PlayersData[collider.gameObject.GetComponent<Player>().PlayerID].IsAlive = false;

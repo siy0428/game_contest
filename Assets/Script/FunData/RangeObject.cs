@@ -236,13 +236,13 @@ public class RangeObject : MonoBehaviour
         DrawFunMesh();
 
         ShootBottonCtr sbc = FindObjectOfType<ShootBottonCtr>();
-        GameObject enemy = EnemyFunCollision();
+        GameObject hit_obj = FunCollision();
 
         //î‚É“G‚ª“ü‚Á‚Ä‚¢‚½ê‡
-        if (enemy)
+        if (hit_obj)
         {
             sbc.SetCanShot(true);
-            sbc.SetShotPos(enemy.transform.position);
+            sbc.SetShotPos(hit_obj.transform.position);
         }
         //î‚É“G‚ª‚¢‚È‚¢ê‡
         else
@@ -283,30 +283,41 @@ public class RangeObject : MonoBehaviour
     /// “G‚Æî‚Ì“–‚½‚è”»’è
     /// </summary>
     /// <returns>“–‚½‚Á‚½“G‚ÌGameObject‚ğ•Ô‚·(‚È‚¢ê‡‚ÍNULL)</returns>
-    public GameObject EnemyFunCollision()
+    public GameObject FunCollision()
     {
         GameObject hit_enemy = null;
 
         //ƒGƒlƒ~[‚Ìæ“¾
+        List<GameObject> objects = new List<GameObject>();
         GameObject[] enemys = GameObject.FindGameObjectsWithTag("Enemy");
+        GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
+
+        //“G‚ÌŠi”[
+        foreach (var enemy in enemys)
+        {
+            objects.Add(enemy);
+        }
+        //ƒvƒŒƒCƒ„[‚ÌŠi”[
+        foreach (var player in players)
+        {
+            objects.Add(player);
+        }
 
         //î‚É“–‚½‚Á‚Ä‚¢‚é“G‚Ìæ“¾
-        foreach (GameObject enemy in enemys)
+        foreach (var obj in objects)
         {
-            //“G‚ÌF‚ğ”’‚Éİ’è
-            enemy.GetComponent<Renderer>().material.color = Color.white;
 
             //“G‚Ì–¼‘O‚Æ‘€ì‚µ‚Ä‚¢‚éƒvƒŒƒCƒ„[‚ª“¯‚¶‚¾‚Á‚½‚çŸ‚Ìˆ—
-            if (enemy.name == Player.name)
+            if (obj.name == Player.name)
             {
                 continue;
             }
 
             //“G‚ÆƒvƒŒƒCƒ„[‚ÌƒxƒNƒgƒ‹
-            Vector3 dir = enemy.transform.position - this.transform.position;
+            Vector3 dir = obj.transform.position - this.transform.position;
 
-            CircleCollider2D rad = enemy.GetComponent<CircleCollider2D>();
-            Vector2 playerPos = enemy.transform.position;
+            CircleCollider2D rad = obj.GetComponent<CircleCollider2D>();
+            Vector2 playerPos = obj.transform.position;
             Vector2 center = this.transform.position;
             float startDeg = GetRotateAngle + (90.0f - Angle / 2);
             float endDeg = startDeg + Angle;
@@ -334,7 +345,7 @@ public class RangeObject : MonoBehaviour
                 //”äŠr‘ÎÛ‚ª‚Ü‚¾‚È‚¢ê‡b’è‚Å“G‚ÌƒIƒuƒWƒFƒNƒg‚ğŠi”[
                 if (!hit_enemy)
                 {
-                    hit_enemy = enemy;
+                    hit_enemy = obj;
                 }
                 else
                 {
@@ -342,7 +353,7 @@ public class RangeObject : MonoBehaviour
                     //Œ»İ”äŠr‚µ‚Ä‚¢‚é“G‚Æ‚Ì‹——£‚Ì•û‚ª’Z‚¢ê‡
                     if (dist.magnitude < dist2.magnitude)
                     {
-                        hit_enemy = enemy;
+                        hit_enemy = obj;
                     }
                 }
             }
