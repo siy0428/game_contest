@@ -59,10 +59,7 @@ public class LoopManager : MonoBehaviour
             //撃破目標に到達出来なかった場合同じループ
             else
             {
-                pc.PlayerWithoutLoop();             //同じプレイヤーの操作処理
-                defeat_player = 0;
-                loops[loop_id].Create();            //同じループの生成
-                time = loops[loop_id].GetTime();    //同じループの時間取得              
+                LoopAgain();
             }
         }
     }
@@ -109,5 +106,16 @@ public class LoopManager : MonoBehaviour
     public float GetNowDefeatCount()
     {
         return defeat_player;
+    }
+
+    /// <summary>
+    /// もう一度同じループ時の処理
+    /// </summary>
+    public void LoopAgain()
+    {
+        pc.PlayerWithoutLoop();             //同じプレイヤーの操作処理
+        defeat_player = 0;
+        loops[loop_id].Create();            //同じループの生成
+        time = loops[loop_id].GetTime();    //同じループの時間取得  
     }
 }
