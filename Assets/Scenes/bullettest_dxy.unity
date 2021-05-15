@@ -1546,7 +1546,7 @@ Rigidbody2D:
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 0
 --- !u!61 &287210088
 BoxCollider2D:
@@ -2308,7 +2308,7 @@ MonoBehaviour:
   IsAlive: 0
   StartPoStartPositon: {x: 0, y: 0}
   PlayersForward: {x: 1, y: 1, z: 0}
-  Bullet: {fileID: 7875155880049078745, guid: 4839e46db498cb746b2a122371cf0455, type: 3}
+  Bullet: {fileID: 3985001856101401244, guid: 504d2fea5f6fb8c49b131f57b5fbb99b, type: 3}
   BulletSpeed: 150
   ShootCD: 0.5
   ShootFixPostion: {x: 0, y: 32, z: 0}

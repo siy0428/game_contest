@@ -16,8 +16,7 @@ public class BulletData : MonoBehaviour
 
     public Vector3 m_Target;
 
-    [SerializeField]
-    private Vector3 m_Dir;
+    public Vector3 m_Dir;
 
     public bool EnableRebound = false;
 
@@ -37,6 +36,8 @@ public class BulletData : MonoBehaviour
     public float ReboundTimes = 0;
 
     public float ReboundedTimes = 0;
+
+    public Vector3 ReboundDir = new Vector3(0,0,-1);
 
     public float m_Attack = 5.0f;
 
@@ -75,6 +76,7 @@ public class BulletData : MonoBehaviour
                 //DefaultMove();
                 break;
             case BulletType.Rebound:
+                ReboundMove();
                 break;
             default:
                 break;
@@ -112,10 +114,19 @@ public class BulletData : MonoBehaviour
 
     private void ReboundMove()
     {
-        if(CheakRebound())
+        if(ReboundDir == new Vector3(0,0,-1))
         {
-            transform.position += m_Dir * BulletSpeed * Time.deltaTime * Mathf.Pow(ReboundRate, ReboundedTimes);
+            ReboundDir = m_Dir;
+            transform.GetComponent<Rigidbody2D>().velocity = ReboundDir * BulletSpeed;
         }
+        else
+        {
+            Vector2 v = transform.GetComponent<Rigidbody2D>().velocity;
+            transform.GetComponent<Rigidbody2D>().velocity = new Vector2(v.x, v.y + BulletGra * Time.deltaTime);
+        }
+        //transform.Translate(ReboundDir * BulletSpeed * Mathf.Pow(ReboundRate, ReboundedTimes) * Time.deltaTime);
+        //transform.Translate(new Vector3(0, BulletGra*Time.deltaTime, 0));
+        //transform.GetComponent<Rigidbody2D>().velocity = ReboundDir * BulletSpeed * Mathf.Pow(ReboundRate, ReboundedTimes);
     }
 
     public void SetTarget(Vector3 _Target)
