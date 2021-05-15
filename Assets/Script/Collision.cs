@@ -22,13 +22,18 @@ public class Collision : MonoBehaviour
     {
         if (collider.gameObject.tag == "Player")
         {
-            if (PlayerID != collider.gameObject.GetComponent<Player>().PlayerID)
+            if (PlayerID != collider.gameObject.GetComponent<Player>().PlayerID)    //é©ï™é©êgÇ…ìñÇΩÇÁÇ»Ç¢èàóù
             {
                 ShootBottonCtr sbc = FindObjectOfType<ShootBottonCtr>();
                 sbc.m_BulletsList.Remove(this.gameObject);
                 GameObject.Destroy(this.gameObject);
-                PlayerCtr.PlayersData[collider.gameObject.GetComponent<Player>().PlayerID].IsAlive = false;
                 collider.gameObject.SetActive(false);
+                if (PlayerID != PlayerCtr.ControlPlayerID)
+                {
+                    PlayerCtr.PlayersData[collider.gameObject.GetComponent<Player>().PlayerID].IsAlive = false;
+                    collider.gameObject.SetActive(false);
+                    lm.LoopAgain(); //ìØÇ∂ÉãÅ[ÉvÇÃê∂ê¨
+                }
             }
         }
 

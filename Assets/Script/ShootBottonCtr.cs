@@ -50,14 +50,9 @@ public class ShootBottonCtr : MonoBehaviour
                 GameObject clone = Instantiate(_PlayerCtr.PlayersData[_PlayerCtr.ControlPlayerID].Bullet, _PlayerCtr.Players[ID].GetComponent<Transform>().position + _PlayerCtr.Players[ID].GetComponent<Player>().ShootFixPostion, Quaternion.identity);
                 clone.GetComponent<BulletData>().SetTarget(ShotPos);    //弾の方向
 
-                // クリックした座標の取得（スクリーン座標からワールド座標に変換）
-                //Vector3 mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 
                 // 向きの生成（Z成分の除去と正規化）
-                //Vector3 shotForward = Vector3.Scale((mouseWorldPos - _PlayerCtr.Players[ID].GetComponent<Transform>().position), new Vector3(1, 1, 0)).normalized;
                 Vector3 shotForward = new Vector3(_PlayerCtr.PlayersData[_PlayerCtr.ControlPlayerID].PlayersForward.x, 0.0f, 0.0f);
-                // 弾に速度を与える
-                //clone.GetComponent<Rigidbody2D>().velocity = shotForward * _PlayerCtr.PlayersData[_PlayerCtr.ControlPlayerID].BulletSpeed;
 
                 //データ記録生成
                 KeyShoot.PlayerID = _PlayerCtr.ControlPlayerID;
@@ -66,7 +61,7 @@ public class ShootBottonCtr : MonoBehaviour
 
                 KeyShoot.StartTime = _PlayerCtr.Timer;
 
-                KeyShoot.ShootDir = shotForward;
+                KeyShoot.ShootDir = ShotPos;
 
                 //記録に追加
                 _PlayerCtr.RecordBehaviour.AddBehaviour(KeyShoot);
@@ -84,9 +79,10 @@ public class ShootBottonCtr : MonoBehaviour
 
             //直接方向を取得
             Vector3 shotForward = _ShootDir;
+            clone.GetComponent<BulletData>().SetTarget(_ShootDir);
 
             // 弾に速度を与える
-            clone.GetComponent<Rigidbody2D>().velocity = shotForward * _PlayerCtr.PlayersData[_PlayerCtr.ControlPlayerID].BulletSpeed;
+            //clone.GetComponent<Rigidbody2D>().velocity = shotForward * _PlayerCtr.PlayersData[_PlayerCtr.ControlPlayerID].BulletSpeed;
 
             clone.GetComponent<Collision>().PlayerID = ID;
             m_BulletsList.Add(clone);
