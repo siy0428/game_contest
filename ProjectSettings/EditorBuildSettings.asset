@@ -5,7 +5,11 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/bullettest.unity
     guid: 4bdaa93df95f3f245bd3f1fd5057d9b8
-  m_configObjects: {}
+  - enabled: 1
+    path: Assets/Scenes/beta.unity
+    guid: 3b87b60730e0f1148a3580bc27d2705b
+  m_configObjects:
+    com.unity.input.settings: {fileID: 11400000, guid: 42d457d492dda9f44a76f9e6ee41583c, type: 2}

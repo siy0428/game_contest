@@ -11,65 +11,63 @@ public class InBoxManager : MonoBehaviour
     [SerializeField]
     private CountDownManager cdm;
 
+    private InBoxCreate ibc;
+    private PlayerController pc;
     private Color DefaultColor;
-    private float Alpha;
-    private bool DecAlpha;
+    private bool IsDecAlpha;
 
-    public float GetAlpha { get { return Alpha; } }
+    public float Alpha { get; private set; }
+    public void SetAlpha(float a) { Alpha = a; }
 
     void Start()
     {
         //初期化
         DefaultColor = RangeBox.GetComponent<Renderer>().material.GetColor("_Color");
-        Alpha = 0.5f;
-        DecAlpha = false;
+        IsDecAlpha = false;
+        ibc = FindObjectOfType<InBoxCreate>();
+        pc = FindObjectOfType<PlayerController>();
 
-        Create();
         cdm.CountStart();
     }
 
     void Update()
     {
         //行動範囲の透明度調整
-        RangeBox.GetComponent<Renderer>().material.SetColor("_Color", DefaultColor);
         DefaultColor.a = Alpha;
-        
+        RangeBox.GetComponent<Renderer>().material.SetColor("_Color", DefaultColor);
+
         //一定時間経過処理
         TimeUp(3.0f);
 
         //一定時間経過後行動範囲を徐々に透明化
-        if(DecAlpha)
+        if (IsDecAlpha)
         {
             Alpha -= 0.01f;
+            //行動範囲制限終了処理
             if (Alpha <= 0.0f)
             {
-                DecAlpha = false;
+                IsDecAlpha = false;
+                ibc.SetIsCraete(false);
+                Destroy(gameObject);
             }
         }
     }
 
     /// <summary>
-    /// 初期位置当たり判定生成
-    /// </summary>
-    public void Create()
-    {
-        foreach(GameObject box in InBoxs)
-        {
-            box.SetActive(true);
-        }
-        DecAlpha = false;
-    }
-
-    /// <summary>
     /// 初期位置当たり判定削除
     /// </summary>
-    public void Delete()
+    private void Finish()
     {
+        //ボックスの当たり判定だけ削除
         foreach (GameObject box in InBoxs)
         {
             box.SetActive(false);
         }
-        DecAlpha = true;
+        //カウントダウンを徐々に透明化
+        IsDecAlpha = true;
+        //プレイヤーを初期位置に
+        int id = pc.ControlPlayerID;
+        pc.PlayersData[id].RespawnPosition();
     }
 
     /// <summary>
@@ -82,7 +80,21 @@ public class InBoxManager : MonoBehaviour
         {
             cdm.CountStop();
             cdm.CountReset();
-            Delete();
+            Finish();
         }
+    }
+
+    /// <summary>
+    /// 行動制限の削除
+    /// </summary>
+    public void Delete()
+    {
+        cdm.CountStop();
+        cdm.CountReset();
+        Finish();
+        Alpha = 0.0f;
+        IsDecAlpha = false;
+        ibc.SetIsCraete(false);
+        Destroy(gameObject);
     }
 }

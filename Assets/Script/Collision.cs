@@ -16,6 +16,10 @@ public class Collision : MonoBehaviour
 
     private CollisionDir Cdir;
     private ContactPoint2D[] cp2;
+
+    private EnemyManager em;
+    private LoopManager lm;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -24,8 +28,9 @@ public class Collision : MonoBehaviour
     }
 
     private void Update()
-    {
-        
+    {      
+        em = FindObjectOfType<EnemyManager>();
+        lm = FindObjectOfType<LoopManager>();
     }
 
     // Update is called once per frame
@@ -35,8 +40,8 @@ public class Collision : MonoBehaviour
 
         if (collider.gameObject.tag == "Player")
         {
-            if(PlayerID != collider.gameObject.GetComponent<Player>().PlayerID)
-            {              
+            if (PlayerID != collider.gameObject.GetComponent<Player>().PlayerID)
+            {
                 ShootBottonCtr sbc = FindObjectOfType<ShootBottonCtr>();
                 sbc.m_BulletsList.Remove(this.gameObject);
                 GameObject.Destroy(this.gameObject);
@@ -45,7 +50,7 @@ public class Collision : MonoBehaviour
             }
         }
 
-        if(collider.gameObject.tag == "Ground")
+        if (collider.gameObject.tag == "Ground")
         {
             BulletData bd = gameObject.GetComponent<BulletData>();
             if (bd.CheakRebound())
@@ -84,13 +89,34 @@ public class Collision : MonoBehaviour
 
         if (collider.gameObject.tag == "Bullet")
         {
-            if(PlayerID !=collider.gameObject.GetComponent<Collision>().PlayerID)
+            if (PlayerID != collider.gameObject.GetComponent<Collision>().PlayerID)
             {
                 ShootBottonCtr sbc = FindObjectOfType<ShootBottonCtr>();
                 sbc.m_BulletsList.Remove(this.gameObject);
                 GameObject.Destroy(this.gameObject);
                 sbc.m_BulletsList.Remove(collider.gameObject);
                 GameObject.Destroy(collider.gameObject);
+            }
+        }
+
+        if (collider.gameObject.tag == "Enemy")
+        {
+            //íeÇÃçÌèú
+            ShootBottonCtr sbc = FindObjectOfType<ShootBottonCtr>();
+            sbc.m_BulletsList.Remove(this.gameObject);
+            GameObject.Destroy(this.gameObject);
+
+            //ìGÇÃçÌèú
+            sbc.m_BulletsList.Remove(collider.gameObject);
+            GameObject.Destroy(collider.gameObject);
+
+            //ÉäÉXÉgÇ©ÇÁìGÇÃçÌèú
+            em.DestroyEnemy(collider.gameObject);
+
+            //ëÄçÏÇµÇƒÇ¢ÇÈÉvÉåÉCÉÑÅ[Ç™ì|ÇµÇΩÇ©Ç«Ç§Ç©
+            if (PlayerID == PlayerCtr.ControlPlayerID)
+            {
+                lm.AddDefeat();
             }
         }
     }

@@ -1,6 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Tilemaps;
+using UnityEngine.InputSystem;
+
+
+//参考:https://enjoy-freely.com/%E3%80%90unity%E3%80%91%E3%83%87%E3%83%BC%E3%82%BF%E4%BF%9D%E5%AD%98%E3%82%BB%E3%83%BC%E3%83%96%E3%81%A7%E3%81%8D%E3%82%8B%E3%82%88%E3%81%86%E3%81%AB%E3%81%97%E3%82%88%E3%81%86%EF%BC%81/
 
 public class ClickPositionCreate : MonoBehaviour
 {
@@ -28,13 +33,13 @@ public class ClickPositionCreate : MonoBehaviour
             //設定したデータを保存
             PlayerPrefs.Save();
         }
-}
+    }
 
     // Update is called once per frame
     void Update()
     {
         // マウス入力で左クリック（0）を離した瞬間
-        if (Input.GetMouseButtonUp(1))        
+        if (Input.GetMouseButtonUp(1))
         {
             // ここでの注意点は座標の引数にVector2を渡すのではなく、Vector3を渡すことである。
             // Vector3でマウスがクリックした位置座標を取得する
