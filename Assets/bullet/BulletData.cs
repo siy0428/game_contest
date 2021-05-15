@@ -63,8 +63,6 @@ public class BulletData : MonoBehaviour
 
     public void Move()
     {
-        m_Dir = m_Target - transform.position;
-        m_Dir.Normalize();
 
         switch (m_Type)
         {
@@ -90,6 +88,9 @@ public class BulletData : MonoBehaviour
 
     private void ArrowMove()
     {
+        m_Dir = m_Target - transform.position;
+        m_Dir.Normalize();
+
         //–Ú•W‚Ì•ÎˆÚŠp“x‚ğ‹‚ß‚é
         m_TargetAngle = 360.0f - Mathf.Atan2(m_Dir.x, m_Dir.y) * Mathf.Rad2Deg;
 
@@ -132,6 +133,8 @@ public class BulletData : MonoBehaviour
     public void SetTarget(Vector3 _Target)
     {
         m_Target = _Target;
+        m_Dir = m_Target - transform.position;
+        m_Dir.Normalize();
     }
 
     public bool CheakRebound()
