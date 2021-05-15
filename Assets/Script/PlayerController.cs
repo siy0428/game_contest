@@ -60,14 +60,14 @@ public class PlayerController : MonoBehaviour
         {
             PlayersData.Add(Players[i].GetComponent<Player>());//キャラクターデータ取得
             PlayersData[i].PlayerID = i;
-            if (i == ControlPlayerID)
-            {
-                Players[i].GetComponent<SpriteRenderer>().sortingOrder = 1;
-            }
-            else
-            {
-                Players[i].GetComponent<SpriteRenderer>().sortingOrder = 0;
-            }
+            //if (i == ControlPlayerID)
+            //{
+            //    Players[i].GetComponent<SpriteRenderer>().sortingOrder = 1;
+            //}
+            //else
+            //{
+            //    Players[i].GetComponent<SpriteRenderer>().sortingOrder = 0;
+            //}
         }
     }
 
@@ -319,10 +319,10 @@ public class PlayerController : MonoBehaviour
 
         ShootCtr.m_BulletsList.Clear();
 
-        Players[ControlPlayerID].GetComponent<SpriteRenderer>().sortingOrder = 0;
+        //Players[ControlPlayerID].GetComponent<SpriteRenderer>().sortingOrder = 0;
         ControlPlayerID++;
         ControlPlayerID %= Players.Count;
-        Players[ControlPlayerID].GetComponent<SpriteRenderer>().sortingOrder = 1;
+        //Players[ControlPlayerID].GetComponent<SpriteRenderer>().sortingOrder = 1;
 
         //保存データの更新
         SavedBehaviour = new PlayerBehaviourData(RecordBehaviour);
