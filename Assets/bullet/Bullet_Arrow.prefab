@@ -31,7 +31,7 @@ Transform:
   m_GameObject: {fileID: 7875155880049078745}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 32, y: 2, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -76,8 +76,8 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 7482667652216324306, guid: db750325989564987a34393247d883b4, type: 3}
-  m_Color: {r: 1, g: 0.6946566, b: 0, a: 1}
+  m_Sprite: {fileID: 21300000, guid: 576962d8d406b784783ad5e24c4de20d, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -129,13 +129,14 @@ MonoBehaviour:
   m_Dir: {x: 0, y: 0, z: 0}
   EnableRebound: 0
   Aiming: 0
-  BulletSpeed: 300
+  BulletSpeed: 3
   BulletGra: -10
   Timer: 0
   LiveTime: 5
   ReboundRate: 0.7
   ReboundTimes: 0
   ReboundedTimes: 0
+  ReboundDir: {x: 0, y: 0, z: -1}
   m_Attack: 5
   m_ArrowFator: 40
 --- !u!50 &9043417017992459915
@@ -172,16 +173,16 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: -0.1558699, y: 0.0069211274}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1, y: 1}
+    pivot: {x: 0.85, y: 0.5}
+    oldSize: {x: 0.5, y: 0.125}
     newSize: {x: 1, y: 1}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 0.38989913, y: 0.06955972}
   m_EdgeRadius: 0

@@ -58,11 +58,12 @@ public class Player : MonoBehaviour
     public float ShootCD = 0.5f;
 
     public Vector3 ShootFixPostion = new Vector3();
-    
-    public Vector3 ObjectDefaultPosition;
+
+    public Vector3 ObjectPosition;
+   
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         IsMove = 0;
         IsJump = false;
