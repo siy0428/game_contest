@@ -28,6 +28,7 @@ public class IconController : MonoBehaviour
 
         switch (canvas.renderMode)
         {
+            //RenderMode‚²‚Æ‚É•`‰æ‚ª•Ï‚í‚é‚Ì‚ÅA“®“I‚É‘Î‰‚·‚é
 
             case RenderMode.ScreenSpaceOverlay:
                 myRectTfm.position = RectTransformUtility.WorldToScreenPoint(Camera.main, targetTfm.position + offset);
