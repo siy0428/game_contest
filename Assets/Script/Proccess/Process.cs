@@ -11,17 +11,17 @@ public class Process : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        textComponent = GameObject.Find("TestProccessTime").GetComponent<Text>();
+        textComponent = GetComponent<Text>();
         lm = FindObjectOfType<LoopManager>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        //仮時間表示
-        if (lm.GetNowTime() > 0.0f)
-        {
-            textComponent.text = "制限時間" + lm.GetNowTime().ToString();
-        }
+        //仮進行度表示
+        float parcent = lm.GetNowDefeatCount() / lm.GetFinishDefeatCount() * 100.0f;
+        parcent = Mathf.Clamp(parcent, 0.0f, 100.0f);
+        textComponent.text = parcent.ToString() + "%";
+
     }
 }
