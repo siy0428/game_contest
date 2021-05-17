@@ -3,27 +3,31 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class ScoreController : MonoBehaviour
-{
-    int score = 0;
-    Text textComponent;
+//-------------------------------------------------------
+//まだ未実装、スコア増やす処理を敵を倒す処理の所に実装する
+//-------------------------------------------------------
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        this.textComponent = GameObject.Find("Text").GetComponent<Text>();
-        this.textComponent.text = "スコア " + score.ToString();
-    }
+//public class ScoreController : MonoBehaviour
+//{
+//    int score = 0;
+//    Text textComponent;
 
-    // Update is called once per frame
-    void Update()
-    {
+//    // Start is called before the first frame update
+//    void Start()
+//    {
+//        this.textComponent = GameObject.Find("Text").GetComponent<Text>();
+//        this.textComponent.text = "スコア " + score.ToString();
+//    }
 
-    }
+//    // Update is called once per frame
+//    void Update()
+//    {
 
-    public void AddScore()
-    {
-        this.score += 10;
-        this.textComponent.text = "スコア " + score.ToString();
-    }
-}
+//    }
+
+//    public void AddScore()
+//    {
+//        this.score += 10;
+//        this.textComponent.text = "スコア " + score.ToString();
+//    }
+//}
