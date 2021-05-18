@@ -44,4 +44,17 @@ public class EnemyManager : MonoBehaviour
     {
         enemys.Remove(enemy);
     }
+
+    /// <summary>
+    /// ‘S‚Ä‚Ì—v‘f‚Ìíœ
+    /// </summary>
+    public void AllDestroyEnemy()
+    {
+        foreach(var enemy in enemys)
+        {
+            Destroy(enemy);
+        }
+
+        enemys.Clear();
+    }
 }

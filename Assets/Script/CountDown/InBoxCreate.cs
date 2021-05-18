@@ -13,9 +13,10 @@ public class InBoxCreate : MonoBehaviour
     private bool IsCreate;
 
     public void SetIsCraete(bool set) { IsCreate = set; }
+    public bool GetIsCreate() { return IsCreate; }
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         IsCreate = false;
         pc = FindObjectOfType<PlayerController>();
@@ -38,33 +39,37 @@ public class InBoxCreate : MonoBehaviour
                 continue;
             }
 
-            foreach (var player in Players)
-            {
-                int id = pc.ControlPlayerID;    //現在操作しているプレイヤーのID
-                float alpha = 0.0f;
-
-                if (pc.Players[id].gameObject.name != player.name)
-                {
-                    alpha = 0.5f;
-                }
-
-                Create(InBox.gameObject, player.ObjectDefaultPosition, alpha);
-            }
+            Create();
         }
     }
 
-    public void Create(GameObject obj, Vector3 pos)
+    private void Create(GameObject obj, Vector3 pos)
     {
         Instantiate(obj, pos, Quaternion.identity);
         IsCreate = true;
     }
 
-    public void Create(GameObject obj, Vector3 pos, float alpha)
+    private void Create(GameObject obj, Vector3 pos, float alpha)
     {
         var box = Instantiate(obj, pos, Quaternion.identity);
         var ibm = box.GetComponent<InBoxManager>();
         ibm.SetAlpha(alpha);
 
         IsCreate = true;
+    }
+
+    public void Create()
+    {
+        foreach (var player in Players)
+        {
+            int id = pc.ControlPlayerID;    //現在操作しているプレイヤーのID
+            float alpha = 0.0f;
+
+            if (pc.Players[id].gameObject.name == player.name)
+            {
+                alpha = 0.5f;
+            }
+            Create(InBox.gameObject, player.StartPoStartPositon, alpha);
+        }
     }
 }

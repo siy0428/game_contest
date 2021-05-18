@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 //-------------------------------------------------------
-//‚Ü‚¾–¢À‘•AƒXƒRƒA‘‚â‚·ˆ—‚ğ“G‚ğ“|‚·ˆ—‚ÌŠ‚ÉÀ‘•‚·‚é
+//â€šÃœâ€šÂ¾â€“Â¢Å½Ã€â€˜â€¢ÂAÆ’XÆ’RÆ’Aâ€˜Ââ€šÃ¢â€šÂ·ÂË†â€”Ââ€šÃ°â€œGâ€šÃ°â€œ|â€šÂ·ÂË†â€”Ââ€šÃŒÂÅ â€šÃ‰Å½Ã€â€˜â€¢â€šÂ·â€šÃ©
 //-------------------------------------------------------
 
 //public class ScoreController : MonoBehaviour
@@ -12,11 +12,12 @@ using UnityEngine.UI;
 //    int score = 0;
 //    Text textComponent;
 
+
 //    // Start is called before the first frame update
 //    void Start()
 //    {
 //        this.textComponent = GameObject.Find("Text").GetComponent<Text>();
-//        this.textComponent.text = "ƒXƒRƒA " + score.ToString();
+//        this.textComponent.text = "Æ’XÆ’RÆ’A " + score.ToString();
 //    }
 
 //    // Update is called once per frame
@@ -28,6 +29,6 @@ using UnityEngine.UI;
 //    public void AddScore()
 //    {
 //        this.score += 10;
-//        this.textComponent.text = "ƒXƒRƒA " + score.ToString();
+//        this.textComponent.text = "Æ’XÆ’RÆ’A " + score.ToString();
 //    }
 //}
