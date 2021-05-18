@@ -197,6 +197,10 @@ PrefabInstance:
       value: QA
       objectReference: {fileID: 0}
     - target: {fileID: 4241516940125508996, guid: 72f6788a664521b46848276c594fedf4, type: 3}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4241516940125508996, guid: 72f6788a664521b46848276c594fedf4, type: 3}
       propertyPath: m_TagString
       value: Player
       objectReference: {fileID: 0}
@@ -251,6 +255,18 @@ PrefabInstance:
     - target: {fileID: 4241516940125508997, guid: 72f6788a664521b46848276c594fedf4, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4241516940345521830, guid: 72f6788a664521b46848276c594fedf4, type: 3}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4241516940826657922, guid: 72f6788a664521b46848276c594fedf4, type: 3}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4241516941221184495, guid: 72f6788a664521b46848276c594fedf4, type: 3}
+      propertyPath: m_Layer
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 5227151770772016518, guid: 72f6788a664521b46848276c594fedf4, type: 3}
       propertyPath: m_Size.x
@@ -347,7 +363,7 @@ GameObject:
   - component: {fileID: 81681420}
   - component: {fileID: 81681419}
   - component: {fileID: 81681418}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Fun
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2183,8 +2199,8 @@ MonoBehaviour:
   - {x: 237.34, y: 35.121, z: 0}
   - {x: 232.57, y: 31.17, z: 0}
   - {x: 242.99, y: 31.17, z: 0}
-  defeat_count: 2
-  time_limit: 10
+  defeat_count: 0
+  time_limit: 5
 --- !u!4 &414436407
 Transform:
   m_ObjectHideFlags: 0
@@ -2231,8 +2247,8 @@ MonoBehaviour:
   spawns:
   - {x: 237.34, y: 35.121, z: 0}
   - {x: 237.34, y: 31.17, z: 0}
-  defeat_count: 1
-  time_limit: 7
+  defeat_count: 0
+  time_limit: 5
 --- !u!4 &464922761
 Transform:
   m_ObjectHideFlags: 0
@@ -2520,7 +2536,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spawns:
   - {x: 237.34, y: 35.121, z: 0}
-  defeat_count: 1
+  defeat_count: 0
   time_limit: 5
 --- !u!4 &736465875
 Transform:
@@ -2712,7 +2728,7 @@ GameObject:
   - component: {fileID: 1033705299}
   - component: {fileID: 1033705298}
   - component: {fileID: 1033705297}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Fun
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2939,8 +2955,8 @@ MonoBehaviour:
   - {x: 237.37, y: 30.93, z: 0}
   - {x: 242.93, y: 30.93, z: 0}
   - {x: 232.29, y: 30.93, z: 0}
-  defeat_count: 4
-  time_limit: 12
+  defeat_count: 0
+  time_limit: 5
 --- !u!4 &1201409513
 Transform:
   m_ObjectHideFlags: 0
@@ -3132,6 +3148,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 7297981070591859244, guid: f8a3a832c518d514ea1b683c9b9a6305, type: 3}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7297981071590470578, guid: f8a3a832c518d514ea1b683c9b9a6305, type: 3}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 7297981072292206836, guid: f8a3a832c518d514ea1b683c9b9a6305, type: 3}
       propertyPath: m_RootOrder
       value: 1
@@ -3183,6 +3207,10 @@ PrefabInstance:
     - target: {fileID: 7297981072292206837, guid: f8a3a832c518d514ea1b683c9b9a6305, type: 3}
       propertyPath: m_Name
       value: Itusmi
+      objectReference: {fileID: 0}
+    - target: {fileID: 7297981072292206837, guid: f8a3a832c518d514ea1b683c9b9a6305, type: 3}
+      propertyPath: m_Layer
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 7297981072292206837, guid: f8a3a832c518d514ea1b683c9b9a6305, type: 3}
       propertyPath: m_TagString

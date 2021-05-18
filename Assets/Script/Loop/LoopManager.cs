@@ -12,7 +12,6 @@ public class LoopManager : MonoBehaviour
     private float time;         //ループごとの時間制限
     private PlayerController pc;
 
-
     // Start is called before the first frame update
     void Start()
     {
@@ -27,7 +26,7 @@ public class LoopManager : MonoBehaviour
     void Update()
     {
         //ボックス生成中は処理を行わない
-        if(loops[loop_id].IsCreate())
+        if (loops[loop_id].IsCreate())
         {
             return;
         }
@@ -39,9 +38,10 @@ public class LoopManager : MonoBehaviour
     }
 
     /// <summary>
-    /// 制限時間後の判定
+    /// 時間経過後の処理
     /// </summary>
-    public void Finish()
+    /// <returns>クリアした場合trueが帰ってくる</returns>
+    private void Finish()
     {
         //タイムオーバーであれば
         if (time <= 0.0f)
@@ -117,5 +117,23 @@ public class LoopManager : MonoBehaviour
         defeat_player = 0;
         loops[loop_id].Create();            //同じループの生成
         time = loops[loop_id].GetTime();    //同じループの時間取得  
+    }
+
+    /// <summary>
+    /// ループ管理番号の取得
+    /// </summary>
+    /// <returns></returns>
+    public int GetLoopId()
+    {
+        return loop_id;
+    }
+
+    /// <summary>
+    /// ループの総数の取得
+    /// </summary>
+    /// <returns></returns>
+    public int GetLoopTotalCount()
+    {
+        return loops.Length - 1;
     }
 }

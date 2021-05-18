@@ -18,8 +18,8 @@ public class Process : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //仮進行度表示
-        float parcent = lm.GetNowDefeatCount() / lm.GetFinishDefeatCount() * 100.0f;
+        //進行度表示
+        float parcent = (float)(lm.GetLoopId()) / lm.GetLoopTotalCount() * 100.0f;
         parcent = Mathf.Clamp(parcent, 0.0f, 100.0f);
         textComponent.text = parcent.ToString() + "%";
 
