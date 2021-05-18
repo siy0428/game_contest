@@ -832,80 +832,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 166060242}
   m_CullTransparentMesh: 1
---- !u!1 &169339949 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 7297981072292206837, guid: f8a3a832c518d514ea1b683c9b9a6305, type: 3}
-  m_PrefabInstance: {fileID: 1736077343}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &169339950
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 169339949}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 54433ebaf24a5bd498eadb9ab0735e6c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  PlayerID: 0
-  HP: 0
-  ATK: 0
-  DEF: 0
-  MoveSpeed: 3
-  JumpStep: 1
-  JumpMass: 3
-  SkillIDs: 
-  IsMove: 0
-  OnBox: 1
-  IsJump: 0
-  JumpedTimes: 0
-  IsAlive: 0
-  StartPoStartPositon: {x: 0, y: 0}
-  PlayersForward: {x: -1, y: 1, z: 0}
-  Bullet: {fileID: 3142873562492474777, guid: 64c9f48f6976bc2469fbcbbb08253b77, type: 3}
-  BulletSpeed: 150
-  ShootCD: 0.5
-  ShootFixPostion: {x: 0, y: 0.5, z: 0}
-  ObjectPosition: {x: 240.79, y: 33.63, z: 0}
---- !u!4 &169339954 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 7297981072292206836, guid: f8a3a832c518d514ea1b683c9b9a6305, type: 3}
-  m_PrefabInstance: {fileID: 1736077343}
-  m_PrefabAsset: {fileID: 0}
---- !u!58 &169339955
-CircleCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 169339949}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0.0022933483, y: 0.22431433}
-  serializedVersion: 2
-  m_Radius: 0.23579657
---- !u!70 &169339956
-CapsuleCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 169339949}
-  m_Enabled: 0
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0.25}
-  m_Size: {x: 0.5, y: 0.5}
-  m_Direction: 0
 --- !u!1 &284831906
 GameObject:
   m_ObjectHideFlags: 0
@@ -2793,7 +2719,7 @@ Transform:
   m_LocalPosition: {x: 0, y: 0.4, z: 0}
   m_LocalScale: {x: -1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 169339954}
+  m_Father: {fileID: 1736077344}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!50 &1033705297
@@ -2883,7 +2809,7 @@ MonoBehaviour:
   TriangleCount: 12
   MaxRotSpeed: 5
   Material: {fileID: 2100000, guid: 35e257e63baf6234c97c5f723b239c5c, type: 2}
-  Player: {fileID: 169339949}
+  Player: {fileID: 0}
 --- !u!1 &1158529087
 GameObject:
   m_ObjectHideFlags: 0
@@ -3267,9 +3193,30 @@ PrefabInstance:
       propertyPath: m_Offset.y
       value: 0.1
       objectReference: {fileID: 0}
+    - target: {fileID: 7810114061052543293, guid: f8a3a832c518d514ea1b683c9b9a6305, type: 3}
+      propertyPath: m_RootOrder
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7810114061052543293, guid: f8a3a832c518d514ea1b683c9b9a6305, type: 3}
+      propertyPath: m_LocalScale.x
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7810114061052543293, guid: f8a3a832c518d514ea1b683c9b9a6305, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 243.03
+      objectReference: {fileID: 0}
+    - target: {fileID: 7810114061052543293, guid: f8a3a832c518d514ea1b683c9b9a6305, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 32.67
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 7297981072292206833, guid: f8a3a832c518d514ea1b683c9b9a6305, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: f8a3a832c518d514ea1b683c9b9a6305, type: 3}
+--- !u!4 &1736077344 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 7810114061052543293, guid: f8a3a832c518d514ea1b683c9b9a6305, type: 3}
+  m_PrefabInstance: {fileID: 1736077343}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1810547942
 GameObject:
   m_ObjectHideFlags: 0
@@ -3302,7 +3249,7 @@ MonoBehaviour:
   InBox: {fileID: 7540531129001430421, guid: 54a77107361b8654eb109ec4a0b71609, type: 3}
   Players:
   - {fileID: 69146285}
-  - {fileID: 169339950}
+  - {fileID: 0}
 --- !u!4 &1810547944
 Transform:
   m_ObjectHideFlags: 0
@@ -3348,7 +3295,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Players:
   - {fileID: 4241516940056888111}
-  - {fileID: 169339949}
+  - {fileID: 0}
   ControlPlayerID: 0
   StartBehaviourRecord: 1
   StartFallBack: 0
