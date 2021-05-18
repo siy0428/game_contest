@@ -235,9 +235,20 @@ public class RangeObject : MonoBehaviour
         //扇メッシュの描画
         DrawFunMesh();
 
-        //敵の扇当たり判定
-        GameObject hit_enemy = PlayerFunCollision();
-        //Debug.Log(hit_enemy);
+        ShootBottonCtr sbc = FindObjectOfType<ShootBottonCtr>();
+        GameObject hit_obj = FunCollision();
+
+        //扇に敵が入っていた場合
+        if (hit_obj)
+        {
+            sbc.SetCanShot(true);
+            sbc.SetShotPos(hit_obj.transform.position);
+        }
+        //扇に敵がいない場合
+        else
+        {
+            sbc.SetCanShot(false);
+        }
     }
 
     /// <summary>
@@ -269,33 +280,44 @@ public class RangeObject : MonoBehaviour
     }
 
     /// <summary>
-    /// プレイヤーと扇の当たり判定
+    /// 敵と扇の当たり判定
     /// </summary>
-    /// <returns>当たったプレイヤーのGameObjectを返す(ない場合はNULL)</returns>
-    public GameObject PlayerFunCollision()
+    /// <returns>当たった敵のGameObjectを返す(ない場合はNULL)</returns>
+    public GameObject FunCollision()
     {
-        GameObject hit_player = null;
+        GameObject hit_enemy = null;
 
         //エネミーの取得
+        List<GameObject> objects = new List<GameObject>();
         GameObject[] enemys = GameObject.FindGameObjectsWithTag("Enemy");
+        GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
+
+        //敵の格納
+        foreach (var enemy in enemys)
+        {
+            objects.Add(enemy);
+        }
+        //プレイヤーの格納
+        foreach (var player in players)
+        {
+            objects.Add(player);
+        }
 
         //扇に当たっている敵の取得
-        foreach (GameObject enemy in enemys)
+        foreach (var obj in objects)
         {
-            //敵の色を白に設定
-            enemy.GetComponent<Renderer>().material.color = Color.white;
 
             //敵の名前と操作しているプレイヤーが同じだったら次の処理
-            if (enemy.name == Player.name)
+            if (obj.name == Player.name)
             {
                 continue;
             }
 
             //敵とプレイヤーのベクトル
-            Vector3 dir = enemy.transform.position - this.transform.position;
+            Vector3 dir = obj.transform.position - this.transform.position;
 
-            CircleCollider2D rad = enemy.GetComponent<CircleCollider2D>();
-            Vector2 playerPos = enemy.transform.position;
+            CircleCollider2D rad = obj.GetComponent<CircleCollider2D>();
+            Vector2 playerPos = obj.transform.position;
             Vector2 center = this.transform.position;
             float startDeg = GetRotateAngle + (90.0f - Angle / 2);
             float endDeg = startDeg + Angle;
@@ -321,22 +343,22 @@ public class RangeObject : MonoBehaviour
             {
                 Vector3 dist = playerPos - center;
                 //比較対象がまだない場合暫定で敵のオブジェクトを格納
-                if(!hit_player)
+                if (!hit_enemy)
                 {
-                    hit_player = enemy;
+                    hit_enemy = obj;
                 }
                 else
                 {
-                    var dist2 = (Vector2)hit_player.transform.position - center;
+                    var dist2 = (Vector2)hit_enemy.transform.position - center;
                     //現在比較している敵との距離の方が短い場合
                     if (dist.magnitude < dist2.magnitude)
                     {
-                        hit_player = enemy;
+                        hit_enemy = obj;
                     }
                 }
             }
         }
 
-        return hit_player;
+        return hit_enemy;
     }
 }

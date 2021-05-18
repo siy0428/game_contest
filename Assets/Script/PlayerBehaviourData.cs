@@ -58,6 +58,8 @@ public class BehaviorData
     //シュートだけ使う。シュートの方向
     public Vector2 ShootDir;
 
+    public bool Used;
+
     //初期化のため、コンストラクタが必要
     public BehaviorData()
     {
@@ -71,6 +73,7 @@ public class BehaviorData
         BottonID = _data.BottonID;
         StartTime = _data.StartTime;
         ShootDir = _data.ShootDir;
+        Used = false;
     }
 }
 
