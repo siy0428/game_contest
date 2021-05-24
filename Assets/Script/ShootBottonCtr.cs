@@ -49,6 +49,7 @@ public class ShootBottonCtr : MonoBehaviour
                 // 弾（ゲームオブジェクト）の生成
                 GameObject clone = Instantiate(_PlayerCtr.PlayersData[_PlayerCtr.ControlPlayerID].Bullet, _PlayerCtr.Players[ID].GetComponent<Transform>().position + _PlayerCtr.Players[ID].GetComponent<Player>().ShootFixPostion, Quaternion.identity);
                 clone.GetComponent<BulletData>().SetTarget(ShotPos);    //弾の方向
+                clone.GetComponent<BulletData>().SetShootPosition(clone.transform.position);
 
 
                 // 向きの生成（Z成分の除去と正規化）
@@ -80,7 +81,7 @@ public class ShootBottonCtr : MonoBehaviour
             //直接方向を取得
             Vector3 shotForward = _ShootDir;
             clone.GetComponent<BulletData>().SetTarget(_ShootDir);
-
+            clone.GetComponent<BulletData>().SetShootPosition(clone.transform.position);
             // 弾に速度を与える
             //clone.GetComponent<Rigidbody2D>().velocity = shotForward * _PlayerCtr.PlayersData[_PlayerCtr.ControlPlayerID].BulletSpeed;
 
@@ -89,6 +90,24 @@ public class ShootBottonCtr : MonoBehaviour
         }
     }
 
+    public void ShootKeyDown_Skill(PlayerController _PlayerCtr, int ID, GameObject _SkillBulletObj, Vector2 _ShootDir = new Vector2())
+    {
+        GameObject clone = Instantiate(_SkillBulletObj, _PlayerCtr.Players[ID].GetComponent<Transform>().position, Quaternion.identity);
+        clone.GetComponent<BulletData>().SetTarget(_ShootDir);    //弾の方向
+        clone.GetComponent<BulletData>().SetShootPosition(clone.transform.position);
+        if (_ShootDir.x > 0)
+        {
+            clone.transform.localScale = new Vector3(-clone.transform.localScale.x, clone.transform.localScale.y, 0);
+            clone.transform.position = new Vector3(clone.transform.position.x + _PlayerCtr.SkillDataCtr.CutFixPosition.x, clone.transform.position.y - _PlayerCtr.SkillDataCtr.CutFixPosition.y,0);
+        }
+        else
+        {
+            clone.transform.position -= _PlayerCtr.SkillDataCtr.CutFixPosition;
+        }
+        clone.GetComponent<Collision>().PlayerID = ID;
+        m_BulletsList.Add(clone);
+    }
+        
     private void Start()
     {
         ShotPos = new Vector3(0.0f, 0.0f, 0.0f);
