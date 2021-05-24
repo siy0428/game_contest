@@ -1779,18 +1779,17 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 336447365}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2382424c312d813438834b25dfd47a5e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Angle: 120
-  m_Radius: 150
-  m_TriangleCount: 12
-  m_MaxRotSpeed: 5
-  m_Material: {fileID: 2100000, guid: 35e257e63baf6234c97c5f723b239c5c, type: 2}
-  m_PlayerController: {fileID: 1880378538}
-  m_Player: {fileID: 1504537289}
+  Angle: 0
+  Radius: 0
+  TriangleCount: 12
+  MaxRotSpeed: 0
+  Material: {fileID: 0}
+  Player: {fileID: 0}
 --- !u!4 &336447369
 Transform:
   m_ObjectHideFlags: 0
@@ -1927,6 +1926,7 @@ MonoBehaviour:
   BulletSpeed: 150
   ShootCD: 0.5
   ShootFixPostion: {x: 0, y: 0, z: 0}
+  ObjectDefaultPosition: {x: 0, y: 0, z: 0}
 --- !u!4 &571841451 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5522745113915133871, guid: 8046e492c92581f40a9d4cb667324250, type: 3}
@@ -2312,6 +2312,7 @@ MonoBehaviour:
   BulletSpeed: 150
   ShootCD: 0.5
   ShootFixPostion: {x: 0, y: 32, z: 0}
+  ObjectDefaultPosition: {x: 0, y: 0, z: 0}
 --- !u!4 &1504537293 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6482005678190899768, guid: 64bf2e141023b4a44b97bb1c6dcb08c3, type: 3}
