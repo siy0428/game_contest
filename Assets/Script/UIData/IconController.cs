@@ -13,9 +13,12 @@ public class IconController : MonoBehaviour
     [SerializeField]
     private Transform targetTfm;
 
+    [SerializeField]
+    private Vector3 offset;
+
     private RectTransform canvasRectTfm;
     private RectTransform myRectTfm;
-    private Vector3 offset = new Vector3(0, 0.5f, 0);  //アイコンの座標調整に使う
+    //private Vector3 offset = new Vector3(0, 0.5f, 0);  //アイコンの座標調整に使う
 
 
     //操作しているキャラクターが死んだか
