@@ -19,16 +19,21 @@ public class InputSystemCtr : MonoBehaviour
     //キーボードのUキー
     private InputAction m_ToNextLoop;
 
+    private InputAction m_Skill;
+
     private MoveBottonCtr m_MoveCtr;
 
     private ShootBottonCtr m_ShootCtr;
 
     private PlayerController m_Player;
+
+    private SkillBottonCtr m_SkillCtr;
     public void Awake()
     {
         m_Input = m_InputObj.transform.GetComponent<PlayerInput>();
         m_MoveCtr = FindObjectOfType<MoveBottonCtr>();
         m_ShootCtr = FindObjectOfType<ShootBottonCtr>();
+        m_SkillCtr = FindObjectOfType<SkillBottonCtr>();
         m_Player = FindObjectOfType<PlayerController>();
 
         InputActionMap actionMap = m_Input.currentActionMap;
@@ -43,6 +48,11 @@ public class InputSystemCtr : MonoBehaviour
 
         m_ToNextLoop = actionMap["ToNextLoop"];
         m_ToNextLoop.started += m_Player.ToNextIsDown;
+
+        m_Skill = actionMap["Skill"];
+        m_Skill.started += m_SkillCtr.SkillBottonIsDown;
+        m_Skill.performed += m_SkillCtr.SkillBottonIsDowning;
+        m_Skill.canceled += m_SkillCtr.SkillBottonIsUp;
     }
 
     // Start is called before the first frame update

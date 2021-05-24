@@ -62,11 +62,10 @@ public class Collision : MonoBehaviour
             {
                 bd.ReboundedTimes++;
                 Vector3 od = bd.ReboundDir;
-                Debug.Log(cp2[0].point);
+                Debug.Log(cp2[0].normal);
 
-                //if (cp2[0].normal.x == 1 || cp2[0].normal.x == -1)
-                //if(Mathf.Abs(od.y/od.x) <0.15f)
-                if(cp2[0].normalImpulse==0)
+                if (cp2[0].normal.x >= 0.5f || cp2[0].normal.x <= -0.5f)
+
                 {
                     Cdir = CollisionDir.LEFTRIGHT;
                 }
@@ -86,9 +85,15 @@ public class Collision : MonoBehaviour
             }
             else
             {
-                ShootBottonCtr sbc = FindObjectOfType<ShootBottonCtr>();
-                sbc.m_BulletsList.Remove(this.gameObject);
-                GameObject.Destroy(this.gameObject);
+                if(bd.m_Type == BulletType.Sword_1)
+                {
+                }
+                else
+                {
+                    ShootBottonCtr sbc = FindObjectOfType<ShootBottonCtr>();
+                    sbc.m_BulletsList.Remove(this.gameObject);
+                    GameObject.Destroy(this.gameObject);
+                }
             }
         }
 
@@ -96,11 +101,22 @@ public class Collision : MonoBehaviour
         {
             if (PlayerID != collider.gameObject.GetComponent<Collision>().PlayerID)
             {
-                ShootBottonCtr sbc = FindObjectOfType<ShootBottonCtr>();
-                sbc.m_BulletsList.Remove(this.gameObject);
-                GameObject.Destroy(this.gameObject);
-                sbc.m_BulletsList.Remove(collider.gameObject);
-                GameObject.Destroy(collider.gameObject);
+                BulletData mbd = gameObject.GetComponent<BulletData>();
+                BulletData bd = collider.gameObject.GetComponent<BulletData>();
+                if (mbd.m_Type == BulletType.Sword_1)
+                {
+                    collider.gameObject.GetComponent<Collision>().PlayerID = PlayerID;
+                    bd.BulletSpeed *= 2;
+                    bd.SetTarget(bd.m_ShootPosition);
+                }
+                else
+                {
+                    ShootBottonCtr sbc = FindObjectOfType<ShootBottonCtr>();
+                    sbc.m_BulletsList.Remove(this.gameObject);
+                    GameObject.Destroy(this.gameObject);
+                    sbc.m_BulletsList.Remove(collider.gameObject);
+                    GameObject.Destroy(collider.gameObject);
+                }
             }
         }
 

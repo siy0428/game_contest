@@ -28,6 +28,8 @@ public class PlayerController : MonoBehaviour
     //シュートのスクリプトポイント
     private ShootBottonCtr ShootCtr;
 
+    private SkillBottonCtr SkillCtr;
+
     //スキルの設定データを取得用
     public SkillData SkillDataCtr;
 
@@ -142,6 +144,13 @@ public class PlayerController : MonoBehaviour
                                     PlayersData[savedata[i].PlayerID].OnBox = false;
                                     SkillDataCtr.UseJumpSmarsh = true;
                                     break;
+                                case 61:
+                                    SkillDataCtr.UseCut = true;
+                                    break;
+                                case 66:
+                                    ShootCtr.ShootKeyDown_Skill(this, savedata[i].PlayerID, SkillDataCtr.CutBulletObj, savedata[i].ShootDir);
+                                    SkillDataCtr.UseCut = false;
+                                    break;
                                 default:
                                     break;
                             }
@@ -179,6 +188,17 @@ public class PlayerController : MonoBehaviour
                         {
                             Jump(i);
                         }
+
+                        float limittime = -1, maxtime = -1;
+
+                        switch (PlayersData[ControlPlayerID].SkillIDs[0])
+                        {
+                            case SkillID.Cut:
+                                limittime = SkillDataCtr.CutLimitTime;
+                                maxtime = SkillDataCtr.MaxLimitTime;
+                                break;
+                        }
+                        SkillCtr.CheakSKillOver(limittime,maxtime);
                     }
 
                     JumpSmarsh(i);
@@ -239,6 +259,7 @@ public class PlayerController : MonoBehaviour
     {
         MoveCtr = FindObjectOfType<MoveBottonCtr>();
         ShootCtr = FindObjectOfType<ShootBottonCtr>();
+        SkillCtr = FindObjectOfType<SkillBottonCtr>();
     }
 
     //ジャンプ操作
@@ -256,8 +277,7 @@ public class PlayerController : MonoBehaviour
             }
             else
             {
-                Players[ID].GetComponent<Rigidbody2D>().velocity = new Vector3(SkillDataCtr.JumpSmarshDir.x * SkillDataCtr.JumpSmarshSpeed, Players[ID].GetComponent<Rigidbody2D>().velocity.y + SkillDataCtr.JumpSmarshDir.y * SkillDataCtr.JumpSmarshSpeed, 0.0f);
-
+                Players[ID].GetComponent<Rigidbody2D>().velocity = new Vector3(SkillDataCtr.JumpSmarshDir.x * SkillDataCtr.JumpSmarshSpeed, Players[ID].GetComponent<Rigidbody2D>().velocity.y + SkillDataCtr.JumpSmarshDir.y * SkillDataCtr.JumpSmarshSpeed * 0.5f, 0.0f);
             }
         }
         PlayersData[ID].JumpedTimes += 1;
@@ -290,13 +310,16 @@ public class PlayerController : MonoBehaviour
         {
             if (!PlayersData[ID].OnBox)
             {
-                Players[ID].GetComponent<Rigidbody2D>().velocity = new Vector3(Players[ID].GetComponent<Rigidbody2D>().velocity.x - SkillDataCtr.JumpSmarshDir.x * SkillDataCtr.JumpSmarshAngular, Players[ID].GetComponent<Rigidbody2D>().velocity.y - SkillDataCtr.JumpSmarshDir.y * SkillDataCtr.JumpSmarshAngular, 0.0f);
+                Players[ID].GetComponent<Rigidbody2D>().velocity = new Vector3(Players[ID].GetComponent<Rigidbody2D>().velocity.x - SkillDataCtr.JumpSmarshDir.x * SkillDataCtr.JumpSmarshAngular * Time.deltaTime, Players[ID].GetComponent<Rigidbody2D>().velocity.y - SkillDataCtr.JumpSmarshDir.y* 0.5f * SkillDataCtr.JumpSmarshAngular * Time.deltaTime, 0.0f);         
             }
             else
-            {
-                Players[ID].GetComponent<Rigidbody2D>().velocity = new Vector3(0.0f, 0.0f, 0.0f);
+            {                
+                Players[ID].GetComponent<Rigidbody2D>().velocity = new Vector3(0.0f, -0.01f, 0.0f);
             }
-            SkillDataCtr.JumpSmarsh();
+            if(SkillDataCtr.JumpSmarsh())
+            {
+                Players[ID].GetComponent<Rigidbody2D>().velocity = new Vector3(0.0f, -0.01f, 0.0f);
+            }
         }
     }
 
@@ -359,5 +382,40 @@ public class PlayerController : MonoBehaviour
         }
         RecordBehaviour.ClearData();
         StartBehaviourRecord = true;
+    }
+
+
+    public float CheakSkillCD()
+    {
+        float rate = 0.0f;
+        switch (PlayersData[ControlPlayerID].SkillIDs[0])
+        {
+            case SkillID.JUMPSMARSH:
+                if(SkillDataCtr.UseJumpSmarsh)
+                {
+                    rate = 0.0f;
+                }
+                else
+                {
+                    rate = 1.0f;
+                }
+                break;
+            case SkillID.Cut:
+                rate = 1.0f - SkillCtr.SkillCDTimer / SkillCtr.SkillCD;
+                break;
+            default:
+                break;
+        }
+
+        return rate;
+    }
+
+    public float CheakShootCD()
+    {
+        float rate = 0.0f;
+
+        rate = 1.0f - ShootCtr.ShootCDTimer / ShootCtr.ShootCD;
+
+        return rate;
     }
 }
