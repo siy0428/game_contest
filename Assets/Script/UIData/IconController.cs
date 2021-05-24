@@ -8,22 +8,40 @@ using UnityEngine.UI;
 public class IconController : MonoBehaviour
 {
     [SerializeField]
-    private Canvas canvas;
+    private Canvas canvas = new Canvas();
     [SerializeField]
     private Transform targetTfm;
+    [SerializeField]
+    private Player player;
+
+    [SerializeField]
+    private Vector3 offset;
 
     private RectTransform canvasRectTfm;
     private RectTransform myRectTfm;
-    private Vector3 offset = new Vector3(0, 70.0f, 0);  //アイコンの座標調整に使う
+    private PlayerController pc;
+    private Image image;
 
     void Start()
     {
         canvasRectTfm = canvas.GetComponent<RectTransform>();
         myRectTfm = GetComponent<RectTransform>();
+        pc = FindObjectOfType<PlayerController>();
+        image = GetComponent<Image>();
     }
 
     void Update()
     {
+        //操作していないプレイヤーだったら処理を行わない
+        if(pc.ControlPlayerID != player.PlayerID)
+        {
+            image.enabled = false;
+            return;
+        }
+
+        //アイコンの描画
+        image.enabled = true;
+
         Vector2 pos;
 
         switch (canvas.renderMode)
@@ -32,7 +50,6 @@ public class IconController : MonoBehaviour
 
             case RenderMode.ScreenSpaceOverlay:
                 myRectTfm.position = RectTransformUtility.WorldToScreenPoint(Camera.main, targetTfm.position + offset);
-
                 break;
 
             case RenderMode.ScreenSpaceCamera:
@@ -43,7 +60,6 @@ public class IconController : MonoBehaviour
 
             case RenderMode.WorldSpace:
                 myRectTfm.LookAt(Camera.main.transform);
-
                 break;
         }
     }
