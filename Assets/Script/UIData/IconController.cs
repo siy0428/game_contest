@@ -9,53 +9,40 @@ public class IconController : MonoBehaviour
 {
     [SerializeField]
     private Canvas canvas = new Canvas();
-
     [SerializeField]
     private Transform targetTfm;
+    [SerializeField]
+    private Player player;
 
     [SerializeField]
     private Vector3 offset;
 
     private RectTransform canvasRectTfm;
     private RectTransform myRectTfm;
-    //private Vector3 offset = new Vector3(0, 0.5f, 0);  //アイコンの座標調整に使う
-
-
-    //操作しているキャラクターが死んだか
-    private bool IsDead = false;
-
-    //プレイヤーリスト
-    public List<GameObject> Players = new List<GameObject>();
-
-    //取得したキャラクターのデータ
-    public List<Player> PlayersData = new List<Player>();
-
+    private PlayerController pc;
+    private Image image;
 
     void Start()
     {
         canvasRectTfm = canvas.GetComponent<RectTransform>();
         myRectTfm = GetComponent<RectTransform>();
-        //初期化
-        for (int i = 0; i < Players.Count; i++)
-        {
-            PlayersData.Add(Players[i].GetComponent<Player>());//キャラクターデータ取得
-            PlayersData[i].PlayerID = i;
-            //if (i == ControlPlayerID)
-            //{
-            //    Players[i].GetComponent<SpriteRenderer>().sortingOrder = 1;
-            //}
-            //else
-            //{
-            //    Players[i].GetComponent<SpriteRenderer>().sortingOrder = 0;
-            //}
-        }
-
+        pc = FindObjectOfType<PlayerController>();
+        image = GetComponent<Image>();
     }
 
     void Update()
     {
-        Vector2 pos;
+        //操作していないプレイヤーだったら処理を行わない
+        if(pc.ControlPlayerID != player.PlayerID)
+        {
+            image.enabled = false;
+            return;
+        }
 
+        //アイコンの描画
+        image.enabled = true;
+
+        Vector2 pos;
 
         switch (canvas.renderMode)
         {
@@ -63,7 +50,6 @@ public class IconController : MonoBehaviour
 
             case RenderMode.ScreenSpaceOverlay:
                 myRectTfm.position = RectTransformUtility.WorldToScreenPoint(Camera.main, targetTfm.position + offset);
-
                 break;
 
             case RenderMode.ScreenSpaceCamera:
@@ -74,23 +60,7 @@ public class IconController : MonoBehaviour
 
             case RenderMode.WorldSpace:
                 myRectTfm.LookAt(Camera.main.transform);
-
                 break;
-        }
-
-        //全てのプレイヤーの動きを更新する
-        for (int i = 0; i < Players.Count; i++)
-        {
-            if (!PlayersData[i].IsAlive)
-            {
-
-            }
-            if (IsDead)
-            {
-                PlayersData[i].IsAlive = false;
-                IsDead = false;
-            }
-
         }
     }
 }
