@@ -56,27 +56,25 @@ public class PlayerController : MonoBehaviour
         GetBottonCtr();
         SkillDataCtr = FindObjectOfType<SkillData>();
         //初期化
-        for (int i = 0; i<Players.Count;i++)
+        for (int i = 0; i < Players.Count; i++)
         {
             PlayersData.Add(Players[i].GetComponent<Player>());//キャラクターデータ取得
             PlayersData[i].PlayerID = i;
-            if(i==ControlPlayerID)
-            {
-                Players[i].GetComponent<SpriteRenderer>().sortingOrder = 1;
-            }
-            else
-            {
-                Players[i].GetComponent<SpriteRenderer>().sortingOrder = 0;
-            }
+            //if (i == ControlPlayerID)
+            //{
+            //    Players[i].GetComponent<SpriteRenderer>().sortingOrder = 1;
+            //}
+            //else
+            //{
+            //    Players[i].GetComponent<SpriteRenderer>().sortingOrder = 0;
+            //}
         }
-       
     }
 
     // Update is called once per frame
     void Update()
     {
-
-        if(!StartFallBack)
+        if (!StartFallBack)
         {
             //最初のループ内相手が動いていないので、下記の操作をジャンプする
             if (SavedBehaviour.GetBehaviourData().Count > 1)
@@ -90,76 +88,78 @@ public class PlayerController : MonoBehaviour
                     //記録時点になったら
                     if (Timer > savedata[i].StartTime)
                     {
-                        //キーの番号ごとに、対応の状態を変更する
-                        switch (savedata[i].BottonID)
+                        if (!savedata[i].Used)
                         {
-                            case 0:
-                                PlayersData[savedata[i].PlayerID].IsMove = -1;
-                                PlayersData[savedata[i].PlayerID].PlayersForward = new Vector3(-1.0f, 1.0f, 0.0f);
-                                break;
-                            case 1:
-                                PlayersData[savedata[i].PlayerID].IsMove = 0;
-                                break;
-                            case 2:
-                                PlayersData[savedata[i].PlayerID].IsMove = 1;
-                                PlayersData[savedata[i].PlayerID].PlayersForward = new Vector3(1.0f, 1.0f, 0.0f);
-                                break;
-                            case 3:
-                                PlayersData[savedata[i].PlayerID].IsMove = 0;
-                                break;
-                            case 4:
-                                PlayersData[savedata[i].PlayerID].IsJump = true;
-                                PlayersData[savedata[i].PlayerID].OnBox = false;
-                                break;
-                            case 5://シュートだけ、直接シュートする
-                                ShootCtr.ShootKeyDown(this, savedata[i].PlayerID, savedata[i].ShootDir);
-                                break;
-                            case 41:
-                                SkillDataCtr.JumpSmarshDir = new Vector2(1, 0);
-                                PlayersData[savedata[i].PlayerID].PlayersForward = new Vector3(1.0f, 1.0f, 0.0f);
-                                PlayersData[savedata[i].PlayerID].IsJump = true;
-                                PlayersData[savedata[i].PlayerID].OnBox = false;
-                                SkillDataCtr.UseJumpSmarsh = true;
-                                break;
-                            case 42:
-                                SkillDataCtr.JumpSmarshDir = new Vector2(-1,0);
-                                PlayersData[savedata[i].PlayerID].PlayersForward = new Vector3(-1.0f, 1.0f, 0.0f);
-                                PlayersData[savedata[i].PlayerID].IsJump = true;
-                                PlayersData[savedata[i].PlayerID].OnBox = false;
-                                SkillDataCtr.UseJumpSmarsh = true;
-                                break;
-                            case 43:
-                                SkillDataCtr.JumpSmarshDir = new Vector2(0, 1);
-                                PlayersData[savedata[i].PlayerID].PlayersForward = new Vector3(-1.0f, 1.0f, 0.0f);
-                                PlayersData[savedata[i].PlayerID].IsJump = true;
-                                PlayersData[savedata[i].PlayerID].OnBox = false;
-                                SkillDataCtr.UseJumpSmarsh = true;
-                                break;
-                            case 44:
-                                SkillDataCtr.JumpSmarshDir = new Vector2(0, -1);
-                                PlayersData[savedata[i].PlayerID].PlayersForward = new Vector3(-1.0f, 1.0f, 0.0f);
-                                PlayersData[savedata[i].PlayerID].IsJump = true;
-                                PlayersData[savedata[i].PlayerID].OnBox = false;
-                                SkillDataCtr.UseJumpSmarsh = true;
-                                break;
-                            default:
-                                break;
+                            //キーの番号ごとに、対応の状態を変更する
+                            switch (savedata[i].BottonID)
+                            {
+                                case 0:
+                                    PlayersData[savedata[i].PlayerID].IsMove = -1;
+                                    PlayersData[savedata[i].PlayerID].PlayersForward = new Vector3(-1.0f, 1.0f, 0.0f);
+                                    break;
+                                case 1:
+                                    PlayersData[savedata[i].PlayerID].IsMove = 0;
+                                    break;
+                                case 2:
+                                    PlayersData[savedata[i].PlayerID].IsMove = 1;
+                                    PlayersData[savedata[i].PlayerID].PlayersForward = new Vector3(1.0f, 1.0f, 0.0f);
+                                    break;
+                                case 3:
+                                    PlayersData[savedata[i].PlayerID].IsMove = 0;
+                                    break;
+                                case 4:
+                                    PlayersData[savedata[i].PlayerID].IsJump = true;
+                                    PlayersData[savedata[i].PlayerID].OnBox = false;
+                                    break;
+                                case 5://シュートだけ、直接シュートする
+                                    ShootCtr.ShootKeyDown(this, savedata[i].PlayerID, savedata[i].ShootDir);
+                                    break;
+                                case 41:
+                                    SkillDataCtr.JumpSmarshDir = new Vector2(1, 0);
+                                    PlayersData[savedata[i].PlayerID].PlayersForward = new Vector3(1.0f, 1.0f, 0.0f);
+                                    PlayersData[savedata[i].PlayerID].IsJump = true;
+                                    PlayersData[savedata[i].PlayerID].OnBox = false;
+                                    SkillDataCtr.UseJumpSmarsh = true;
+                                    break;
+                                case 42:
+                                    SkillDataCtr.JumpSmarshDir = new Vector2(-1, 0);
+                                    PlayersData[savedata[i].PlayerID].PlayersForward = new Vector3(-1.0f, 1.0f, 0.0f);
+                                    PlayersData[savedata[i].PlayerID].IsJump = true;
+                                    PlayersData[savedata[i].PlayerID].OnBox = false;
+                                    SkillDataCtr.UseJumpSmarsh = true;
+                                    break;
+                                case 43:
+                                    SkillDataCtr.JumpSmarshDir = new Vector2(0, 1);
+                                    PlayersData[savedata[i].PlayerID].PlayersForward = new Vector3(-1.0f, 1.0f, 0.0f);
+                                    PlayersData[savedata[i].PlayerID].IsJump = true;
+                                    PlayersData[savedata[i].PlayerID].OnBox = false;
+                                    SkillDataCtr.UseJumpSmarsh = true;
+                                    break;
+                                case 44:
+                                    SkillDataCtr.JumpSmarshDir = new Vector2(0, -1);
+                                    PlayersData[savedata[i].PlayerID].PlayersForward = new Vector3(-1.0f, 1.0f, 0.0f);
+                                    PlayersData[savedata[i].PlayerID].IsJump = true;
+                                    PlayersData[savedata[i].PlayerID].OnBox = false;
+                                    SkillDataCtr.UseJumpSmarsh = true;
+                                    break;
+                                default:
+                                    break;
+                            }
+                            savedata[i].Used = true;
                         }
-                        //保存データの対応キー番号を-1で、反応完了データを無効化する
-                        savedata[i].BottonID = -1;
                     }
                 }
             }
 
             //全てのプレイヤーの動きを更新する
-            for(int i =0; i<Players.Count;i++)
+            for (int i = 0; i < Players.Count; i++)
             {
-                if(PlayersData[i].IsAlive)
+                if (PlayersData[i].IsAlive)
                 {
                     //非操作対象
                     if (i != ControlPlayerID)
                     {
-                        if(!CheakJumpSmarsh(i))
+                        if (!CheakJumpSmarsh(i))
                         {
                             Vector2 pos = Players[i].GetComponent<Transform>().position;
                             Players[i].GetComponent<Transform>().position = new Vector2(pos.x + PlayersData[i].IsMove * PlayersData[i].MoveSpeed * Time.deltaTime, pos.y);
@@ -187,11 +187,11 @@ public class PlayerController : MonoBehaviour
                     {
                         PlayersData[i].JumpedTimes = 0;
                     }
-                }              
+                }
             }
 
             //次のループへのキー
-            
+
             if (IsDead)
             {
                 PlayersData[ControlPlayerID].IsAlive = false;
@@ -227,59 +227,30 @@ public class PlayerController : MonoBehaviour
         }
         else
         {
-            //データを初期値に戻る
-            Timer = 0.0f;
-            for (int i = 0; i < Players.Count; i++)
-            {
-                PlayersData[i].IsJump =false;
-                PlayersData[i].IsAlive = true;
-                Players[i].GetComponent<Transform>().position = PlayersData[i].StartPoStartPositon;
-                Players[i].SetActive(true);
-            }
-
-            for(int i = 0; i<ShootCtr.m_BulletsList.Count;i++)
-            {
-                GameObject.Destroy(ShootCtr.m_BulletsList[i]);
-            }
-
-            ShootCtr.m_BulletsList.Clear();
-
             //操作対象変更
-            Players[ControlPlayerID].GetComponent<SpriteRenderer>().sortingOrder = 0;
-            ControlPlayerID++;
-            ControlPlayerID %= Players.Count;
-            Players[ControlPlayerID].GetComponent<SpriteRenderer>().sortingOrder = 1;
+            ChangePlayer();
 
             StartFallBack = false;
-
-            //保存データの更新
-            SavedBehaviour = new PlayerBehaviourData(RecordBehaviour);
-
-            //記録データの削除
-            RecordBehaviour.ClearData();
-
-            //新しい記録準備完了
-            StartBehaviourRecord = true;
         }
     }
 
     //スクリプト取得
     void GetBottonCtr()
     {
-        MoveCtr = FindObjectOfType<MoveBottonCtr>();       
+        MoveCtr = FindObjectOfType<MoveBottonCtr>();
         ShootCtr = FindObjectOfType<ShootBottonCtr>();
     }
 
     //ジャンプ操作
     void Jump(int ID)
     {
-        if(PlayersData[ID].JumpedTimes < 1)
+        if (PlayersData[ID].JumpedTimes < 1)
         {
             Players[ID].GetComponent<Rigidbody2D>().velocity = new Vector2(Players[ID].GetComponent<Rigidbody2D>().velocity.x, Mathf.Sqrt(2 * 9.81f * Players[ID].GetComponent<Rigidbody2D>().gravityScale * JumpFocre * Players[ID].GetComponent<Player>().JumpMass));
         }
         else
         {
-            if(!PlayersData[ID].CheakSkill(SkillID.JUMPSMARSH))
+            if (!PlayersData[ID].CheakSkill(SkillID.JUMPSMARSH))
             {
                 Players[ID].GetComponent<Rigidbody2D>().velocity = new Vector2(Players[ID].GetComponent<Rigidbody2D>().velocity.x, Mathf.Sqrt(9.81f * Players[ID].GetComponent<Rigidbody2D>().gravityScale * JumpFocre * Players[ID].GetComponent<Player>().JumpMass));
             }
@@ -289,7 +260,7 @@ public class PlayerController : MonoBehaviour
 
             }
         }
-        PlayersData[ID].JumpedTimes+=1;
+        PlayersData[ID].JumpedTimes += 1;
         PlayersData[ID].IsJump = false;
     }
 
@@ -298,7 +269,7 @@ public class PlayerController : MonoBehaviour
         IsDead = true;
     }
 
-    public void SetScale(int ID,Vector3 _Scale)
+    public void SetScale(int ID, Vector3 _Scale)
     {
         PlayersData[ID].PlayersForward = _Scale;
         Players[ID].GetComponent<Transform>().localScale = _Scale;
@@ -306,7 +277,7 @@ public class PlayerController : MonoBehaviour
 
     public bool CheakJumpSmarsh(int ID)
     {
-        if(PlayersData[ID].CheakSkill(SkillID.JUMPSMARSH) && SkillDataCtr.UseJumpSmarsh)
+        if (PlayersData[ID].CheakSkill(SkillID.JUMPSMARSH) && SkillDataCtr.UseJumpSmarsh)
         {
             return true;
         }
@@ -315,17 +286,78 @@ public class PlayerController : MonoBehaviour
 
     private void JumpSmarsh(int ID)
     {
-        if(CheakJumpSmarsh(ID))
+        if (CheakJumpSmarsh(ID))
         {
-            if(!PlayersData[ID].OnBox)
+            if (!PlayersData[ID].OnBox)
             {
                 Players[ID].GetComponent<Rigidbody2D>().velocity = new Vector3(Players[ID].GetComponent<Rigidbody2D>().velocity.x - SkillDataCtr.JumpSmarshDir.x * SkillDataCtr.JumpSmarshAngular, Players[ID].GetComponent<Rigidbody2D>().velocity.y - SkillDataCtr.JumpSmarshDir.y * SkillDataCtr.JumpSmarshAngular, 0.0f);
             }
             else
             {
-                Players[ID].GetComponent<Rigidbody2D>().velocity = new Vector3(0.0f,0.0f, 0.0f);
+                Players[ID].GetComponent<Rigidbody2D>().velocity = new Vector3(0.0f, 0.0f, 0.0f);
             }
-            SkillDataCtr.JumpSmarsh();          
+            SkillDataCtr.JumpSmarsh();
         }
+    }
+
+    public void ChangePlayer()
+    {
+        //データを初期値に戻る
+        Timer = 0.0f;
+        for (int i = 0; i < Players.Count; i++)
+        {
+            PlayersData[i].IsJump = false;
+            PlayersData[i].IsAlive = true;
+            Players[i].GetComponent<Transform>().position = PlayersData[i].StartPoStartPositon;
+            Players[i].SetActive(true);
+        }
+
+        for (int i = 0; i < ShootCtr.m_BulletsList.Count; i++)
+        {
+            GameObject.Destroy(ShootCtr.m_BulletsList[i]);
+        }
+
+        ShootCtr.m_BulletsList.Clear();
+
+        //Players[ControlPlayerID].GetComponent<SpriteRenderer>().sortingOrder = 0;
+        ControlPlayerID++;
+        ControlPlayerID %= Players.Count;
+        //Players[ControlPlayerID].GetComponent<SpriteRenderer>().sortingOrder = 1;
+
+        //保存データの更新
+        SavedBehaviour = new PlayerBehaviourData(RecordBehaviour);
+
+        //記録データの削除
+        RecordBehaviour.ClearData();
+
+        //新しい記録準備完了
+        StartBehaviourRecord = true;
+    }
+
+    public void PlayerWithoutLoop()
+    {
+        Timer = 0.0f;
+
+        for (int i = 0; i < Players.Count; i++)
+        {
+            PlayersData[i].IsJump = false;
+            PlayersData[i].IsAlive = true;
+            Players[i].GetComponent<Transform>().position = PlayersData[i].StartPoStartPositon;
+            Players[i].SetActive(true);
+        }
+
+        for (int i = 0; i < ShootCtr.m_BulletsList.Count; i++)
+        {
+            GameObject.Destroy(ShootCtr.m_BulletsList[i]);
+        }
+
+        ShootCtr.m_BulletsList.Clear();
+
+        for(int i = 0; i < SavedBehaviour.GetBehaviourData().Count; i++)
+        {
+            SavedBehaviour.GetBehaviourData()[i].Used = false;
+        }
+        RecordBehaviour.ClearData();
+        StartBehaviourRecord = true;
     }
 }
