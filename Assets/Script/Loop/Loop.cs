@@ -5,17 +5,17 @@ using UnityEngine;
 public class Loop : MonoBehaviour
 {
     [SerializeField]
-    private Vector3[] spawns;
+    protected Vector3[] spawns;
     [SerializeField]
-    private int defeat_count;
+    protected int defeat_count;
     [SerializeField]
-    private float time_limit;
+    protected float time_limit;
 
-    private int enemy_count;    //1ループで出現する敵の数
-    private EnemyCreate ec;
-    private EnemyManager em;
-    private InBoxCreate ibc;
-    private PlayerController pc;
+    protected int enemy_count;    //1ループで出現する敵の数
+    protected EnemyCreate ec;
+    protected EnemyManager em;
+    protected InBoxCreate ibc;
+    protected PlayerController pc;
 
     // Start is called before the first frame update
     void Awake()
@@ -37,14 +37,12 @@ public class Loop : MonoBehaviour
     /// <summary>
     /// インスペクタで設定した座標に敵を生成
     /// </summary>
-    public void Create()
+    virtual public void Create()
     {
         //敵リストの削除
         em.AllDestroyEnemy();
 
-        ibc.Create();
-
-        foreach(var player in pc.PlayersData)
+        foreach (var player in pc.PlayersData)
         {
             player.RespawnPosition();
         }
@@ -53,6 +51,8 @@ public class Loop : MonoBehaviour
         {
             ec.Create(spawn);
         }
+
+        ibc.Create();
     }
 
     /// <summary>
