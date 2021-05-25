@@ -30,6 +30,8 @@ public class PlayerController : MonoBehaviour
 
     private SkillBottonCtr SkillCtr;
 
+    private CharacterUIController ChaUICtr;
+
     //スキルの設定データを取得用
     public SkillData SkillDataCtr;
 
@@ -71,6 +73,7 @@ public class PlayerController : MonoBehaviour
             //    Players[i].GetComponent<SpriteRenderer>().sortingOrder = 0;
             //}
         }
+        ChaUICtr.ChangeUI(ControlPlayerID);
     }
 
     // Update is called once per frame
@@ -90,7 +93,7 @@ public class PlayerController : MonoBehaviour
                     //記録時点になったら
                     if (Timer > savedata[i].StartTime)
                     {
-                        if (!savedata[i].Used)
+                        if (!savedata[i].Used && PlayersData[savedata[i].PlayerID].IsAlive)
                         {
                             //キーの番号ごとに、対応の状態を変更する
                             switch (savedata[i].BottonID)
@@ -260,6 +263,7 @@ public class PlayerController : MonoBehaviour
         MoveCtr = FindObjectOfType<MoveBottonCtr>();
         ShootCtr = FindObjectOfType<ShootBottonCtr>();
         SkillCtr = FindObjectOfType<SkillBottonCtr>();
+        ChaUICtr = FindObjectOfType<CharacterUIController>();
     }
 
     //ジャンプ操作
@@ -341,12 +345,20 @@ public class PlayerController : MonoBehaviour
         }
 
         ShootCtr.m_BulletsList.Clear();
+        ShootCtr.ShootCDTimer = 0.0f;
+
+        SkillCtr.SkillKeyDown = 0;
+        SkillCtr.SkillTimer = 0.0f;
+        SkillCtr.SkillCDTimer = 0.0f;
+        SkillCtr.SkillIntoCD = false;
+        SkillDataCtr.EnableUseCut = true;
+        SkillDataCtr.UseCut = false;
 
         //Players[ControlPlayerID].GetComponent<SpriteRenderer>().sortingOrder = 0;
         ControlPlayerID++;
         ControlPlayerID %= Players.Count;
         //Players[ControlPlayerID].GetComponent<SpriteRenderer>().sortingOrder = 1;
-
+        ChaUICtr.ChangeUI(ControlPlayerID);
         //保存データの更新
         SavedBehaviour = new PlayerBehaviourData(RecordBehaviour);
 
@@ -375,8 +387,16 @@ public class PlayerController : MonoBehaviour
         }
 
         ShootCtr.m_BulletsList.Clear();
+        ShootCtr.ShootCDTimer = 0.0f;
 
-        for(int i = 0; i < SavedBehaviour.GetBehaviourData().Count; i++)
+        SkillCtr.SkillKeyDown = 0;
+        SkillCtr.SkillTimer = 0.0f;
+        SkillCtr.SkillCDTimer = 0.0f;
+        SkillCtr.SkillIntoCD = false;
+        SkillDataCtr.EnableUseCut = true;
+        SkillDataCtr.UseCut = false;
+
+        for (int i = 0; i < SavedBehaviour.GetBehaviourData().Count; i++)
         {
             SavedBehaviour.GetBehaviourData()[i].Used = false;
         }
@@ -393,20 +413,23 @@ public class PlayerController : MonoBehaviour
             case SkillID.JUMPSMARSH:
                 if(SkillDataCtr.UseJumpSmarsh)
                 {
-                    rate = 0.0f;
+                    rate = 1.0f;
                 }
                 else
                 {
-                    rate = 1.0f;
+                    rate = 0.0f;
                 }
                 break;
             case SkillID.Cut:
                 rate = 1.0f - SkillCtr.SkillCDTimer / SkillCtr.SkillCD;
+                if(!SkillDataCtr.UseCut)
+                {
+                    rate = 0;
+                }
                 break;
             default:
                 break;
         }
-
         return rate;
     }
 
@@ -415,6 +438,10 @@ public class PlayerController : MonoBehaviour
         float rate = 0.0f;
 
         rate = 1.0f - ShootCtr.ShootCDTimer / ShootCtr.ShootCD;
+        if(ShootCtr.GetCanShot())
+        {
+            rate = 0;
+        }
 
         return rate;
     }
