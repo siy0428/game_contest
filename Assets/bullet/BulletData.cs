@@ -48,6 +48,12 @@ public class BulletData : MonoBehaviour
     private float m_TargetAngle = 0.0f;
 
     public Vector3 m_ShootPosition;
+
+    public float DriveOffFactor = 10.0f;
+
+    public float DriveOffAngleMin = 12.0f;
+
+    public float DriveOffAngleMax = 32.0f;
     
     // Start is called before the first frame update
     void Start()

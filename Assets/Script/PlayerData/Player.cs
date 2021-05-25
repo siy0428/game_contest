@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Player : MonoBehaviour
 {
@@ -60,8 +61,16 @@ public class Player : MonoBehaviour
     public Vector3 ShootFixPostion = new Vector3();
 
     public Vector3 ObjectPosition;
-   
 
+    //キャラクターアイコン
+    public Sprite AvatarObj;
+
+    //普通の攻撃アイコン
+    public Sprite AttackIconObj;
+
+    //ユニットスキルアイコン
+    public Sprite SkillIconObj;
+    
     // Start is called before the first frame update
     void Awake()
     {

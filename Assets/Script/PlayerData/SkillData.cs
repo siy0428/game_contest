@@ -54,8 +54,6 @@ public class SkillData : MonoBehaviour
         float value = 0.0f;
         switch (_skillID)
         {
-            case SkillID.NONE:
-                break;
             case SkillID.JUMPSMARSH:
                 break;
             case SkillID.Cut:
