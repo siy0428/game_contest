@@ -16,9 +16,15 @@ public class ShootBottonCtr : MonoBehaviour
 
     public List<GameObject> m_BulletsList = new List<GameObject>();
 
+    CharacterUIController ChaUICtr;
+
+
     public void ShootBottonIsDown(InputAction.CallbackContext obj)
     {
-        KeyShootDown = 1;
+        if(KeyShootDown == 0)
+        {
+            KeyShootDown = 1;
+        }
     }
 
     private Vector3 ShotPos;
@@ -33,6 +39,11 @@ public class ShootBottonCtr : MonoBehaviour
     public void SetCanShot(bool can)
     {
         CanShot = can;
+    }
+
+    public bool GetCanShot()
+    {
+        return CanShot;
     }
 
     //IDÇÕìÆçÏÇÃéÂ
@@ -112,6 +123,9 @@ public class ShootBottonCtr : MonoBehaviour
     {
         ShotPos = new Vector3(0.0f, 0.0f, 0.0f);
         CanShot = false;
+
+        ChaUICtr = FindObjectOfType<CharacterUIController>();
+
     }
 
     private void Update()
@@ -126,5 +140,6 @@ public class ShootBottonCtr : MonoBehaviour
             KeyShootDown = 0;
             ShootCDTimer = 0.0f;
         }
+        ChaUICtr.CDMaskUpdate(0);
     }
 }

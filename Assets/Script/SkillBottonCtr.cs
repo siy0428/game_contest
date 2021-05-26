@@ -23,11 +23,16 @@ public class SkillBottonCtr : MonoBehaviour
 
     PlayerController _PlayerCtr;
 
+    CharacterUIController ChaUICtr;
+
     public void SkillBottonIsDown(InputAction.CallbackContext obj)
     {
         SkillKeyDown = 1;
         DownKeyRecord();
-        _PlayerCtr.SkillDataCtr.EnableUseCut = false;
+        if(_PlayerCtr.PlayersData[_PlayerCtr.ControlPlayerID].SkillIDs[0] == SkillID.Cut)
+        {
+            _PlayerCtr.SkillDataCtr.EnableUseCut = false;
+        }
     }
 
     public void SkillBottonIsDowning(InputAction.CallbackContext obj)
@@ -42,6 +47,11 @@ public class SkillBottonCtr : MonoBehaviour
     public void SkillBottonIsUp(InputAction.CallbackContext obj)
     {
         SkillKeyDown = -1;
+        if (_PlayerCtr.PlayersData[_PlayerCtr.ControlPlayerID].SkillIDs[0] == SkillID.Cut)
+        {
+            _PlayerCtr.SkillDataCtr.UseCut = true;
+        }
+
     }
 
     // Start is called before the first frame update
@@ -49,21 +59,31 @@ public class SkillBottonCtr : MonoBehaviour
     {
         Sbc = FindObjectOfType<ShootBottonCtr>();
         _PlayerCtr = FindObjectOfType<PlayerController>();
+
+        ChaUICtr = FindObjectOfType<CharacterUIController>();
     }
 
     // Update is called once per frame
     void Update()
     {
+
         if(SkillIntoCD && SkillKeyDown == 0)
         {
+            SkillCD = FindObjectOfType<SkillData>().GetSkillCDTime(_PlayerCtr.PlayersData[_PlayerCtr.ControlPlayerID].SkillIDs[0]);
+           
             SkillCDTimer += Time.deltaTime;
             if (SkillCDTimer >= SkillCD)
             {
                 SkillIntoCD = false;
                 SkillCDTimer = 0.0f;
-                _PlayerCtr.SkillDataCtr.EnableUseCut = true;
+                if (_PlayerCtr.PlayersData[_PlayerCtr.ControlPlayerID].SkillIDs[0] == SkillID.Cut)
+                {
+                    _PlayerCtr.SkillDataCtr.EnableUseCut = true;
+                    _PlayerCtr.SkillDataCtr.UseCut = false;
+                }
             }
         }
+        ChaUICtr.CDMaskUpdate(1);
     }
 
     public void UseSkill(int ID)
@@ -103,7 +123,7 @@ public class SkillBottonCtr : MonoBehaviour
         else
         {
             //êßå¿éûä‘Çí¥Ç¶ÇƒÅAç≈ëÂêßå¿éûä‘Çí¥Ç¶ÇƒÇ»Ç¢èÍçáÅATimerÇó›â¡Çµë±Ç¢ÇƒÇ¢Ç≠
-            if (SkillKeyDown == 1)
+            if (SkillKeyDown == -1 || SkillKeyDown == 1)
             {
                 SkillTimer += Time.deltaTime;
             }
@@ -121,7 +141,7 @@ public class SkillBottonCtr : MonoBehaviour
                 KeySkill.StartTime = _PlayerCtr.Timer;
                 KeySkill.ShootDir = new Vector2(_PlayerCtr.PlayersData[_PlayerCtr.ControlPlayerID].transform.localScale.x, _PlayerCtr.PlayersData[_PlayerCtr.ControlPlayerID].transform.localScale.y);
                 KeySkill.Used = false;
-                KeySkill.PlayerID = _PlayerCtr.ControlPlayerID;
+                KeySkill.PlayerID = _PlayerCtr.ControlPlayerID;                
                 break;
             default:
                 break;
@@ -139,6 +159,7 @@ public class SkillBottonCtr : MonoBehaviour
                 KeySkill.ShootDir = new Vector2(_PlayerCtr.PlayersData[_PlayerCtr.ControlPlayerID].transform.localScale.x, _PlayerCtr.PlayersData[_PlayerCtr.ControlPlayerID].transform.localScale.y);
                 KeySkill.Used = false;
                 KeySkill.PlayerID = _PlayerCtr.ControlPlayerID;
+                FindObjectOfType<SkillData>().UseCut = true;
                 break;
             default:
                 break;
