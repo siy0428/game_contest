@@ -41,7 +41,7 @@ public class RangeObject : MonoBehaviour
     {
         PlayerInput _input = FindObjectOfType<PlayerInput>();
         InputActionMap actionMap = _input.currentActionMap;
-        arrow = actionMap["Fun"];
+        arrow = actionMap["Move"];
         pc = FindObjectOfType<PlayerController>();
     }
 

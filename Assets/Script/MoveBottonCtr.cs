@@ -41,30 +41,30 @@ public class MoveBottonCtr : MonoBehaviour
         moveValuePref = moveValue;
         moveValue = _LeftStick.ReadValue<Vector2>();
 
-        if(moveValue.x > 0.4f)
+        if (moveValue.x > 0.4f)
         {
             KeyDDown = 1;
         }
-        else if(moveValue.x < -0.4f)
+        else if (moveValue.x < -0.4f)
         {
             KeyADown = 1;
         }
 
-        if(moveValue.y > 0.4f)
+        if (moveValue.y > 0.4f)
         {
             keyWDown = 1;
         }
-        else if(moveValue.y < -0.4f)
+        else if (moveValue.y < -0.4f)
         {
             keySDown = 1;
         }
 
-        if(moveValuePref.x > 0.4f && moveValue.x < 0.4f)
+        if (moveValuePref.x > 0.4f && moveValue.x < 0.4f)
         {
             KeyDDown = -1;
         }
 
-        if(moveValuePref.x < -0.4f && moveValue.x > -0.4f)
+        if (moveValuePref.x < -0.4f && moveValue.x > -0.4f)
         {
             KeyADown = -1;
         }
@@ -74,7 +74,7 @@ public class MoveBottonCtr : MonoBehaviour
             keyWDown = -1;
         }
 
-        if(moveValuePref.y < -0.4f && moveValue.y > -0.4f)
+        if (moveValuePref.y < -0.4f && moveValue.y > -0.4f)
         {
             keySDown = -1;
         }
@@ -88,7 +88,7 @@ public class MoveBottonCtr : MonoBehaviour
     public void MoveBottonUse(PlayerController _PlayerCtr)
     {
         //記録が許可がある場合のみ、操作できる
-        if(_PlayerCtr.StartBehaviourRecord)
+        if (_PlayerCtr.StartBehaviourRecord)
         {
             //移動量計算
             float moveX = 0.0f;
@@ -97,12 +97,12 @@ public class MoveBottonCtr : MonoBehaviour
             if (KeyADown > 0)
             {
                 //左と右が同時に押したことの記入を防ぐため、止まる状態じゃなければ反応しない
-                if(IsMove == 0)
+                if (IsMove == 0)
                 {
                     //移動状態更新
                     IsMove = -1;
-                    _PlayerCtr.SetScale(_PlayerCtr.ControlPlayerID,new Vector3(-1.0f, 1.0f, 0.0f));
-                    
+                    _PlayerCtr.SetScale(_PlayerCtr.ControlPlayerID, new Vector3(-1.0f, 1.0f, 0.0f));
+
                     //データ記録作成
                     KeyA.StartTime = _PlayerCtr.Timer;
                     KeyA.BottonID = 0;
@@ -111,7 +111,8 @@ public class MoveBottonCtr : MonoBehaviour
                     //記録リストに追加
                     _PlayerCtr.RecordBehaviour.AddBehaviour(KeyA);
 
-                    _PlayerCtr.GetComponent<Animator>().SetBool("isMoving", true);
+                    Animator[] animators = _PlayerCtr.PlayersData[_PlayerCtr.ControlPlayerID].GetComponentsInChildren<Animator>();
+                    animators[1].SetBool("isMoving", true);
                 }
             }
 
@@ -133,7 +134,8 @@ public class MoveBottonCtr : MonoBehaviour
                     //記録リストに追加
                     _PlayerCtr.RecordBehaviour.AddBehaviour(KeyD);
 
-                    _PlayerCtr.GetComponent<Animator>().SetBool("isMoving", true);
+                    Animator[] animators = _PlayerCtr.PlayersData[_PlayerCtr.ControlPlayerID].GetComponentsInChildren<Animator>();
+                    animators[1].SetBool("isMoving", true);
                 }
             }
 
@@ -154,7 +156,8 @@ public class MoveBottonCtr : MonoBehaviour
                     //記録リストに追加
                     _PlayerCtr.RecordBehaviour.AddBehaviour(KeyA);
 
-                    _PlayerCtr.GetComponent<Animator>().SetBool("isMoving", false);
+                    Animator[] animators = _PlayerCtr.PlayersData[_PlayerCtr.ControlPlayerID].GetComponentsInChildren<Animator>();
+                    animators[1].SetBool("isMoving", false);
                 }
 
                 KeyADown = 0;
@@ -177,7 +180,8 @@ public class MoveBottonCtr : MonoBehaviour
                     //記録リストに追加
                     _PlayerCtr.RecordBehaviour.AddBehaviour(KeyD);
 
-                    _PlayerCtr.GetComponent<Animator>().SetBool("isMoving", false);
+                    Animator[] animators = _PlayerCtr.PlayersData[_PlayerCtr.ControlPlayerID].GetComponentsInChildren<Animator>();
+                    animators[1].SetBool("isMoving", false);
                 }
                 KeyDDown = 0;
             }
@@ -197,34 +201,34 @@ public class MoveBottonCtr : MonoBehaviour
                     //データ記録作成
                     KeySpace.StartTime = _PlayerCtr.Timer;
 
-                    if(_PlayerCtr.PlayersData[_PlayerCtr.ControlPlayerID].CheakSkill(SkillID.JUMPSMARSH))
+                    if (_PlayerCtr.PlayersData[_PlayerCtr.ControlPlayerID].CheakSkill(SkillID.JUMPSMARSH))
                     {
-                        if(_PlayerCtr.PlayersData[_PlayerCtr.ControlPlayerID].JumpedTimes == 1 && (KeyDDown >0 || KeyADown>0 || keyWDown> 0 || keySDown > 0))
+                        if (_PlayerCtr.PlayersData[_PlayerCtr.ControlPlayerID].JumpedTimes == 1 && (KeyDDown > 0 || KeyADown > 0 || keyWDown > 0 || keySDown > 0))
                         {
                             if (KeyDDown > 0)
                             {
                                 KeySpace.BottonID = 41;
-                                _PlayerCtr.SkillDataCtr.JumpSmarshDir = new Vector2(1,0);
+                                _PlayerCtr.SkillDataCtr.JumpSmarshDir = new Vector2(1, 0);
                             }
-                            else if(KeyADown > 0)
+                            else if (KeyADown > 0)
                             {
                                 KeySpace.BottonID = 42;
-                                _PlayerCtr.SkillDataCtr.JumpSmarshDir = new Vector2(-1,0);
+                                _PlayerCtr.SkillDataCtr.JumpSmarshDir = new Vector2(-1, 0);
                             }
-                            else if(keyWDown > 0)
+                            else if (keyWDown > 0)
                             {
                                 KeySpace.BottonID = 43;
                                 _PlayerCtr.SkillDataCtr.JumpSmarshDir = new Vector2(0, 1);
 
                             }
-                            else if(keySDown > 0)
+                            else if (keySDown > 0)
                             {
                                 KeySpace.BottonID = 44;
                                 _PlayerCtr.SkillDataCtr.JumpSmarshDir = new Vector2(0, -1);
                             }
                             _PlayerCtr.SkillDataCtr.UseJumpSmarsh = true;
                         }
-                        else if(_PlayerCtr.PlayersData[_PlayerCtr.ControlPlayerID].JumpedTimes == 0)
+                        else if (_PlayerCtr.PlayersData[_PlayerCtr.ControlPlayerID].JumpedTimes == 0)
                         {
                             KeySpace.BottonID = 4;
                         }
@@ -242,7 +246,7 @@ public class MoveBottonCtr : MonoBehaviour
                 KeySpaceDown = 0;
             }
 
-            if(keyWDown > 0)
+            if (keyWDown > 0)
             {
                 keyWDown = 0;
             }
@@ -261,10 +265,10 @@ public class MoveBottonCtr : MonoBehaviour
             playerpostion = _PlayerCtr.Players[_PlayerCtr.ControlPlayerID].GetComponent<Transform>().position;
 
             //座標変更
-            if(!_PlayerCtr.CheakJumpSmarsh(_PlayerCtr.ControlPlayerID))
+            if (!_PlayerCtr.CheakJumpSmarsh(_PlayerCtr.ControlPlayerID))
             {
                 _PlayerCtr.Players[_PlayerCtr.ControlPlayerID].GetComponent<Transform>().position = new Vector2(playerpostion.x + moveX, playerpostion.y);
-            }            
+            }
         }
     }
 }

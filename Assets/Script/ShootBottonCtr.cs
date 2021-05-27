@@ -83,6 +83,10 @@ public class ShootBottonCtr : MonoBehaviour
                 clone.GetComponent<Collision>().PlayerID = ID;
                 m_BulletsList.Add(clone);
             }
+            else
+            {
+                KeyShootDown = 0;
+            }
         }
         else if (ID != _PlayerCtr.ControlPlayerID)//”ñ‘€ì‘ÎÛ‚Ìˆ—
         {
