@@ -333,11 +333,15 @@ public class PlayerController : MonoBehaviour
         Timer = 0.0f;
         for (int i = 0; i < Players.Count; i++)
         {
+            PlayersData[i].HP = PlayersData[i].MaxHP;
             PlayersData[i].IsJump = false;
             PlayersData[i].IsAlive = true;
             Players[i].GetComponent<Transform>().position = PlayersData[i].StartPoStartPositon;
             Players[i].SetActive(true);
         }
+
+        ChaUICtr.ChangeHP(PlayersData[ControlPlayerID].PlayerID);
+
 
         for (int i = 0; i < ShootCtr.m_BulletsList.Count; i++)
         {
@@ -354,10 +358,9 @@ public class PlayerController : MonoBehaviour
         SkillDataCtr.EnableUseCut = true;
         SkillDataCtr.UseCut = false;
 
-        //Players[ControlPlayerID].GetComponent<SpriteRenderer>().sortingOrder = 0;
         ControlPlayerID++;
         ControlPlayerID %= Players.Count;
-        //Players[ControlPlayerID].GetComponent<SpriteRenderer>().sortingOrder = 1;
+
         ChaUICtr.ChangeUI(ControlPlayerID);
         //保存データの更新
         SavedBehaviour = new PlayerBehaviourData(RecordBehaviour);
@@ -375,11 +378,14 @@ public class PlayerController : MonoBehaviour
 
         for (int i = 0; i < Players.Count; i++)
         {
+            PlayersData[i].HP = PlayersData[i].MaxHP;
             PlayersData[i].IsJump = false;
             PlayersData[i].IsAlive = true;
             Players[i].GetComponent<Transform>().position = PlayersData[i].StartPoStartPositon;
             Players[i].SetActive(true);
         }
+
+        ChaUICtr.ChangeHP(PlayersData[ControlPlayerID].PlayerID);
 
         for (int i = 0; i < ShootCtr.m_BulletsList.Count; i++)
         {

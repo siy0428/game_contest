@@ -11,6 +11,8 @@ public class Player : MonoBehaviour
     //キャラクタ－のヘルスポイント
     public float HP;
 
+    public float MaxHP;
+
     //キャラクターによる攻撃力の修正値
     public float ATK;
 
@@ -44,7 +46,7 @@ public class Player : MonoBehaviour
     public bool IsAlive;
 
     //キャラクターの初期位置
-    public Vector2 StartPoStartPositon;
+    public Vector3 StartPoStartPositon;
 
     //キャラクターの向き方向
     public Vector3 PlayersForward;
@@ -68,8 +70,11 @@ public class Player : MonoBehaviour
     //普通の攻撃アイコン
     public Sprite AttackIconObj;
 
-    //ユニットスキルアイコン
+    //スキルアイコン
     public Sprite SkillIconObj;
+
+    //スキルのボタンイメージ
+    public Sprite SkillBottonIm;
     
     // Start is called before the first frame update
     void Awake()
@@ -104,6 +109,11 @@ public class Player : MonoBehaviour
         }
 
         return false;
+    }
+
+    public void Hurt(float _Demage)
+    {
+        HP -= _Demage;
     }
 
     public void OnCollisionEnter2D(UnityEngine.Collision2D collision)
