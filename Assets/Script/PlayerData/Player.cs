@@ -44,7 +44,7 @@ public class Player : MonoBehaviour
     public bool IsAlive;
 
     //キャラクターの初期位置
-    public Vector2 StartPoStartPositon;
+    public Vector3 StartPoStartPositon;
 
     //キャラクターの向き方向
     public Vector3 PlayersForward;
@@ -60,7 +60,7 @@ public class Player : MonoBehaviour
 
     public Vector3 ShootFixPostion = new Vector3();
 
-    public Vector3 ObjectPosition;
+    public Vector3 InBoxOffset;
 
     //キャラクターアイコン
     public Sprite AvatarObj;

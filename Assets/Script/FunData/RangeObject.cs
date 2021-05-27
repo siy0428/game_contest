@@ -25,6 +25,7 @@ public class RangeObject : MonoBehaviour
     /// プライベート変数
     /// </summary>
     private PlayerController pc;
+    private ShootBottonCtr sbc;
     private float RotSpeed = 1.0f;
     private InputAction arrow;
     private float FinishAngle;
@@ -35,8 +36,8 @@ public class RangeObject : MonoBehaviour
     public float GetAngle { get { return Angle; } }
     public float GetRadius { get { return Radius; } }
     public int GetTriangleCount { get { return TriangleCount; } }
-    public float GetRotateAngle { get; private set; } = 0.0f;
-    public Vector3 Direction { get; private set; } = Vector3.up;
+    public float GetRotateAngle { get; private set; }
+    public Vector3 Direction { get; private set; }
 
     void Start()
     {
@@ -44,7 +45,9 @@ public class RangeObject : MonoBehaviour
         InputActionMap actionMap = _input.currentActionMap;
         arrow = actionMap["Move"];
         pc = FindObjectOfType<PlayerController>();
+        sbc = FindObjectOfType<ShootBottonCtr>();
 
+        Direction = Vector3.up;
         FinishAngle = 0.0f;
         GetRotateAngle = FinishAngle;
     }
@@ -260,7 +263,6 @@ public class RangeObject : MonoBehaviour
         //扇メッシュの描画
         DrawFunMesh();
 
-        ShootBottonCtr sbc = FindObjectOfType<ShootBottonCtr>();
         GameObject hit_obj = FunCollision();
 
         //扇に敵が入っていた場合

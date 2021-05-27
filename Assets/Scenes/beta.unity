@@ -316,6 +316,10 @@ PrefabInstance:
       propertyPath: m_LocalPosition.y
       value: 32.6
       objectReference: {fileID: 0}
+    - target: {fileID: 8612584339121283431, guid: 72f6788a664521b46848276c594fedf4, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 10
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 72f6788a664521b46848276c594fedf4, type: 3}
 --- !u!1 &84154972
@@ -2459,7 +2463,7 @@ MonoBehaviour:
   spawns:
   - {x: 237.34, y: 35.121, z: 0}
   defeat_count: 0
-  time_limit: 9999
+  time_limit: 15
 --- !u!4 &736465875
 Transform:
   m_ObjectHideFlags: 0
@@ -2590,7 +2594,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 959276456}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -0.99998474}
+  m_LocalPosition: {x: 0, y: 0.33, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1049415922}
@@ -2719,13 +2723,13 @@ MonoBehaviour:
   IsJump: 0
   JumpedTimes: 0
   IsAlive: 0
-  StartPoStartPositon: {x: 0, y: 0}
+  StartPoStartPositon: {x: 0, y: 0, z: 0}
   PlayersForward: {x: 1, y: 1, z: 0}
   Bullet: {fileID: 7875155880049078745, guid: 4839e46db498cb746b2a122371cf0455, type: 3}
   BulletSpeed: 150
   ShootCD: 0.5
   ShootFixPostion: {x: 0, y: 0.5, z: 0}
-  ObjectPosition: {x: 243, y: 38, z: 0}
+  InBoxOffset: {x: 0, y: 0.5, z: 0}
   AvatarObj: {fileID: 21300000, guid: 05243ba111e0070428d11607d4bdd6dd, type: 3}
   AttackIconObj: {fileID: 3361893691445635442, guid: e27b8589df343f4489d0989a386683ff, type: 3}
   SkillIconObj: {fileID: -5703202164605339356, guid: e27b8589df343f4489d0989a386683ff, type: 3}
@@ -3212,13 +3216,13 @@ MonoBehaviour:
   IsJump: 0
   JumpedTimes: 0
   IsAlive: 0
-  StartPoStartPositon: {x: 0, y: 0}
+  StartPoStartPositon: {x: 0, y: 0, z: 0}
   PlayersForward: {x: 1, y: 1, z: 0}
   Bullet: {fileID: 5598220327185535831, guid: 15cc9d124acaf274cb63fd1f74a0d31b, type: 3}
   BulletSpeed: 150
   ShootCD: 0.5
   ShootFixPostion: {x: 0, y: 0.5, z: 0}
-  ObjectPosition: {x: 243, y: 33.63, z: 0}
+  InBoxOffset: {x: 0, y: 0.5, z: 0}
   AvatarObj: {fileID: 21300000, guid: ba0670f9cf12ff344b07cf44ae535ff4, type: 3}
   AttackIconObj: {fileID: -7319077863675432324, guid: e27b8589df343f4489d0989a386683ff, type: 3}
   SkillIconObj: {fileID: 1981871264356009146, guid: e27b8589df343f4489d0989a386683ff, type: 3}
@@ -3554,6 +3558,24 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1578174331}
   m_CullTransparentMesh: 1
+--- !u!1 &1591278132 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8612584339425296964, guid: 72f6788a664521b46848276c594fedf4, type: 3}
+  m_PrefabInstance: {fileID: 69146283}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1591278136
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1591278132}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cd4425fb2ad1d4b48aa000bc1e40621d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ro: {fileID: 959276461}
 --- !u!1 &1593924592
 GameObject:
   m_ObjectHideFlags: 0
