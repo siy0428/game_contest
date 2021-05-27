@@ -2459,7 +2459,7 @@ MonoBehaviour:
   spawns:
   - {x: 237.34, y: 35.121, z: 0}
   defeat_count: 0
-  time_limit: 15
+  time_limit: 9999
 --- !u!4 &736465875
 Transform:
   m_ObjectHideFlags: 0

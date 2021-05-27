@@ -27,6 +27,7 @@ public class RangeObject : MonoBehaviour
     private PlayerController pc;
     private float RotSpeed = 1.0f;
     private InputAction arrow;
+    private float FinishAngle;
 
     /// <summary>
     /// 他スクリプトから参照用メソッド
@@ -43,6 +44,9 @@ public class RangeObject : MonoBehaviour
         InputActionMap actionMap = _input.currentActionMap;
         arrow = actionMap["Move"];
         pc = FindObjectOfType<PlayerController>();
+
+        FinishAngle = 0.0f;
+        GetRotateAngle = FinishAngle;
     }
 
     // Update is called once per frame
@@ -63,6 +67,13 @@ public class RangeObject : MonoBehaviour
     /// </summary>
     void InputDir(Vector2 input)
     {
+        //なにも入力していない場合処理を行わない
+        input.Normalize();
+        if (input.magnitude < 1.0f)
+        {
+            return;
+        }
+
         //上方向
         if (input.y > 0.5f)
         {
@@ -121,6 +132,20 @@ public class RangeObject : MonoBehaviour
         {
             GetRotateAngle -= RotSpeed;
         }
+
+        //目標の角度に達したら角度を固定
+        var cross = Vector3.Cross(Direction, Vector3.up);
+        cross.z = (cross.z < 0) ? 1 : -1;
+        FinishAngle = Vector3.Angle(Direction, Vector3.up) * cross.z;
+        FinishAngle = (FinishAngle + 360) % 360;
+        if (FinishAngle - MaxRotSpeed <= GetRotateAngle && FinishAngle + MaxRotSpeed >= GetRotateAngle)
+        {
+            GetRotateAngle = FinishAngle;
+        }
+
+        //角度の調整
+        GetRotateAngle %= 360.0f;
+        GetRotateAngle = (GetRotateAngle + 360) % 360;
 
         //回転速度の減衰
         if (Vector3.Dot(this.transform.up, Direction) > 0.9f)
