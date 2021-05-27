@@ -18,11 +18,8 @@ public class DestroyTrigger : MonoBehaviour
     {
         if (DoDestroy)
         {
-            Destroy(gameObject, 1.0f);
-            if (gameObject.GetComponentInParent<DestroyTrigger>() != null)
-            {
-                gameObject.GetComponentInParent<DestroyTrigger>().DoDestroy = true;
-            }
+            Destroy(transform.parent.gameObject, 3.0f);
+            Destroy(gameObject, 2.0f);
         }
     }
 }

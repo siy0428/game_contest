@@ -95,22 +95,27 @@ public class PlayerController : MonoBehaviour
                     {
                         if (!savedata[i].Used && PlayersData[savedata[i].PlayerID].IsAlive)
                         {
+                            Animator[] animators = PlayersData[savedata[i].PlayerID].GetComponentsInChildren<Animator>();
                             //キーの番号ごとに、対応の状態を変更する
                             switch (savedata[i].BottonID)
                             {
                                 case 0:
                                     PlayersData[savedata[i].PlayerID].IsMove = -1;
                                     PlayersData[savedata[i].PlayerID].PlayersForward = new Vector3(-1.0f, 1.0f, 0.0f);
+                                    animators[1].SetBool("isMoving", true);
                                     break;
                                 case 1:
                                     PlayersData[savedata[i].PlayerID].IsMove = 0;
+                                    animators[1].SetBool("isMoving", false);
                                     break;
                                 case 2:
                                     PlayersData[savedata[i].PlayerID].IsMove = 1;
                                     PlayersData[savedata[i].PlayerID].PlayersForward = new Vector3(1.0f, 1.0f, 0.0f);
+                                    animators[1].SetBool("isMoving", true);
                                     break;
                                 case 3:
                                     PlayersData[savedata[i].PlayerID].IsMove = 0;
+                                    animators[1].SetBool("isMoving", false);
                                     break;
                                 case 4:
                                     PlayersData[savedata[i].PlayerID].IsJump = true;
@@ -168,6 +173,9 @@ public class PlayerController : MonoBehaviour
             {
                 if (PlayersData[i].IsAlive)
                 {
+
+                    Animator[] animators = Players[i].GetComponentsInChildren<Animator>();
+
                     //非操作対象
                     if (i != ControlPlayerID)
                     {
@@ -205,6 +213,8 @@ public class PlayerController : MonoBehaviour
                     }
 
                     JumpSmarsh(i);
+
+                    animators[1].SetFloat("vspeed", Players[i].GetComponent<Rigidbody2D>().velocity.y);
 
                     if (Players[i].GetComponent<Rigidbody2D>().velocity.y == 0)
                     {

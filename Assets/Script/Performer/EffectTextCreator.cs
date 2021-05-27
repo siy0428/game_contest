@@ -21,14 +21,13 @@ public class EffectTextCreator : MonoBehaviour
         float pos_y = gameObject.GetComponentInParent<Transform>().position.y + 0.5f + Random.insideUnitCircle.y * 0.5f;
 
         ParentObj = new GameObject(EffectTextStr);
-        ParentObj.AddComponent<DestroyTrigger>();
 
         TextObj = new GameObject("EffectTextObj");
         TextObj.transform.SetParent(ParentObj.transform);
         TextObj.AddComponent<SpriteRenderer>();
         TextObj.AddComponent<Animator>();
-        TextObj.GetComponent<Animator>().runtimeAnimatorController = theAnimator;
         TextObj.AddComponent<DestroyTrigger>();
+        TextObj.GetComponent<Animator>().runtimeAnimatorController = theAnimator;
 
         ParentObj.transform.position = new Vector3(pos_x, pos_y, 2.0f);
         DoneCreate = true;

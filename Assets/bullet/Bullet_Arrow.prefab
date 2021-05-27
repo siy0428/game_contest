@@ -129,7 +129,7 @@ MonoBehaviour:
   m_Dir: {x: 0, y: 0, z: 0}
   EnableRebound: 0
   Aiming: 0
-  BulletSpeed: 3
+  BulletSpeed: 4
   BulletGra: -10
   Timer: 0
   LiveTime: 5
@@ -139,6 +139,10 @@ MonoBehaviour:
   ReboundDir: {x: 0, y: 0, z: -1}
   m_Attack: 5
   m_ArrowFator: 40
+  m_ShootPosition: {x: 0, y: 0, z: 0}
+  DriveOffFactor: 10
+  DriveOffAngleMin: 12
+  DriveOffAngleMax: 32
 --- !u!50 &9043417017992459915
 Rigidbody2D:
   serializedVersion: 4

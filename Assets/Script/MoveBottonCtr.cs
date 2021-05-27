@@ -195,6 +195,10 @@ public class MoveBottonCtr : MonoBehaviour
                 //ジャンプしてない状態のみ、ジャンプできる
                 if (!_PlayerCtr.PlayersData[_PlayerCtr.ControlPlayerID].IsJump && _PlayerCtr.PlayersData[_PlayerCtr.ControlPlayerID].JumpedTimes < _PlayerCtr.PlayersData[_PlayerCtr.ControlPlayerID].JumpStep)
                 {
+
+                    Animator[] animators = _PlayerCtr.PlayersData[_PlayerCtr.ControlPlayerID].GetComponentsInChildren<Animator>();
+                    animators[1].SetTrigger("doJump");
+
                     //ジャンプ状態更新
                     _PlayerCtr.PlayersData[_PlayerCtr.ControlPlayerID].IsJump = true;
 
@@ -267,7 +271,8 @@ public class MoveBottonCtr : MonoBehaviour
             //座標変更
             if (!_PlayerCtr.CheakJumpSmarsh(_PlayerCtr.ControlPlayerID))
             {
-                _PlayerCtr.Players[_PlayerCtr.ControlPlayerID].GetComponent<Transform>().position = new Vector2(playerpostion.x + moveX, playerpostion.y);
+                _PlayerCtr.Players[_PlayerCtr.ControlPlayerID].GetComponent<Transform>().position = new Vector3(playerpostion.x + moveX, playerpostion.y,
+                    _PlayerCtr.Players[_PlayerCtr.ControlPlayerID].transform.position.z);
             }
         }
     }
