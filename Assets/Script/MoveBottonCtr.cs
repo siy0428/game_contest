@@ -110,6 +110,8 @@ public class MoveBottonCtr : MonoBehaviour
 
                     //記録リストに追加
                     _PlayerCtr.RecordBehaviour.AddBehaviour(KeyA);
+
+                    _PlayerCtr.GetComponent<Animator>().SetBool("isMoving", true);
                 }
             }
 
@@ -131,6 +133,7 @@ public class MoveBottonCtr : MonoBehaviour
                     //記録リストに追加
                     _PlayerCtr.RecordBehaviour.AddBehaviour(KeyD);
 
+                    _PlayerCtr.GetComponent<Animator>().SetBool("isMoving", true);
                 }
             }
 
@@ -150,6 +153,8 @@ public class MoveBottonCtr : MonoBehaviour
 
                     //記録リストに追加
                     _PlayerCtr.RecordBehaviour.AddBehaviour(KeyA);
+
+                    _PlayerCtr.GetComponent<Animator>().SetBool("isMoving", false);
                 }
 
                 KeyADown = 0;
@@ -171,6 +176,8 @@ public class MoveBottonCtr : MonoBehaviour
 
                     //記録リストに追加
                     _PlayerCtr.RecordBehaviour.AddBehaviour(KeyD);
+
+                    _PlayerCtr.GetComponent<Animator>().SetBool("isMoving", false);
                 }
                 KeyDDown = 0;
             }

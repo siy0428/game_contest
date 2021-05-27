@@ -3228,6 +3228,9 @@ MonoBehaviour:
   ShootCD: 0.5
   ShootFixPostion: {x: 0, y: 0.5, z: 0}
   ObjectPosition: {x: 243, y: 38, z: 0}
+  AvatarObj: {fileID: 0}
+  AttackIconObj: {fileID: 0}
+  SkillIconObj: {fileID: 0}
 --- !u!58 &1049415924
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -3244,6 +3247,26 @@ CircleCollider2D:
   m_Offset: {x: 0.023615837, y: 0.18598747}
   serializedVersion: 2
   m_Radius: 0.11918163
+--- !u!1 &1071682920 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8612584340025995360, guid: 72f6788a664521b46848276c594fedf4, type: 3}
+  m_PrefabInstance: {fileID: 69146283}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1071682922
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1071682920}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c35385a7e3622e148a429e954bcbf650, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  theAnimator: {fileID: 9100000, guid: de5a15406a02ccd4c87295d2a7de6c20, type: 2}
+  EffectTextStr: pata
+  DoCreateText: 0
 --- !u!1 &1101412667
 GameObject:
   m_ObjectHideFlags: 0
@@ -3771,6 +3794,9 @@ MonoBehaviour:
   ShootCD: 0.5
   ShootFixPostion: {x: 0, y: 0.5, z: 0}
   ObjectPosition: {x: 243, y: 33.63, z: 0}
+  AvatarObj: {fileID: 0}
+  AttackIconObj: {fileID: 0}
+  SkillIconObj: {fileID: 0}
 --- !u!58 &1266795360
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -4859,7 +4885,7 @@ MonoBehaviour:
   StartBehaviourRecord: 1
   StartFallBack: 0
   FallBackSpeed: 5
-  SkillDataCtr: {fileID: 0}
+  SkillDataCtr: {fileID: 526104736}
   Timer: 0
   JumpFocre: 1
   PlayersData: []
