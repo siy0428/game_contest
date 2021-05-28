@@ -54,13 +54,16 @@ public class ShootBottonCtr : MonoBehaviour
             //射撃可能な場合
             if (CanShot)
             {
+                Animator[] animators = _PlayerCtr.PlayersData[_PlayerCtr.ControlPlayerID].GetComponentsInChildren<Animator>();
+                animators[0].SetBool("doAttack", true);
+
                 //操作キャラクターのシュートの間隔を取得する
                 ShootCD = _PlayerCtr.PlayersData[_PlayerCtr.ControlPlayerID].ShootCD;
 
                 // 弾（ゲームオブジェクト）の生成
-                GameObject clone = Instantiate(_PlayerCtr.PlayersData[_PlayerCtr.ControlPlayerID].Bullet, _PlayerCtr.Players[ID].GetComponent<Transform>().position + _PlayerCtr.Players[ID].GetComponent<Player>().ShootFixPostion, Quaternion.identity);
-                clone.GetComponent<BulletData>().SetTarget(ShotPos);    //弾の方向
-                clone.GetComponent<BulletData>().SetShootPosition(clone.transform.position);
+                //GameObject clone = Instantiate(_PlayerCtr.PlayersData[_PlayerCtr.ControlPlayerID].Bullet, _PlayerCtr.Players[ID].GetComponent<Transform>().position + _PlayerCtr.Players[ID].GetComponent<Player>().ShootFixPostion, Quaternion.identity);
+                //clone.GetComponent<BulletData>().SetTarget(ShotPos);    //弾の方向
+                //clone.GetComponent<BulletData>().SetShootPosition(clone.transform.position);
 
 
                 // 向きの生成（Z成分の除去と正規化）
@@ -80,8 +83,10 @@ public class ShootBottonCtr : MonoBehaviour
 
                 KeyShootDown = -1;
 
-                clone.GetComponent<Collision>().PlayerID = ID;
-                m_BulletsList.Add(clone);
+                _PlayerCtr.PlayersData[_PlayerCtr.ControlPlayerID].gameObject.GetComponentInChildren<ShootKeeper>().SetParama(ShotPos, ID);
+
+                //clone.GetComponent<Collision>().PlayerID = ID;
+                //m_BulletsList.Add(clone);
             }
             else
             {

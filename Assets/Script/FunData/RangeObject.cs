@@ -269,7 +269,14 @@ public class RangeObject : MonoBehaviour
         if (hit_obj)
         {
             sbc.SetCanShot(true);
-            sbc.SetShotPos(hit_obj.transform.position);
+            if (hit_obj.tag == "Player")
+            {
+                sbc.SetShotPos(hit_obj.transform.position + new Vector3(0.0f, 0.25f, 0.0f));
+            } 
+            else
+            {
+                sbc.SetShotPos(hit_obj.transform.position);
+            }
         }
         //êÓÇ…ìGÇ™Ç¢Ç»Ç¢èÍçá
         else
