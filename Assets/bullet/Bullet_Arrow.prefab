@@ -137,8 +137,12 @@ MonoBehaviour:
   ReboundTimes: 0
   ReboundedTimes: 0
   ReboundDir: {x: 0, y: 0, z: -1}
-  m_Attack: 5
-  m_ArrowFator: 40
+  m_Attack: 1
+  m_ArrowFator: 30
+  m_ShootPosition: {x: 0, y: 0, z: 0}
+  DriveOffFactor: 10
+  DriveOffAngleMin: 12
+  DriveOffAngleMax: 32
 --- !u!50 &9043417017992459915
 Rigidbody2D:
   serializedVersion: 4
@@ -158,7 +162,7 @@ Rigidbody2D:
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 0
 --- !u!61 &5731814420642921940
 BoxCollider2D:

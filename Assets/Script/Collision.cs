@@ -20,11 +20,14 @@ public class Collision : MonoBehaviour
     private EnemyManager em;
     private LoopManager lm;
 
+    private CharacterUIController CUICtr;
+
     // Start is called before the first frame update
     void Start()
     {
         PlayerCtr = FindObjectOfType<PlayerController>();
         cp2 = new ContactPoint2D[1];
+        CUICtr = FindObjectOfType<CharacterUIController>();
     }
 
     private void Update()
@@ -40,19 +43,37 @@ public class Collision : MonoBehaviour
 
         if (collider.gameObject.tag == "Player")
         {
-            if (PlayerID != collider.gameObject.GetComponent<Player>().PlayerID)    //自分自身に当たらない処理
+            Player en = collider.gameObject.GetComponent<Player>();
+            if (PlayerID != en.PlayerID)    //自分自身に当たらない処理
             {
-                BulletData bd = gameObject.GetComponent<BulletData>();
-                DriveOff(gameObject, bd.m_Type);
-                ShootBottonCtr sbc = FindObjectOfType<ShootBottonCtr>();
-                sbc.m_BulletsList.Remove(this.gameObject);
-                GameObject.Destroy(this.gameObject);
-                collider.gameObject.SetActive(false);
-                if (PlayerID != PlayerCtr.ControlPlayerID)
+                Player py = PlayerCtr.PlayersData[PlayerID];
+                if (en.HP > 0)
                 {
-                    PlayerCtr.PlayersData[collider.gameObject.GetComponent<Player>().PlayerID].IsAlive = false;
-                    collider.gameObject.SetActive(false);
-                    lm.LoopAgain(); //同じループの生成
+                    en.Hurt(py.Bullet.GetComponent<BulletData>().m_Attack + py.ATK);
+                    BulletData bd = gameObject.GetComponent<BulletData>();
+                    DriveOff(gameObject, bd.m_Type);
+                    ShootBottonCtr sbc = FindObjectOfType<ShootBottonCtr>();
+                    sbc.m_BulletsList.Remove(this.gameObject);
+                    GameObject.Destroy(this.gameObject);
+
+                    
+                    if (en.HP <= 0)
+                    {
+                        PlayerCtr.PlayersData[collider.gameObject.GetComponent<Player>().PlayerID].IsAlive = false;
+                        collider.gameObject.SetActive(false);
+                        if (PlayerID != PlayerCtr.ControlPlayerID)
+                        {
+                            lm.LoopAgain(); //同じループの生成
+                        }
+                    }
+                    else
+                    {
+                        if (PlayerID != PlayerCtr.ControlPlayerID)
+                        {
+                            CUICtr.ChangeHP(en.PlayerID);
+                            Debug.Log(en.HP);
+                        }
+                    }
                 }
             }
         }
