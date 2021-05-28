@@ -60,7 +60,7 @@ public class Player : MonoBehaviour
 
     public Vector3 ShootFixPostion = new Vector3();
 
-    public Vector3 InBoxOffset;
+    public Vector3 Offset;
 
     //キャラクターアイコン
     public Sprite AvatarObj;
