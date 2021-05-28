@@ -242,7 +242,7 @@ MonoBehaviour:
   ReboundTimes: 0
   ReboundedTimes: 0
   ReboundDir: {x: 0, y: 0, z: -1}
-  m_Attack: 5
+  m_Attack: 1
   m_ArrowFator: 40
   m_ShootPosition: {x: 0, y: 0, z: 0}
   DriveOffFactor: 10
