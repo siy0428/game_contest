@@ -69,7 +69,7 @@ public class InBoxCreate : MonoBehaviour
             {
                 alpha = 0.5f;
             }
-            var pos = player.StartPoStartPositon + player.InBoxOffset;
+            var pos = player.StartPoStartPositon + player.Offset;
             Create(InBox.gameObject, pos, alpha);
         }
     }
