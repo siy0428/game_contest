@@ -55,7 +55,7 @@ public class ShootBottonCtr : MonoBehaviour
             if (CanShot)
             {
                 Animator[] animators = _PlayerCtr.PlayersData[_PlayerCtr.ControlPlayerID].GetComponentsInChildren<Animator>();
-                animators[0].SetBool("doAttack", true);
+                animators[0].SetTrigger("doAttack");
 
                 //操作キャラクターのシュートの間隔を取得する
                 ShootCD = _PlayerCtr.PlayersData[_PlayerCtr.ControlPlayerID].ShootCD;
@@ -99,14 +99,19 @@ public class ShootBottonCtr : MonoBehaviour
             GameObject clone = Instantiate(_PlayerCtr.PlayersData[ID].Bullet, _PlayerCtr.Players[ID].GetComponent<Transform>().position + _PlayerCtr.Players[ID].GetComponent<Player>().ShootFixPostion, Quaternion.identity);
 
             //直接方向を取得
-            Vector3 shotForward = _ShootDir;
-            clone.GetComponent<BulletData>().SetTarget(_ShootDir);
-            clone.GetComponent<BulletData>().SetShootPosition(clone.transform.position);
+            // Vector3 shotForward = _ShootDir;
+            // clone.GetComponent<BulletData>().SetTarget(_ShootDir);
+            // clone.GetComponent<BulletData>().SetShootPosition(clone.transform.position);
             // 弾に速度を与える
             //clone.GetComponent<Rigidbody2D>().velocity = shotForward * _PlayerCtr.PlayersData[_PlayerCtr.ControlPlayerID].BulletSpeed;
 
-            clone.GetComponent<Collision>().PlayerID = ID;
-            m_BulletsList.Add(clone);
+            //clone.GetComponent<Collision>().PlayerID = ID;
+            //m_BulletsList.Add(clone);
+
+            Animator[] animators = _PlayerCtr.PlayersData[_PlayerCtr.ControlPlayerID].GetComponentsInChildren<Animator>();
+            animators[0].SetTrigger("doAttack");
+
+            _PlayerCtr.PlayersData[_PlayerCtr.ControlPlayerID].gameObject.GetComponentInChildren<ShootKeeper>().SetParama(ShotPos, ID);
         }
     }
 

@@ -2731,6 +2731,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PlayerID: 0
   HP: 0
+  MaxHP: 0
   ATK: 0
   DEF: 0
   MoveSpeed: 3
@@ -2748,10 +2749,11 @@ MonoBehaviour:
   BulletSpeed: 250
   ShootCD: 0.5
   ShootFixPostion: {x: 0, y: 0.5, z: 0}
-  InBoxOffset: {x: 0, y: 0, z: 0}
+  Offset: {x: 0, y: 0, z: 0}
   AvatarObj: {fileID: 21300000, guid: 05243ba111e0070428d11607d4bdd6dd, type: 3}
   AttackIconObj: {fileID: 3361893691445635442, guid: e27b8589df343f4489d0989a386683ff, type: 3}
   SkillIconObj: {fileID: -5703202164605339356, guid: e27b8589df343f4489d0989a386683ff, type: 3}
+  SkillBottonIm: {fileID: 21300000, guid: f6567620734688f4c894a199a1dac1a0, type: 3}
 --- !u!58 &1049415924
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -3224,6 +3226,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PlayerID: 0
   HP: 0
+  MaxHP: 0
   ATK: 0
   DEF: 0
   MoveSpeed: 3
@@ -3241,10 +3244,11 @@ MonoBehaviour:
   BulletSpeed: 300
   ShootCD: 1
   ShootFixPostion: {x: 0, y: 0.5, z: 0}
-  InBoxOffset: {x: 0, y: 0, z: 0}
+  Offset: {x: 0, y: 0, z: 0}
   AvatarObj: {fileID: 21300000, guid: ba0670f9cf12ff344b07cf44ae535ff4, type: 3}
   AttackIconObj: {fileID: -7319077863675432324, guid: e27b8589df343f4489d0989a386683ff, type: 3}
   SkillIconObj: {fileID: 1981871264356009146, guid: e27b8589df343f4489d0989a386683ff, type: 3}
+  SkillBottonIm: {fileID: 21300000, guid: 6856a115ed7d5294b8ed6ba0903b592e, type: 3}
 --- !u!58 &1266795360
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -4274,6 +4278,9 @@ MonoBehaviour:
   AttackIconCDMaskObj: {fileID: 1593924592}
   SkillIconObj: {fileID: 1711949425}
   SkillIconCDMaskObj: {fileID: 1312321907}
+  SkillBottonImObj: {fileID: 0}
+  HealthPointObj: []
+  HealthPointIconsList: []
 --- !u!4 &1963407637
 Transform:
   m_ObjectHideFlags: 0
