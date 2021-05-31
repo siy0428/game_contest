@@ -112,7 +112,7 @@ public class ShootBottonCtr : MonoBehaviour
             animators[0].SetTrigger("doAttack");
 
             //_PlayerCtr.PlayersData[_PlayerCtr.ControlPlayerID].gameObject.GetComponentInChildren<ShootKeeper>().SetParama(ShotPos, ID);
-            _PlayerCtr.PlayersData[_PlayerCtr.ControlPlayerID].gameObject.GetComponentInChildren<ShootKeeper>().SetParama(_ShootDir, ID);
+            _PlayerCtr.PlayersData[ID].gameObject.GetComponentInChildren<ShootKeeper>().SetParama(_ShootDir, ID);
         }
     }
 
