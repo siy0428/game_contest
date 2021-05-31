@@ -28,12 +28,13 @@ public class Collision : MonoBehaviour
         PlayerCtr = FindObjectOfType<PlayerController>();
         cp2 = new ContactPoint2D[1];
         CUICtr = FindObjectOfType<CharacterUIController>();
-    }
-
-    private void Update()
-    {      
         em = FindObjectOfType<EnemyManager>();
         lm = FindObjectOfType<LoopManager>();
+    }
+
+    void Update()
+    {
+        
     }
 
     // Update is called once per frame
@@ -55,23 +56,22 @@ public class Collision : MonoBehaviour
                     ShootBottonCtr sbc = FindObjectOfType<ShootBottonCtr>();
                     sbc.m_BulletsList.Remove(this.gameObject);
                     GameObject.Destroy(this.gameObject);
-
-                    
+                  
                     if (en.HP <= 0)
                     {
-                        PlayerCtr.PlayersData[collider.gameObject.GetComponent<Player>().PlayerID].IsAlive = false;
+                        //PlayerCtr.PlayersData[collider.gameObject.GetComponent<Player>().PlayerID].IsAlive = false;
                         collider.gameObject.SetActive(false);
-                        if (PlayerID != PlayerCtr.ControlPlayerID)
-                        {
-                            lm.LoopAgain(); //同じループの生成
-                        }
+                        //if (PlayerID != PlayerCtr.ControlPlayerID)
+                        //{
+                        //    lm.LoopAgain(); //同じループの生成
+                        //}
                     }
                     else
                     {
                         if (PlayerID != PlayerCtr.ControlPlayerID)
                         {
                             CUICtr.ChangeHP(en.PlayerID);
-                            Debug.Log(en.HP);
+                            //Debug.Log(en + "のHP:" + en.HP);
                         }
                     }
                 }
@@ -88,7 +88,6 @@ public class Collision : MonoBehaviour
                 Debug.Log(cp2[0].normal);
 
                 if (cp2[0].normal.x >= 0.5f || cp2[0].normal.x <= -0.5f)
-
                 {
                     Cdir = CollisionDir.LEFTRIGHT;
                 }
