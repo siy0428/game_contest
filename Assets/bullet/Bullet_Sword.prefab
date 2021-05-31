@@ -245,6 +245,6 @@ MonoBehaviour:
   m_Attack: 1
   m_ArrowFator: 40
   m_ShootPosition: {x: 0, y: 0, z: 0}
-  DriveOffFactor: 10
-  DriveOffAngleMin: 12
-  DriveOffAngleMax: 32
+  DriveOffFactor: 100
+  DriveOffAngleMin: 32
+  DriveOffAngleMax: 64
