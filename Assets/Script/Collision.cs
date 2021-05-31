@@ -51,7 +51,7 @@ public class Collision : MonoBehaviour
                 {
                     en.Hurt(py.Bullet.GetComponent<BulletData>().m_Attack + py.ATK);
                     BulletData bd = gameObject.GetComponent<BulletData>();
-                    DriveOff(gameObject, bd.m_Type);
+                    DriveOff(gameObject, collider.gameObject, bd.m_Type);
                     ShootBottonCtr sbc = FindObjectOfType<ShootBottonCtr>();
                     sbc.m_BulletsList.Remove(this.gameObject);
                     GameObject.Destroy(this.gameObject);
@@ -146,7 +146,7 @@ public class Collision : MonoBehaviour
         if (collider.gameObject.tag == "Enemy")
         {
             BulletData bd = gameObject.GetComponent<BulletData>();
-            DriveOff(gameObject, bd.m_Type);
+            DriveOff(gameObject, collider.gameObject, bd.m_Type);
 
             //íeÇÃçÌèú
             ShootBottonCtr sbc = FindObjectOfType<ShootBottonCtr>();
@@ -168,11 +168,11 @@ public class Collision : MonoBehaviour
         }
     }
 
-    void DriveOff(GameObject obj, BulletType _Type)
+    void DriveOff(GameObject obj,GameObject Targetobj, BulletType _Type)
     {
         BulletData bd = obj.GetComponent<BulletData>();
 
-        float angle = Random.Range(bd.DriveOffAngleMin, bd.DriveOffAngleMax);
+        float angle = Random.Range(bd.DriveOffAngleMin, bd.DriveOffAngleMax)* Mathf.Deg2Rad;
 
        if(_Type == BulletType.Sword)
         {
@@ -186,7 +186,8 @@ public class Collision : MonoBehaviour
             {
                 dir = new Vector2(-Mathf.Cos(angle), Mathf.Sin(angle));
             }
-            obj.GetComponent<Rigidbody2D>().AddForce(bd.DriveOffFactor * dir);
+            Debug.Log(dir);
+            Targetobj.GetComponent<Rigidbody2D>().AddForce(bd.DriveOffFactor * dir);
         }
     }
 }

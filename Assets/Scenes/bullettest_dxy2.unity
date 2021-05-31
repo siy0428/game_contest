@@ -3688,7 +3688,7 @@ MonoBehaviour:
   MaxHP: 6
   ATK: 0
   DEF: 0
-  MoveSpeed: 2.99
+  MoveSpeed: 3
   JumpStep: 2
   JumpMass: 3
   SkillIDs: 01000000
