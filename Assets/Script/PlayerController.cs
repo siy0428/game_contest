@@ -360,7 +360,6 @@ public class PlayerController : MonoBehaviour
 
         ChaUICtr.ChangeHP(PlayersData[ControlPlayerID].PlayerID);
 
-
         for (int i = 0; i < ShootCtr.m_BulletsList.Count; i++)
         {
             GameObject.Destroy(ShootCtr.m_BulletsList[i]);

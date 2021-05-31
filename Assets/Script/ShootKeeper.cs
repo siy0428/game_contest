@@ -38,12 +38,10 @@ public class ShootKeeper : MonoBehaviour
         }
         if (doShoot && !isShot)
         {
-
             // 弾（ゲームオブジェクト）の生成
             GameObject clone = Instantiate(shootOrigin.Bullet, shootOrigin.GetComponent<Transform>().position + shootOrigin.GetComponent<Player>().ShootFixPostion, Quaternion.identity);
             clone.GetComponent<BulletData>().SetTarget(TargetPos);    //弾の方向
             clone.GetComponent<BulletData>().SetShootPosition(new Vector3(clone.transform.position.x, clone.transform.position.y, 1.0f));
-
             clone.GetComponent<Collision>().PlayerID = ShootOriginID;
             shootbottonctr.m_BulletsList.Add(clone);
 

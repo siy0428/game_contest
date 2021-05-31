@@ -96,7 +96,7 @@ public class ShootBottonCtr : MonoBehaviour
         else if (ID != _PlayerCtr.ControlPlayerID)//非操作対象の処理
         {
             // 弾（ゲームオブジェクト）の生成
-            GameObject clone = Instantiate(_PlayerCtr.PlayersData[ID].Bullet, _PlayerCtr.Players[ID].GetComponent<Transform>().position + _PlayerCtr.Players[ID].GetComponent<Player>().ShootFixPostion, Quaternion.identity);
+            //GameObject clone = Instantiate(_PlayerCtr.PlayersData[ID].Bullet, _PlayerCtr.Players[ID].GetComponent<Transform>().position + _PlayerCtr.Players[ID].GetComponent<Player>().ShootFixPostion, Quaternion.identity);
 
             //直接方向を取得
             // Vector3 shotForward = _ShootDir;
@@ -108,10 +108,11 @@ public class ShootBottonCtr : MonoBehaviour
             //clone.GetComponent<Collision>().PlayerID = ID;
             //m_BulletsList.Add(clone);
 
-            Animator[] animators = _PlayerCtr.PlayersData[_PlayerCtr.ControlPlayerID].GetComponentsInChildren<Animator>();
+            Animator[] animators = _PlayerCtr.PlayersData[ID].GetComponentsInChildren<Animator>();
             animators[0].SetTrigger("doAttack");
 
-            _PlayerCtr.PlayersData[_PlayerCtr.ControlPlayerID].gameObject.GetComponentInChildren<ShootKeeper>().SetParama(ShotPos, ID);
+            //_PlayerCtr.PlayersData[_PlayerCtr.ControlPlayerID].gameObject.GetComponentInChildren<ShootKeeper>().SetParama(ShotPos, ID);
+            _PlayerCtr.PlayersData[_PlayerCtr.ControlPlayerID].gameObject.GetComponentInChildren<ShootKeeper>().SetParama(_ShootDir, ID);
         }
     }
 
