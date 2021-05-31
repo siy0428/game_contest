@@ -134,6 +134,7 @@ public class SkillBottonCtr : MonoBehaviour
     
     private void DownKeyRecord()
     {
+        Animator[] animators = _PlayerCtr.PlayersData[_PlayerCtr.ControlPlayerID].GetComponentsInChildren<Animator>();
         switch (_PlayerCtr.PlayersData[_PlayerCtr.ControlPlayerID].SkillIDs[0])
         {
             case SkillID.Cut:
@@ -141,7 +142,9 @@ public class SkillBottonCtr : MonoBehaviour
                 KeySkill.StartTime = _PlayerCtr.Timer;
                 KeySkill.ShootDir = new Vector2(_PlayerCtr.PlayersData[_PlayerCtr.ControlPlayerID].transform.localScale.x, _PlayerCtr.PlayersData[_PlayerCtr.ControlPlayerID].transform.localScale.y);
                 KeySkill.Used = false;
-                KeySkill.PlayerID = _PlayerCtr.ControlPlayerID;                
+                KeySkill.PlayerID = _PlayerCtr.ControlPlayerID;
+                animators[0].SetBool("isKamae", true);
+                animators[1].SetBool("isKamae", true);
                 break;
             default:
                 break;
@@ -151,6 +154,7 @@ public class SkillBottonCtr : MonoBehaviour
 
     private void UpKeyRecord()
     {
+        Animator[] animators = _PlayerCtr.PlayersData[_PlayerCtr.ControlPlayerID].GetComponentsInChildren<Animator>();
         switch (_PlayerCtr.PlayersData[_PlayerCtr.ControlPlayerID].SkillIDs[0])
         {
             case SkillID.Cut:
@@ -160,6 +164,8 @@ public class SkillBottonCtr : MonoBehaviour
                 KeySkill.Used = false;
                 KeySkill.PlayerID = _PlayerCtr.ControlPlayerID;
                 FindObjectOfType<SkillData>().UseCut = true;
+                animators[0].SetBool("isKamae", false);
+                animators[1].SetBool("isKamae", false);
                 break;
             default:
                 break;

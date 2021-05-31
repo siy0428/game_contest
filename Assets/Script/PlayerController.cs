@@ -120,9 +120,11 @@ public class PlayerController : MonoBehaviour
                                 case 4:
                                     PlayersData[savedata[i].PlayerID].IsJump = true;
                                     PlayersData[savedata[i].PlayerID].OnBox = false;
+                                    animators[1].SetTrigger("doJump");
                                     break;
                                 case 5://シュートだけ、直接シュートする
                                     ShootCtr.ShootKeyDown(this, savedata[i].PlayerID, savedata[i].ShootDir);
+                                    //animators[0].SetTrigger("doAttack");
                                     break;
                                 case 41:
                                     SkillDataCtr.JumpSmarshDir = new Vector2(1, 0);
@@ -130,6 +132,7 @@ public class PlayerController : MonoBehaviour
                                     PlayersData[savedata[i].PlayerID].IsJump = true;
                                     PlayersData[savedata[i].PlayerID].OnBox = false;
                                     SkillDataCtr.UseJumpSmarsh = true;
+                                    animators[1].SetTrigger("doDash");
                                     break;
                                 case 42:
                                     SkillDataCtr.JumpSmarshDir = new Vector2(-1, 0);
@@ -137,6 +140,7 @@ public class PlayerController : MonoBehaviour
                                     PlayersData[savedata[i].PlayerID].IsJump = true;
                                     PlayersData[savedata[i].PlayerID].OnBox = false;
                                     SkillDataCtr.UseJumpSmarsh = true;
+                                    animators[1].SetTrigger("doDash");
                                     break;
                                 case 43:
                                     SkillDataCtr.JumpSmarshDir = new Vector2(0, 1);
@@ -144,6 +148,7 @@ public class PlayerController : MonoBehaviour
                                     PlayersData[savedata[i].PlayerID].IsJump = true;
                                     PlayersData[savedata[i].PlayerID].OnBox = false;
                                     SkillDataCtr.UseJumpSmarsh = true;
+                                    animators[1].SetTrigger("doDash");
                                     break;
                                 case 44:
                                     SkillDataCtr.JumpSmarshDir = new Vector2(0, -1);
@@ -151,13 +156,16 @@ public class PlayerController : MonoBehaviour
                                     PlayersData[savedata[i].PlayerID].IsJump = true;
                                     PlayersData[savedata[i].PlayerID].OnBox = false;
                                     SkillDataCtr.UseJumpSmarsh = true;
+                                    animators[1].SetTrigger("doDash");
                                     break;
                                 case 61:
                                     SkillDataCtr.UseCut = true;
+                                    animators[1].SetBool("isKamae", true) ;
                                     break;
                                 case 66:
                                     ShootCtr.ShootKeyDown_Skill(this, savedata[i].PlayerID, SkillDataCtr.CutBulletObj, savedata[i].ShootDir);
                                     SkillDataCtr.UseCut = false;
+                                    animators[1].SetBool("isKamae", false);
                                     break;
                                 default:
                                     break;

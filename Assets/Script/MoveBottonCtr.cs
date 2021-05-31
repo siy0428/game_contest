@@ -231,6 +231,7 @@ public class MoveBottonCtr : MonoBehaviour
                                 _PlayerCtr.SkillDataCtr.JumpSmarshDir = new Vector2(0, -1);
                             }
                             _PlayerCtr.SkillDataCtr.UseJumpSmarsh = true;
+                            animators[1].SetTrigger("doDash");
                         }
                         else if (_PlayerCtr.PlayersData[_PlayerCtr.ControlPlayerID].JumpedTimes == 0)
                         {
