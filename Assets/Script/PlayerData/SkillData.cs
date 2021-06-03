@@ -5,8 +5,8 @@ using UnityEngine;
 public enum SkillID
 {
     NONE,
-    ATTACK,
-    JUMPSMARSH
+    JUMPSMARSH,
+    Cut
 }
 
 
@@ -19,7 +19,19 @@ public class SkillData : MonoBehaviour
     public Vector2 JumpSmarshDir = new Vector2();
     public bool UseJumpSmarsh = false;
     public float JumpSmarshAngular = 5.0f;
-    public void JumpSmarsh()
+
+    //ãèçá
+    public float CutCD = 3.0f;
+    public float CutLimitTime = 1.0f;
+    public float MaxLimitTime = 3.0f;
+    public bool UseCut = false;
+    public Vector3 CutFixPosition;
+    public bool EnableUseCut = true;
+    public GameObject CutBulletObj;
+
+    //public float 
+    
+    public bool JumpSmarsh()
     {
         if(UseJumpSmarsh)
         {
@@ -28,11 +40,29 @@ public class SkillData : MonoBehaviour
                 UseJumpSmarsh = false;
                 JumpSmarshTimer = 0.0f;
                 JumpSmarshDir = new Vector2(0,0);
-                return;
+                return true;
             }
 
             JumpSmarshTimer += Time.deltaTime;         
         }
+        return false;
     }
+
     //
+    public float GetSkillCDTime(SkillID _skillID)
+    {
+        float value = 0.0f;
+        switch (_skillID)
+        {
+            case SkillID.JUMPSMARSH:
+                break;
+            case SkillID.Cut:
+                value = CutCD;
+                break;
+            default:
+                break;
+        }
+
+        return value;
+    }
 }

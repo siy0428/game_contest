@@ -6,7 +6,9 @@ public enum BulletType
 {
      Default,
      Arrow,
-     Rebound
+     Rebound,
+     Sword,
+     Sword_1
 }
 
 
@@ -45,6 +47,14 @@ public class BulletData : MonoBehaviour
 
     private float m_TargetAngle = 0.0f;
 
+    public Vector3 m_ShootPosition;
+
+    public float DriveOffFactor = 10.0f;
+
+    public float DriveOffAngleMin = 12.0f;
+
+    public float DriveOffAngleMax = 32.0f;
+    
     // Start is called before the first frame update
     void Start()
     {
@@ -55,6 +65,8 @@ public class BulletData : MonoBehaviour
     {
         if(Timer >= LiveTime)
         {
+            ShootBottonCtr sbc = FindObjectOfType<ShootBottonCtr>();
+            sbc.m_BulletsList.Remove(this.gameObject);
             GameObject.Destroy(gameObject);
         }
         Move();
@@ -71,10 +83,15 @@ public class BulletData : MonoBehaviour
                 break;
             case BulletType.Arrow:
                 ArrowMove();
-                //DefaultMove();
                 break;
             case BulletType.Rebound:
                 ReboundMove();
+                break;
+            case BulletType.Sword:
+                SwordMove();
+                break;
+            case BulletType.Sword_1:
+                Sword_1Move();
                 break;
             default:
                 break;
@@ -86,31 +103,43 @@ public class BulletData : MonoBehaviour
         transform.position += m_Dir * BulletSpeed * Time.deltaTime;
     }
 
+    bool aimed = false;
     private void ArrowMove()
     {
-        m_Dir = m_Target - transform.position;
-        m_Dir.Normalize();
+        Vector3 temp = m_Target - transform.position;
 
-        //–Ú•W‚Ì•ÎˆÚŠp“x‚ð‹‚ß‚é
-        m_TargetAngle = 360.0f - Mathf.Atan2(m_Dir.x, m_Dir.y) * Mathf.Rad2Deg;
+        if((temp.x > 0 && m_Dir.x <= 0 || temp.x <= 0 && m_Dir.x >0))
+        {
+            if(!aimed)
+            {
+                aimed = true;
+            }
+        }
+        else if(!aimed)
+        {
+            m_Dir = m_Target - transform.position;
+            m_Dir.Normalize();
+
+            //–Ú•W‚Ì•ÎˆÚŠp“x‚ð‹‚ß‚é
+            m_TargetAngle = 360.0f - Mathf.Atan2(m_Dir.x, m_Dir.y) * Mathf.Rad2Deg;
+        }
+
 
         //Œü‚«‚É‚æ‚èAŒvŽZŽ®‚ð·•Ê‰»
-        if(m_Dir.x > 0)
-        {           
+        if (m_Dir.x > 0)
+        {
             transform.eulerAngles = new Vector3(0, 0, 90 + m_TargetAngle);
 
-            transform.rotation = transform.rotation * Quaternion.Euler(0, 0, m_ArrowFator);
-
-            transform.Translate(Vector3.right * Time.deltaTime * BulletSpeed);
         }
-        else if(m_Dir.x <0)
+        else
         {
             transform.eulerAngles = new Vector3(0, 0, m_TargetAngle);
-
-            transform.rotation = transform.rotation * Quaternion.Euler(0, 0, m_ArrowFator);
-
-            transform.Translate(Vector3.right * Time.deltaTime * BulletSpeed);
         }
+
+        transform.rotation = transform.rotation * Quaternion.Euler(0, 0, m_ArrowFator);
+
+        transform.Translate(Vector3.right * Time.deltaTime * BulletSpeed);
+
     }
 
     private void ReboundMove()
@@ -130,11 +159,52 @@ public class BulletData : MonoBehaviour
         //transform.GetComponent<Rigidbody2D>().velocity = ReboundDir * BulletSpeed * Mathf.Pow(ReboundRate, ReboundedTimes);
     }
 
+    private void SwordMove()
+    {
+        //transform.position += m_Dir * BulletSpeed * Time.deltaTime;
+        Vector3 temp = m_Target - transform.position;
+
+    
+        if (!aimed)
+        {
+            m_Dir = m_Target - transform.position;
+            m_Dir.Normalize();
+
+            //–Ú•W‚Ì•ÎˆÚŠp“x‚ð‹‚ß‚é
+            m_TargetAngle = 360.0f - Mathf.Atan2(m_Dir.x, m_Dir.y) * Mathf.Rad2Deg;
+            aimed = true;
+        }
+
+
+        //Œü‚«‚É‚æ‚èAŒvŽZŽ®‚ð·•Ê‰»
+        if (m_Dir.x > 0)
+        {
+            transform.eulerAngles = new Vector3(0, 0, 90 + m_TargetAngle);
+
+        }
+        else
+        {
+            transform.eulerAngles = new Vector3(0, 0, 90 + m_TargetAngle);
+        }
+
+        transform.Translate(Vector3.right * Time.deltaTime * BulletSpeed);
+    }
+
+    private void Sword_1Move()
+    {
+
+    }
+
     public void SetTarget(Vector3 _Target)
     {
         m_Target = _Target;
         m_Dir = m_Target - transform.position;
         m_Dir.Normalize();
+    }
+
+    public void SetShootPosition(Vector3 _Position)
+    {
+        m_ShootPosition = _Position;
     }
 
     public bool CheakRebound()

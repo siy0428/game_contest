@@ -20,17 +20,21 @@ public class Collision : MonoBehaviour
     private EnemyManager em;
     private LoopManager lm;
 
+    private CharacterUIController CUICtr;
+
     // Start is called before the first frame update
     void Start()
     {
         PlayerCtr = FindObjectOfType<PlayerController>();
         cp2 = new ContactPoint2D[1];
-    }
-
-    private void Update()
-    {      
+        CUICtr = FindObjectOfType<CharacterUIController>();
         em = FindObjectOfType<EnemyManager>();
         lm = FindObjectOfType<LoopManager>();
+    }
+
+    void Update()
+    {
+        
     }
 
     // Update is called once per frame
@@ -40,17 +44,36 @@ public class Collision : MonoBehaviour
 
         if (collider.gameObject.tag == "Player")
         {
-            if (PlayerID != collider.gameObject.GetComponent<Player>().PlayerID)    //自分自身に当たらない処理
+            Player en = collider.gameObject.GetComponent<Player>();
+            if (PlayerID != en.PlayerID)    //自分自身に当たらない処理
             {
-                ShootBottonCtr sbc = FindObjectOfType<ShootBottonCtr>();
-                sbc.m_BulletsList.Remove(this.gameObject);
-                GameObject.Destroy(this.gameObject);
-                collider.gameObject.SetActive(false);
-                if (PlayerID != PlayerCtr.ControlPlayerID)
+                Player py = PlayerCtr.PlayersData[PlayerID];
+                if (en.HP > 0)
                 {
-                    PlayerCtr.PlayersData[collider.gameObject.GetComponent<Player>().PlayerID].IsAlive = false;
-                    collider.gameObject.SetActive(false);
-                    lm.LoopAgain(); //同じループの生成
+                    en.Hurt(py.Bullet.GetComponent<BulletData>().m_Attack + py.ATK);
+                    BulletData bd = gameObject.GetComponent<BulletData>();
+                    DriveOff(gameObject, collider.gameObject, bd.m_Type);
+                    ShootBottonCtr sbc = FindObjectOfType<ShootBottonCtr>();
+                    sbc.m_BulletsList.Remove(this.gameObject);
+                    GameObject.Destroy(this.gameObject);
+                  
+                    if (en.HP <= 0)
+                    {
+                        //PlayerCtr.PlayersData[collider.gameObject.GetComponent<Player>().PlayerID].IsAlive = false;
+                        collider.gameObject.SetActive(false);
+                        //if (PlayerID != PlayerCtr.ControlPlayerID)
+                        //{
+                        //    lm.LoopAgain(); //同じループの生成
+                        //}
+                    }
+                    else
+                    {
+                        if (PlayerID != PlayerCtr.ControlPlayerID)
+                        {
+                            CUICtr.ChangeHP(en.PlayerID);
+                            //Debug.Log(en + "のHP:" + en.HP);
+                        }
+                    }
                 }
             }
         }
@@ -62,11 +85,9 @@ public class Collision : MonoBehaviour
             {
                 bd.ReboundedTimes++;
                 Vector3 od = bd.ReboundDir;
-                Debug.Log(cp2[0].point);
+                Debug.Log(cp2[0].normal);
 
-                //if (cp2[0].normal.x == 1 || cp2[0].normal.x == -1)
-                //if(Mathf.Abs(od.y/od.x) <0.15f)
-                if(cp2[0].normalImpulse==0)
+                if (cp2[0].normal.x >= 0.5f || cp2[0].normal.x <= -0.5f)
                 {
                     Cdir = CollisionDir.LEFTRIGHT;
                 }
@@ -86,9 +107,15 @@ public class Collision : MonoBehaviour
             }
             else
             {
-                ShootBottonCtr sbc = FindObjectOfType<ShootBottonCtr>();
-                sbc.m_BulletsList.Remove(this.gameObject);
-                GameObject.Destroy(this.gameObject);
+                if(bd.m_Type == BulletType.Sword_1)
+                {
+                }
+                else
+                {
+                    ShootBottonCtr sbc = FindObjectOfType<ShootBottonCtr>();
+                    sbc.m_BulletsList.Remove(this.gameObject);
+                    GameObject.Destroy(this.gameObject);
+                }
             }
         }
 
@@ -96,16 +123,30 @@ public class Collision : MonoBehaviour
         {
             if (PlayerID != collider.gameObject.GetComponent<Collision>().PlayerID)
             {
-                ShootBottonCtr sbc = FindObjectOfType<ShootBottonCtr>();
-                sbc.m_BulletsList.Remove(this.gameObject);
-                GameObject.Destroy(this.gameObject);
-                sbc.m_BulletsList.Remove(collider.gameObject);
-                GameObject.Destroy(collider.gameObject);
+                BulletData mbd = gameObject.GetComponent<BulletData>();
+                BulletData bd = collider.gameObject.GetComponent<BulletData>();
+                if (mbd.m_Type == BulletType.Sword_1)
+                {
+                    collider.gameObject.GetComponent<Collision>().PlayerID = PlayerID;
+                    bd.BulletSpeed *= 2;
+                    bd.SetTarget(bd.m_ShootPosition);
+                }
+                else
+                {
+                    ShootBottonCtr sbc = FindObjectOfType<ShootBottonCtr>();
+                    sbc.m_BulletsList.Remove(this.gameObject);
+                    GameObject.Destroy(this.gameObject);
+                    sbc.m_BulletsList.Remove(collider.gameObject);
+                    GameObject.Destroy(collider.gameObject);
+                }
             }
         }
 
         if (collider.gameObject.tag == "Enemy")
         {
+            BulletData bd = gameObject.GetComponent<BulletData>();
+            DriveOff(gameObject, collider.gameObject, bd.m_Type);
+
             //弾の削除
             ShootBottonCtr sbc = FindObjectOfType<ShootBottonCtr>();
             sbc.m_BulletsList.Remove(this.gameObject);
@@ -123,6 +164,29 @@ public class Collision : MonoBehaviour
             {
                 lm.AddDefeat();
             }
+        }
+    }
+
+    void DriveOff(GameObject obj,GameObject Targetobj, BulletType _Type)
+    {
+        BulletData bd = obj.GetComponent<BulletData>();
+
+        float angle = Random.Range(bd.DriveOffAngleMin, bd.DriveOffAngleMax)* Mathf.Deg2Rad;
+
+       if(_Type == BulletType.Sword)
+        {
+            Vector2 dir = new Vector2();
+            if(bd.m_Dir.x > 0)
+            {
+                dir = new Vector2(Mathf.Cos(angle), Mathf.Sin(angle));
+            }
+
+            if(bd.m_Dir.x < 0)
+            {
+                dir = new Vector2(-Mathf.Cos(angle), Mathf.Sin(angle));
+            }
+            Debug.Log(dir);
+            Targetobj.GetComponent<Rigidbody2D>().AddForce(bd.DriveOffFactor * dir);
         }
     }
 }

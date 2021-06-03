@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 7810114060887426668}
   - component: {fileID: 7810114060887426671}
   m_Layer: 0
-  m_Name: Itsumi_katana
+  m_Name: weapon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -71,7 +71,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: ae39e8873dcfa0146ba16b50232e4db5, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -113,7 +113,7 @@ GameObject:
   - component: {fileID: 7810114061052543293}
   - component: {fileID: 7810114061052543292}
   - component: {fileID: 7810114061052543295}
-  - component: {fileID: 1281119403302528287}
+  - component: {fileID: 4047888613230863135}
   m_Layer: 0
   m_Name: Itusmi
   m_TagString: Untagged
@@ -184,8 +184,8 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.25, y: 0.14332485}
   m_EdgeRadius: 0
---- !u!70 &1281119403302528287
-CapsuleCollider2D:
+--- !u!58 &4047888613230863135
+CircleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -197,9 +197,9 @@ CapsuleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.010806054, y: 0.23054913}
-  m_Size: {x: 0.2449776, y: 0.44380862}
-  m_Direction: 0
+  m_Offset: {x: -0.02200666, y: 0.21068078}
+  serializedVersion: 2
+  m_Radius: 0.17731771
 --- !u!1 &7810114061666317829
 GameObject:
   m_ObjectHideFlags: 0

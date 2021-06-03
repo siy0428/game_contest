@@ -6,6 +6,7 @@ public class bullet_contoroller : MonoBehaviour
 {
     float screen_width = 640.0f;
     float screen_height = 320.0f;
+
     // Start is called before the first frame update
     void Start()
     {

@@ -25,8 +25,10 @@ public class RangeObject : MonoBehaviour
     /// プライベート変数
     /// </summary>
     private PlayerController pc;
+    private ShootBottonCtr sbc;
     private float RotSpeed = 1.0f;
     private InputAction arrow;
+    private float FinishAngle;
 
     /// <summary>
     /// 他スクリプトから参照用メソッド
@@ -34,15 +36,20 @@ public class RangeObject : MonoBehaviour
     public float GetAngle { get { return Angle; } }
     public float GetRadius { get { return Radius; } }
     public int GetTriangleCount { get { return TriangleCount; } }
-    public float GetRotateAngle { get; private set; } = 0.0f;
-    public Vector3 Direction { get; private set; } = Vector3.up;
+    public float GetRotateAngle { get; private set; }
+    public Vector3 Direction { get; private set; }
 
     void Start()
     {
         PlayerInput _input = FindObjectOfType<PlayerInput>();
         InputActionMap actionMap = _input.currentActionMap;
-        arrow = actionMap["Fun"];
+        arrow = actionMap["Move"];
         pc = FindObjectOfType<PlayerController>();
+        sbc = FindObjectOfType<ShootBottonCtr>();
+
+        Direction = Vector3.up;
+        FinishAngle = 0.0f;
+        GetRotateAngle = FinishAngle;
     }
 
     // Update is called once per frame
@@ -63,6 +70,13 @@ public class RangeObject : MonoBehaviour
     /// </summary>
     void InputDir(Vector2 input)
     {
+        //なにも入力していない場合処理を行わない
+        input.Normalize();
+        if (input.magnitude < 1.0f)
+        {
+            return;
+        }
+
         //上方向
         if (input.y > 0.5f)
         {
@@ -121,6 +135,20 @@ public class RangeObject : MonoBehaviour
         {
             GetRotateAngle -= RotSpeed;
         }
+
+        //目標の角度に達したら角度を固定
+        var cross = Vector3.Cross(Direction, Vector3.up);
+        cross.z = (cross.z < 0) ? 1 : -1;
+        FinishAngle = Vector3.Angle(Direction, Vector3.up) * cross.z;
+        FinishAngle = (FinishAngle + 360) % 360;
+        if (FinishAngle - MaxRotSpeed <= GetRotateAngle && FinishAngle + MaxRotSpeed >= GetRotateAngle)
+        {
+            GetRotateAngle = FinishAngle;
+        }
+
+        //角度の調整
+        GetRotateAngle %= 360.0f;
+        GetRotateAngle = (GetRotateAngle + 360) % 360;
 
         //回転速度の減衰
         if (Vector3.Dot(this.transform.up, Direction) > 0.9f)
@@ -235,14 +263,20 @@ public class RangeObject : MonoBehaviour
         //扇メッシュの描画
         DrawFunMesh();
 
-        ShootBottonCtr sbc = FindObjectOfType<ShootBottonCtr>();
         GameObject hit_obj = FunCollision();
 
         //扇に敵が入っていた場合
         if (hit_obj)
         {
             sbc.SetCanShot(true);
-            sbc.SetShotPos(hit_obj.transform.position);
+            if (hit_obj.tag == "Player")
+            {
+                sbc.SetShotPos(hit_obj.transform.position + new Vector3(0.0f, 0.25f, 0.0f));
+            } 
+            else
+            {
+                sbc.SetShotPos(hit_obj.transform.position);
+            }
         }
         //扇に敵がいない場合
         else

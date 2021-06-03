@@ -28,6 +28,10 @@ public class PlayerController : MonoBehaviour
     //シュートのスクリプトポイント
     private ShootBottonCtr ShootCtr;
 
+    private SkillBottonCtr SkillCtr;
+
+    private CharacterUIController ChaUICtr;
+
     //スキルの設定データを取得用
     public SkillData SkillDataCtr;
 
@@ -69,6 +73,7 @@ public class PlayerController : MonoBehaviour
             //    Players[i].GetComponent<SpriteRenderer>().sortingOrder = 0;
             //}
         }
+        ChaUICtr.ChangeUI(ControlPlayerID);
     }
 
     // Update is called once per frame
@@ -88,31 +93,38 @@ public class PlayerController : MonoBehaviour
                     //記録時点になったら
                     if (Timer > savedata[i].StartTime)
                     {
-                        if (!savedata[i].Used)
+                        if (!savedata[i].Used && PlayersData[savedata[i].PlayerID].IsAlive)
                         {
+                            Animator[] animators = PlayersData[savedata[i].PlayerID].GetComponentsInChildren<Animator>();
                             //キーの番号ごとに、対応の状態を変更する
                             switch (savedata[i].BottonID)
                             {
                                 case 0:
                                     PlayersData[savedata[i].PlayerID].IsMove = -1;
                                     PlayersData[savedata[i].PlayerID].PlayersForward = new Vector3(-1.0f, 1.0f, 0.0f);
+                                    animators[1].SetBool("isMoving", true);
                                     break;
                                 case 1:
                                     PlayersData[savedata[i].PlayerID].IsMove = 0;
+                                    animators[1].SetBool("isMoving", false);
                                     break;
                                 case 2:
                                     PlayersData[savedata[i].PlayerID].IsMove = 1;
                                     PlayersData[savedata[i].PlayerID].PlayersForward = new Vector3(1.0f, 1.0f, 0.0f);
+                                    animators[1].SetBool("isMoving", true);
                                     break;
                                 case 3:
                                     PlayersData[savedata[i].PlayerID].IsMove = 0;
+                                    animators[1].SetBool("isMoving", false);
                                     break;
                                 case 4:
                                     PlayersData[savedata[i].PlayerID].IsJump = true;
                                     PlayersData[savedata[i].PlayerID].OnBox = false;
+                                    animators[1].SetTrigger("doJump");
                                     break;
                                 case 5://シュートだけ、直接シュートする
                                     ShootCtr.ShootKeyDown(this, savedata[i].PlayerID, savedata[i].ShootDir);
+                                    //animators[0].SetTrigger("doAttack");
                                     break;
                                 case 41:
                                     SkillDataCtr.JumpSmarshDir = new Vector2(1, 0);
@@ -120,6 +132,7 @@ public class PlayerController : MonoBehaviour
                                     PlayersData[savedata[i].PlayerID].IsJump = true;
                                     PlayersData[savedata[i].PlayerID].OnBox = false;
                                     SkillDataCtr.UseJumpSmarsh = true;
+                                    animators[1].SetTrigger("doDash");
                                     break;
                                 case 42:
                                     SkillDataCtr.JumpSmarshDir = new Vector2(-1, 0);
@@ -127,6 +140,7 @@ public class PlayerController : MonoBehaviour
                                     PlayersData[savedata[i].PlayerID].IsJump = true;
                                     PlayersData[savedata[i].PlayerID].OnBox = false;
                                     SkillDataCtr.UseJumpSmarsh = true;
+                                    animators[1].SetTrigger("doDash");
                                     break;
                                 case 43:
                                     SkillDataCtr.JumpSmarshDir = new Vector2(0, 1);
@@ -134,6 +148,7 @@ public class PlayerController : MonoBehaviour
                                     PlayersData[savedata[i].PlayerID].IsJump = true;
                                     PlayersData[savedata[i].PlayerID].OnBox = false;
                                     SkillDataCtr.UseJumpSmarsh = true;
+                                    animators[1].SetTrigger("doDash");
                                     break;
                                 case 44:
                                     SkillDataCtr.JumpSmarshDir = new Vector2(0, -1);
@@ -141,6 +156,16 @@ public class PlayerController : MonoBehaviour
                                     PlayersData[savedata[i].PlayerID].IsJump = true;
                                     PlayersData[savedata[i].PlayerID].OnBox = false;
                                     SkillDataCtr.UseJumpSmarsh = true;
+                                    animators[1].SetTrigger("doDash");
+                                    break;
+                                case 61:
+                                    SkillDataCtr.UseCut = true;
+                                    animators[1].SetBool("isKamae", true) ;
+                                    break;
+                                case 66:
+                                    ShootCtr.ShootKeyDown_Skill(this, savedata[i].PlayerID, SkillDataCtr.CutBulletObj, savedata[i].ShootDir);
+                                    SkillDataCtr.UseCut = false;
+                                    animators[1].SetBool("isKamae", false);
                                     break;
                                 default:
                                     break;
@@ -156,6 +181,9 @@ public class PlayerController : MonoBehaviour
             {
                 if (PlayersData[i].IsAlive)
                 {
+
+                    Animator[] animators = Players[i].GetComponentsInChildren<Animator>();
+
                     //非操作対象
                     if (i != ControlPlayerID)
                     {
@@ -179,9 +207,22 @@ public class PlayerController : MonoBehaviour
                         {
                             Jump(i);
                         }
+
+                        float limittime = -1, maxtime = -1;
+
+                        switch (PlayersData[ControlPlayerID].SkillIDs[0])
+                        {
+                            case SkillID.Cut:
+                                limittime = SkillDataCtr.CutLimitTime;
+                                maxtime = SkillDataCtr.MaxLimitTime;
+                                break;
+                        }
+                        SkillCtr.CheakSKillOver(limittime,maxtime);
                     }
 
                     JumpSmarsh(i);
+
+                    animators[1].SetFloat("vspeed", Players[i].GetComponent<Rigidbody2D>().velocity.y);
 
                     if (Players[i].GetComponent<Rigidbody2D>().velocity.y == 0)
                     {
@@ -239,6 +280,8 @@ public class PlayerController : MonoBehaviour
     {
         MoveCtr = FindObjectOfType<MoveBottonCtr>();
         ShootCtr = FindObjectOfType<ShootBottonCtr>();
+        SkillCtr = FindObjectOfType<SkillBottonCtr>();
+        ChaUICtr = FindObjectOfType<CharacterUIController>();
     }
 
     //ジャンプ操作
@@ -256,8 +299,7 @@ public class PlayerController : MonoBehaviour
             }
             else
             {
-                Players[ID].GetComponent<Rigidbody2D>().velocity = new Vector3(SkillDataCtr.JumpSmarshDir.x * SkillDataCtr.JumpSmarshSpeed, Players[ID].GetComponent<Rigidbody2D>().velocity.y + SkillDataCtr.JumpSmarshDir.y * SkillDataCtr.JumpSmarshSpeed, 0.0f);
-
+                Players[ID].GetComponent<Rigidbody2D>().velocity = new Vector3(SkillDataCtr.JumpSmarshDir.x * SkillDataCtr.JumpSmarshSpeed, Players[ID].GetComponent<Rigidbody2D>().velocity.y + SkillDataCtr.JumpSmarshDir.y * SkillDataCtr.JumpSmarshSpeed * 0.5f, 0.0f);
             }
         }
         PlayersData[ID].JumpedTimes += 1;
@@ -290,13 +332,16 @@ public class PlayerController : MonoBehaviour
         {
             if (!PlayersData[ID].OnBox)
             {
-                Players[ID].GetComponent<Rigidbody2D>().velocity = new Vector3(Players[ID].GetComponent<Rigidbody2D>().velocity.x - SkillDataCtr.JumpSmarshDir.x * SkillDataCtr.JumpSmarshAngular, Players[ID].GetComponent<Rigidbody2D>().velocity.y - SkillDataCtr.JumpSmarshDir.y * SkillDataCtr.JumpSmarshAngular, 0.0f);
+                Players[ID].GetComponent<Rigidbody2D>().velocity = new Vector3(Players[ID].GetComponent<Rigidbody2D>().velocity.x - SkillDataCtr.JumpSmarshDir.x * SkillDataCtr.JumpSmarshAngular * Time.deltaTime, Players[ID].GetComponent<Rigidbody2D>().velocity.y - SkillDataCtr.JumpSmarshDir.y* 0.5f * SkillDataCtr.JumpSmarshAngular * Time.deltaTime, 0.0f);         
             }
             else
-            {
-                Players[ID].GetComponent<Rigidbody2D>().velocity = new Vector3(0.0f, 0.0f, 0.0f);
+            {                
+                Players[ID].GetComponent<Rigidbody2D>().velocity = new Vector3(0.0f, -0.01f, 0.0f);
             }
-            SkillDataCtr.JumpSmarsh();
+            if(SkillDataCtr.JumpSmarsh())
+            {
+                Players[ID].GetComponent<Rigidbody2D>().velocity = new Vector3(0.0f, -0.01f, 0.0f);
+            }
         }
     }
 
@@ -306,11 +351,14 @@ public class PlayerController : MonoBehaviour
         Timer = 0.0f;
         for (int i = 0; i < Players.Count; i++)
         {
+            PlayersData[i].HP = PlayersData[i].MaxHP;
             PlayersData[i].IsJump = false;
             PlayersData[i].IsAlive = true;
             Players[i].GetComponent<Transform>().position = PlayersData[i].StartPoStartPositon;
             Players[i].SetActive(true);
         }
+
+        ChaUICtr.ChangeHP(PlayersData[ControlPlayerID].PlayerID);
 
         for (int i = 0; i < ShootCtr.m_BulletsList.Count; i++)
         {
@@ -318,12 +366,19 @@ public class PlayerController : MonoBehaviour
         }
 
         ShootCtr.m_BulletsList.Clear();
+        ShootCtr.ShootCDTimer = 0.0f;
 
-        //Players[ControlPlayerID].GetComponent<SpriteRenderer>().sortingOrder = 0;
+        SkillCtr.SkillKeyDown = 0;
+        SkillCtr.SkillTimer = 0.0f;
+        SkillCtr.SkillCDTimer = 0.0f;
+        SkillCtr.SkillIntoCD = false;
+        SkillDataCtr.EnableUseCut = true;
+        SkillDataCtr.UseCut = false;
+
         ControlPlayerID++;
         ControlPlayerID %= Players.Count;
-        //Players[ControlPlayerID].GetComponent<SpriteRenderer>().sortingOrder = 1;
 
+        ChaUICtr.ChangeUI(ControlPlayerID);
         //保存データの更新
         SavedBehaviour = new PlayerBehaviourData(RecordBehaviour);
 
@@ -340,11 +395,14 @@ public class PlayerController : MonoBehaviour
 
         for (int i = 0; i < Players.Count; i++)
         {
+            PlayersData[i].HP = PlayersData[i].MaxHP;
             PlayersData[i].IsJump = false;
             PlayersData[i].IsAlive = true;
             Players[i].GetComponent<Transform>().position = PlayersData[i].StartPoStartPositon;
             Players[i].SetActive(true);
         }
+
+        ChaUICtr.ChangeHP(PlayersData[ControlPlayerID].PlayerID);
 
         for (int i = 0; i < ShootCtr.m_BulletsList.Count; i++)
         {
@@ -352,12 +410,62 @@ public class PlayerController : MonoBehaviour
         }
 
         ShootCtr.m_BulletsList.Clear();
+        ShootCtr.ShootCDTimer = 0.0f;
 
-        for(int i = 0; i < SavedBehaviour.GetBehaviourData().Count; i++)
+        SkillCtr.SkillKeyDown = 0;
+        SkillCtr.SkillTimer = 0.0f;
+        SkillCtr.SkillCDTimer = 0.0f;
+        SkillCtr.SkillIntoCD = false;
+        SkillDataCtr.EnableUseCut = true;
+        SkillDataCtr.UseCut = false;
+
+        for (int i = 0; i < SavedBehaviour.GetBehaviourData().Count; i++)
         {
             SavedBehaviour.GetBehaviourData()[i].Used = false;
         }
         RecordBehaviour.ClearData();
         StartBehaviourRecord = true;
+    }
+
+
+    public float CheakSkillCD()
+    {
+        float rate = 0.0f;
+        switch (PlayersData[ControlPlayerID].SkillIDs[0])
+        {
+            case SkillID.JUMPSMARSH:
+                if(SkillDataCtr.UseJumpSmarsh)
+                {
+                    rate = 1.0f;
+                }
+                else
+                {
+                    rate = 0.0f;
+                }
+                break;
+            case SkillID.Cut:
+                rate = 1.0f - SkillCtr.SkillCDTimer / SkillCtr.SkillCD;
+                if(!SkillDataCtr.UseCut)
+                {
+                    rate = 0;
+                }
+                break;
+            default:
+                break;
+        }
+        return rate;
+    }
+
+    public float CheakShootCD()
+    {
+        float rate = 0.0f;
+
+        rate = 1.0f - ShootCtr.ShootCDTimer / ShootCtr.ShootCD;
+        if(ShootCtr.GetCanShot())
+        {
+            rate = 0;
+        }
+
+        return rate;
     }
 }
