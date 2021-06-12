@@ -45,7 +45,7 @@ public class Loop : MonoBehaviour
         foreach (var player in pc.PlayersData)
         {
             player.RespawnPosition();
-            player.gameObject.SetActive(true);
+            //player.gameObject.SetActive(true);
         }
 
         foreach (var spawn in spawns)

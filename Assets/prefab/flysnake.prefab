@@ -95,6 +95,7 @@ GameObject:
   - component: {fileID: 7888617827934644493}
   - component: {fileID: 7888617827934644595}
   - component: {fileID: 4959285234426232684}
+  - component: {fileID: 7310034727424979686}
   m_Layer: 7
   m_Name: flysnake
   m_TagString: Enemy
@@ -218,3 +219,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isActive: 1
+--- !u!114 &7310034727424979686
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7888617827934644592}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3cf8c3306a437fb4a86c4033f6d29a57, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isRewinding: 0
