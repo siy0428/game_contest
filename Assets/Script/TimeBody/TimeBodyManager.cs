@@ -5,12 +5,15 @@ using UnityEngine.InputSystem;
 
 public class TimeBodyManager : MonoBehaviour
 {
-    private bool IsUse;
+    [SerializeField]
+    private int magnification;
+
+    private bool is_use;
 
     // Start is called before the first frame update
     void Start()
     {
-        IsUse = false;
+        is_use = false;
     }
 
     // Update is called once per frame
@@ -19,13 +22,18 @@ public class TimeBodyManager : MonoBehaviour
         
     }
 
+    public int GetMagniflication()
+    {
+        return magnification;
+    }
+
     public void SetIsUse(bool use)
     {
-        IsUse = use;
+        is_use = use;
     }
 
     public bool GetIsUse()
     {
-        return IsUse;
+        return is_use;
     }
 }

@@ -22,7 +22,7 @@ public class TimeBody : MonoBehaviour
     void Update()
     {
         //逆再生の開始
-        if(tbm.GetIsUse())
+        if (tbm.GetIsUse())
         {
             StartRewind();
         }
@@ -56,7 +56,16 @@ public class TimeBody : MonoBehaviour
         {
             //リストの先頭から座標を参照
             transform.position = positions[0];
-            positions.RemoveAt(0);
+            //逆再生の速度調整
+            for (int i = 0; i < tbm.GetMagniflication(); i++)
+            {
+                //リストの中身が空っぽになったら処理をしない
+                if (positions.Count <= 0)
+                {
+                    break;
+                }
+                positions.RemoveAt(0);  //座標リストの先頭を削除
+            }
         }
         else
         {
