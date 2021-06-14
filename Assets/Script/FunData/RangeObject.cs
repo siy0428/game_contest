@@ -72,6 +72,7 @@ public class RangeObject : MonoBehaviour
     {
         //‚È‚É‚à“ü—Í‚µ‚Ä‚¢‚È‚¢ê‡ˆ—‚ğs‚í‚È‚¢
         input.Normalize();
+
         if (input.magnitude < 1.0f)
         {
             return;
