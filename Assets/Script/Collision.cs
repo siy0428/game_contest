@@ -186,6 +186,10 @@ public class Collision : MonoBehaviour
                 dir = new Vector2(-Mathf.Cos(angle), Mathf.Sin(angle));
             }
             Targetobj.GetComponent<Rigidbody2D>().AddForce(bd.DriveOffFactor * dir);
+            if(Targetobj.tag == "Player")
+            {
+                Targetobj.GetComponent<Player>().EnableMoveJump = false;
+            }
         }
     }
 }

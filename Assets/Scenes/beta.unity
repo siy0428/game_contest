@@ -4916,6 +4916,9 @@ MonoBehaviour:
   SkillIDs: 01000000
   IsMove: 0
   OnBox: 1
+  EnableMoveJump: 1
+  DisableMoveTime: 0.3
+  DMTimer: 0
   IsJump: 0
   JumpedTimes: 0
   IsAlive: 0
@@ -4924,6 +4927,11 @@ MonoBehaviour:
   Bullet: {fileID: 7875155880049078745, guid: 4839e46db498cb746b2a122371cf0455, type: 3}
   BulletSpeed: 150
   ShootCD: 0.5
+  ShootTimer: 0
+  ShootPos: {x: 0, y: 0, z: 0}
+  CanShoot: 0
+  ShootIntoCD: 0
+  ShootSensorDir: {x: 1, y: 0}
   ShootFixPostion: {x: 0.3, y: 0.3, z: 0}
   Offset: {x: 0, y: 0.45, z: 0}
   AvatarObj: {fileID: 21300000, guid: 05243ba111e0070428d11607d4bdd6dd, type: 3}
@@ -5482,6 +5490,9 @@ MonoBehaviour:
   SkillIDs: 02000000
   IsMove: 0
   OnBox: 1
+  EnableMoveJump: 1
+  DisableMoveTime: 0.3
+  DMTimer: 0
   IsJump: 0
   JumpedTimes: 0
   IsAlive: 0
@@ -5490,6 +5501,11 @@ MonoBehaviour:
   Bullet: {fileID: 5598220327185535831, guid: 15cc9d124acaf274cb63fd1f74a0d31b, type: 3}
   BulletSpeed: 150
   ShootCD: 0.5
+  ShootTimer: 0
+  ShootPos: {x: 0, y: 0, z: 0}
+  CanShoot: 0
+  ShootIntoCD: 0
+  ShootSensorDir: {x: 1, y: 0}
   ShootFixPostion: {x: 0, y: 0.45, z: 0}
   Offset: {x: 0, y: 0.35, z: 0}
   AvatarObj: {fileID: 21300000, guid: ba0670f9cf12ff344b07cf44ae535ff4, type: 3}
@@ -6059,14 +6075,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.5019608, g: 0.5019608, b: 0.5019608, a: 0.5882353}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: ddf8bd16d5555c046833aafc6524381a, type: 3}
+  m_Sprite: {fileID: 6649462072431506076, guid: 76f07a04e7afc9a44990d74c6bdedf3d, type: 3}
   m_Type: 3
   m_PreserveAspect: 0
   m_FillCenter: 1
