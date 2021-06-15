@@ -1,125 +1,105 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 public class TimeBody : MonoBehaviour
 {
-    public bool isRewinding = false;
-    List<Vector3> positions;
-
-    private InputAction left_mouse;
-    private InputAction right_mouse;
-    private int press;
-    private int old_press;
+    //逆再生用変数
+    private bool isRewinding;
+    private Rigidbody2D rb2d;
+    private List<Vector3> positions;
+    private TimeBodyManager tbm;
 
     // Start is called before the first frame update
     void Start()
     {
-        PlayerInput _input = FindObjectOfType<PlayerInput>();
-        InputActionMap actionMap = _input.currentActionMap;
-
-        //テスト用左クリック
-        left_mouse = actionMap["LeftMouse"];
-        left_mouse.started += IsLeftDown;
-        left_mouse.canceled += IsLeftUp;
-
-        //右クリック
-        right_mouse = actionMap["RightMouse"];
-        right_mouse.started += IsRightDown;
-        right_mouse.canceled += IsRightUp;
-
-        press = 0;
-        old_press = press;
-
+        isRewinding = false;
         positions = new List<Vector3>();
+        rb2d = GetComponent<Rigidbody2D>();
+        tbm = FindObjectOfType<TimeBodyManager>();
     }
 
-    // Update is called once per frame
     void Update()
     {
-        if (press == 1)
+        //逆再生の開始
+        if (tbm.GetIsUse())
         {
             StartRewind();
         }
-        else if (press == -1)
+        //逆再生の停止
+        else
         {
             StopRewind();
         }
-
-        //最後に入力の更新
-        InputUpdate();
     }
 
     void FixedUpdate()
     {
+        //逆再生
         if (isRewinding)
         {
             Rewind();
         }
+        //記録
         else
         {
             Record();
         }
     }
 
+    /// <summary>
+    /// 逆再生
+    /// </summary>
     void Rewind()
     {
         if (positions.Count > 0)
         {
+            //リストの先頭から座標を参照
             transform.position = positions[0];
-            positions.RemoveAt(0);
+            //逆再生の速度調整
+            for (int i = 0; i < tbm.GetMagniflication(); i++)
+            {
+                //リストの中身が空っぽになったら処理をしない
+                if (positions.Count <= 0)
+                {
+                    break;
+                }
+                positions.RemoveAt(0);  //座標リストの先頭を削除
+            }
         }
         else
         {
             StopRewind();
+            tbm.SetIsUse(false);
+            positions.Clear();
         }
     }
 
+    /// <summary>
+    /// 座標の記録
+    /// </summary>
     void Record()
     {
+        //リストの先頭に座標を記録
         positions.Insert(0, transform.position);
     }
 
+
+    /// <summary>
+    /// 逆再生の開始
+    /// </summary>
     public void StartRewind()
     {
         isRewinding = true;
+        rb2d.isKinematic = true;
     }
 
+    /// <summary>
+    /// 逆再生の停止
+    /// </summary>
     public void StopRewind()
     {
         isRewinding = false;
-    }
-
-    private void InputUpdate()
-    {
-        //1F前のキー入力状態を参照してキーが離されているかどうかの判定
-        if (press != old_press)
-        {
-            press = 0;  //離されている
-        }
-
-        old_press = press;
-    }
-
-    private void IsLeftDown(InputAction.CallbackContext obj)
-    {
-        press = 1;
-    }
-
-
-    private void IsLeftUp(InputAction.CallbackContext obj)
-    {
-        press = -1;
-    }
-
-    private void IsRightDown(InputAction.CallbackContext obj)
-    {
-        press = 1;
-    }
-
-    private void IsRightUp(InputAction.CallbackContext obj)
-    {
-        press = -1;
+        rb2d.isKinematic = false;
     }
 }
