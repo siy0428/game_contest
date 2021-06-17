@@ -29,7 +29,7 @@ public class RangeObject : MonoBehaviour
     private float RotSpeed = 1.0f;
     private InputAction arrow;
     private float FinishAngle;
-
+    private Player m_player;
     /// <summary>
     /// 他スクリプトから参照用メソッド
     /// </summary>
@@ -46,7 +46,7 @@ public class RangeObject : MonoBehaviour
         arrow = actionMap["Move"];
         pc = FindObjectOfType<PlayerController>();
         sbc = FindObjectOfType<ShootBottonCtr>();
-
+        m_player = Player.GetComponent<Player>();
         Direction = Vector3.up;
         FinishAngle = 0.0f;
         GetRotateAngle = FinishAngle;
@@ -55,8 +55,19 @@ public class RangeObject : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
+        Vector2 dir;
+        if(m_player.PlayerID == pc.ControlPlayerID)
+        {
+            dir = arrow.ReadValue<Vector2>();
+        }
+        else
+        {
+            dir = Player.GetComponent<Player>().ShootSensorDir;
+        }
+
         //入力した方向の取得
-        InputDir(arrow.ReadValue<Vector2>());
+        InputDir(dir);
 
         //回転
         Rotation();
@@ -72,6 +83,7 @@ public class RangeObject : MonoBehaviour
     {
         //なにも入力していない場合処理を行わない
         input.Normalize();
+
         if (input.magnitude < 1.0f)
         {
             return;
@@ -253,7 +265,7 @@ public class RangeObject : MonoBehaviour
         {
             renderer.material = Material;
             renderer.enabled = false;
-            return;
+            //return;
         }
 
         //扇の描画
@@ -268,20 +280,20 @@ public class RangeObject : MonoBehaviour
         //扇に敵が入っていた場合
         if (hit_obj)
         {
-            sbc.SetCanShot(true);
+            sbc.SetCanShot(m_player.PlayerID, true);
             if (hit_obj.tag == "Player")
             {
-                sbc.SetShotPos(hit_obj.transform.position + new Vector3(0.0f, 0.25f, 0.0f));
+                sbc.SetShotPos(m_player.PlayerID,hit_obj.transform.position + new Vector3(0.0f, 0.25f, 0.0f));
             } 
             else
             {
-                sbc.SetShotPos(hit_obj.transform.position);
+                sbc.SetShotPos(m_player.PlayerID,hit_obj.transform.position);
             }
         }
         //扇に敵がいない場合
         else
         {
-            sbc.SetCanShot(false);
+            sbc.SetCanShot(m_player.PlayerID,false);
         }
     }
 

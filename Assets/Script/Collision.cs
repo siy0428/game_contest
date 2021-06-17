@@ -71,7 +71,7 @@ public class Collision : MonoBehaviour
                         if (PlayerID != PlayerCtr.ControlPlayerID)
                         {
                             CUICtr.ChangeHP(en.PlayerID);
-                            //Debug.Log(en + "‚ÌHP:" + en.HP);
+                            Debug.Log(en + "‚ÌHP:" + en.HP);
                         }
                     }
                 }
@@ -185,8 +185,11 @@ public class Collision : MonoBehaviour
             {
                 dir = new Vector2(-Mathf.Cos(angle), Mathf.Sin(angle));
             }
-            Debug.Log(dir);
             Targetobj.GetComponent<Rigidbody2D>().AddForce(bd.DriveOffFactor * dir);
+            if(Targetobj.tag == "Player")
+            {
+                Targetobj.GetComponent<Player>().EnableMoveJump = false;
+            }
         }
     }
 }

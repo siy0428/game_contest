@@ -123,8 +123,14 @@ public class PlayerController : MonoBehaviour
                                     animators[1].SetTrigger("doJump");
                                     break;
                                 case 5://シュートだけ、直接シュートする
-                                    ShootCtr.ShootKeyDown(this, savedata[i].PlayerID, savedata[i].ShootDir);
+                                    //ShootCtr.ShootKeyDown(this, savedata[i].PlayerID, savedata[i].ShootDir);
                                     //animators[0].SetTrigger("doAttack");
+                                    break;
+                                case 6:
+                                    PlayersData[savedata[i].PlayerID].ShootSensorDir = new Vector2(0, 1);
+                                    break;
+                                case 8:
+                                    PlayersData[savedata[i].PlayerID].ShootSensorDir = new Vector2(0, -1);
                                     break;
                                 case 41:
                                     SkillDataCtr.JumpSmarshDir = new Vector2(1, 0);
@@ -148,6 +154,7 @@ public class PlayerController : MonoBehaviour
                                     PlayersData[savedata[i].PlayerID].IsJump = true;
                                     PlayersData[savedata[i].PlayerID].OnBox = false;
                                     SkillDataCtr.UseJumpSmarsh = true;
+                                    PlayersData[savedata[i].PlayerID].ShootSensorDir = new Vector2(0, 1);
                                     animators[1].SetTrigger("doDash");
                                     break;
                                 case 44:
@@ -156,6 +163,7 @@ public class PlayerController : MonoBehaviour
                                     PlayersData[savedata[i].PlayerID].IsJump = true;
                                     PlayersData[savedata[i].PlayerID].OnBox = false;
                                     SkillDataCtr.UseJumpSmarsh = true;
+                                    PlayersData[savedata[i].PlayerID].ShootSensorDir = new Vector2(0, -1);
                                     animators[1].SetTrigger("doDash");
                                     break;
                                 case 61:
@@ -197,7 +205,7 @@ public class PlayerController : MonoBehaviour
                         {
                             Jump(i);
                         }
-
+                        ShootCtr.ShootKeyDown(this, i);
                     }
                     else if (i == ControlPlayerID)//操作対象
                     {
@@ -354,6 +362,9 @@ public class PlayerController : MonoBehaviour
             PlayersData[i].HP = PlayersData[i].MaxHP;
             PlayersData[i].IsJump = false;
             PlayersData[i].IsAlive = true;
+            PlayersData[i].ShootTimer = 0.0f;
+            PlayersData[i].ShootIntoCD = false;
+            PlayersData[i].CanShoot = false;
             Players[i].GetComponent<Transform>().position = PlayersData[i].StartPoStartPositon;
             Players[i].SetActive(true);
         }
@@ -367,7 +378,7 @@ public class PlayerController : MonoBehaviour
 
         ShootCtr.m_BulletsList.Clear();
         ShootCtr.ShootCDTimer = 0.0f;
-
+       
         SkillCtr.SkillKeyDown = 0;
         SkillCtr.SkillTimer = 0.0f;
         SkillCtr.SkillCDTimer = 0.0f;
@@ -398,6 +409,9 @@ public class PlayerController : MonoBehaviour
             PlayersData[i].HP = PlayersData[i].MaxHP;
             PlayersData[i].IsJump = false;
             PlayersData[i].IsAlive = true;
+            PlayersData[i].ShootTimer = 0.0f;
+            PlayersData[i].ShootIntoCD = false;
+            PlayersData[i].CanShoot = false;
             Players[i].GetComponent<Transform>().position = PlayersData[i].StartPoStartPositon;
             Players[i].SetActive(true);
         }
@@ -460,8 +474,8 @@ public class PlayerController : MonoBehaviour
     {
         float rate = 0.0f;
 
-        rate = 1.0f - ShootCtr.ShootCDTimer / ShootCtr.ShootCD;
-        if(ShootCtr.GetCanShot())
+        rate = 1.0f - PlayersData[ControlPlayerID].ShootTimer / PlayersData[ControlPlayerID].ShootCD;
+        if(PlayersData[ControlPlayerID].CanShoot)
         {
             rate = 0;
         }

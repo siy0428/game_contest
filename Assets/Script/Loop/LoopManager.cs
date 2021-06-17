@@ -7,19 +7,23 @@ public class LoopManager : MonoBehaviour
     [SerializeField]
     private Loop[] loops;
 
+    private bool isRewindStart; //逆再生を開始したかどうか
     private int loop_id;        //現在のループの段階
     private int defeat_player;  //操作しているプレイヤーが倒した敵の数
     private float time;         //ループごとの時間制限
     private PlayerController pc;
+    private TimeBodyManager tbm;
 
     // Start is called before the first frame update
     void Start()
     {
+        isRewindStart = false;
         loop_id = 0;
         defeat_player = 0;
         loops[loop_id].Create();            //1つ目のループ生成
         time = loops[loop_id].GetTime();    //1つ目のループの時間取得
         pc = FindObjectOfType<PlayerController>();
+        tbm = FindObjectOfType<TimeBodyManager>();
     }
 
     // Update is called once per frame
@@ -46,6 +50,19 @@ public class LoopManager : MonoBehaviour
         //タイムオーバーであれば
         if (time <= 0.0f)
         {
+            //まだ逆再生を開始していない場合
+            if (!isRewindStart)
+            {
+                tbm.SetIsUse(true);
+                isRewindStart = true;
+            }
+
+            //逆再生中であれば次のループに移行しない
+            if (tbm.GetIsUse())
+            {
+                return;
+            }
+
             //目標撃破数に到達していた場合次のループ
             if (defeat_player >= loops[loop_id].GetDefeatCount())
             {
@@ -61,6 +78,7 @@ public class LoopManager : MonoBehaviour
             {
                 LoopAgain();
             }
+            isRewindStart = false;
         }
     }
 

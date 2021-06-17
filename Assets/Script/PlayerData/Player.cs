@@ -36,6 +36,12 @@ public class Player : MonoBehaviour
 
     public bool OnBox = true;
 
+    public bool EnableMoveJump = true;
+
+    public float DisableMoveTime = 0.3f;
+
+    public float DMTimer = 0.0f;
+
     //ジャンプ状態
     public bool IsJump;
 
@@ -59,6 +65,16 @@ public class Player : MonoBehaviour
 
     //シュートの間隔時間
     public float ShootCD = 0.5f;
+
+    public float ShootTimer = 0.0f;
+
+    public Vector3 ShootPos = new Vector3();
+
+    public bool CanShoot = false;
+
+    public bool ShootIntoCD = false;
+
+    public Vector2 ShootSensorDir = new Vector2(1, 0);
 
     public Vector3 ShootFixPostion = new Vector3();
 
@@ -85,12 +101,23 @@ public class Player : MonoBehaviour
         JumpedTimes = 0;
         StartPoStartPositon = gameObject.GetComponent<Transform>().position;
         PlayersForward = gameObject.GetComponent<Transform>().localScale;
+        ShootSensorDir = new Vector2(PlayersForward.x, 0);
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        if(!EnableMoveJump)
+        {
+            if(DMTimer < DisableMoveTime)
+            {
+                DMTimer += Time.deltaTime;
+            }
+            if(DMTimer >= DisableMoveTime)
+            {
+                EnableMoveJump = true;
+            }
+        }
     }
 
     public void RespawnPosition()
@@ -121,6 +148,20 @@ public class Player : MonoBehaviour
         if(collision.gameObject.tag == "Ground")
         {
             OnBox = true;
+        }
+    }
+
+    public void ShootCDFunc()
+    {
+        if(ShootIntoCD)
+        {
+            ShootTimer += Time.deltaTime;
+
+            if(ShootTimer >= ShootCD)
+            {
+                ShootTimer = 0.0f;
+                ShootIntoCD = false;
+            }
         }
     }
 }

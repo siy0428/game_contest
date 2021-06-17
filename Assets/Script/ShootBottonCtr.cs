@@ -18,7 +18,7 @@ public class ShootBottonCtr : MonoBehaviour
 
     CharacterUIController ChaUICtr;
 
-
+    PlayerController PCtr;
     public void ShootBottonIsDown(InputAction.CallbackContext obj)
     {
         if(KeyShootDown == 0)
@@ -29,16 +29,18 @@ public class ShootBottonCtr : MonoBehaviour
 
     private Vector3 ShotPos;
 
-    public void SetShotPos(Vector3 pos)
+    public void SetShotPos(int id,Vector3 pos)
     {
-        ShotPos = pos;
+        PCtr.PlayersData[id].ShootPos = pos;
+        //ShotPos = pos;
     }
 
     private bool CanShot;
 
-    public void SetCanShot(bool can)
+    public void SetCanShot(int id ,bool can)
     {
-        CanShot = can;
+        PCtr.PlayersData[id].CanShoot = can;
+        //CanShot = can;
     }
 
     public bool GetCanShot()
@@ -49,16 +51,16 @@ public class ShootBottonCtr : MonoBehaviour
     //IDは動作の主
     public void ShootKeyDown(PlayerController _PlayerCtr, int ID, Vector2 _ShootDir = new Vector2())
     {
-        if (KeyShootDown > 0 && ID == _PlayerCtr.ControlPlayerID)//操作対象の処理
+        if (ID == _PlayerCtr.ControlPlayerID)//操作対象の処理
         {
             //射撃可能な場合
-            if (CanShot)
+            if (_PlayerCtr.PlayersData[ID].CanShoot && !_PlayerCtr.PlayersData[ID].ShootIntoCD)
             {
                 Animator[] animators = _PlayerCtr.PlayersData[_PlayerCtr.ControlPlayerID].GetComponentsInChildren<Animator>();
                 animators[0].SetTrigger("doAttack");
 
                 //操作キャラクターのシュートの間隔を取得する
-                ShootCD = _PlayerCtr.PlayersData[_PlayerCtr.ControlPlayerID].ShootCD;
+                //ShootCD = _PlayerCtr.PlayersData[_PlayerCtr.ControlPlayerID].ShootCD;
 
                 // 弾（ゲームオブジェクト）の生成
                 //GameObject clone = Instantiate(_PlayerCtr.PlayersData[_PlayerCtr.ControlPlayerID].Bullet, _PlayerCtr.Players[ID].GetComponent<Transform>().position + _PlayerCtr.Players[ID].GetComponent<Player>().ShootFixPostion, Quaternion.identity);
@@ -70,27 +72,27 @@ public class ShootBottonCtr : MonoBehaviour
                 Vector3 shotForward = new Vector3(_PlayerCtr.PlayersData[_PlayerCtr.ControlPlayerID].PlayersForward.x, 0.0f, 0.0f);
 
                 //データ記録生成
-                KeyShoot.PlayerID = _PlayerCtr.ControlPlayerID;
+                //KeyShoot.PlayerID = _PlayerCtr.ControlPlayerID;
 
-                KeyShoot.BottonID = 5;
+                //KeyShoot.BottonID = 5;
 
-                KeyShoot.StartTime = _PlayerCtr.Timer;
+                //KeyShoot.StartTime = _PlayerCtr.Timer;
 
-                KeyShoot.ShootDir = ShotPos;
+                //KeyShoot.ShootDir = ShotPos;
 
                 //記録に追加
-                _PlayerCtr.RecordBehaviour.AddBehaviour(KeyShoot);
+                //_PlayerCtr.RecordBehaviour.AddBehaviour(KeyShoot);
 
-                KeyShootDown = -1;
+                //KeyShootDown = -1;
 
-                _PlayerCtr.PlayersData[_PlayerCtr.ControlPlayerID].gameObject.GetComponentInChildren<ShootKeeper>().SetParama(ShotPos, ID);
-
+                _PlayerCtr.PlayersData[ID].gameObject.GetComponentInChildren<ShootKeeper>().SetParama(_PlayerCtr.PlayersData[ID].ShootPos, ID);
+                _PlayerCtr.PlayersData[ID].ShootIntoCD = true;
                 //clone.GetComponent<Collision>().PlayerID = ID;
                 //m_BulletsList.Add(clone);
             }
             else
             {
-                KeyShootDown = 0;
+                //KeyShootDown = 0;
             }
         }
         else if (ID != _PlayerCtr.ControlPlayerID)//非操作対象の処理
@@ -107,12 +109,15 @@ public class ShootBottonCtr : MonoBehaviour
 
             //clone.GetComponent<Collision>().PlayerID = ID;
             //m_BulletsList.Add(clone);
+            if (_PlayerCtr.PlayersData[ID].CanShoot && !_PlayerCtr.PlayersData[ID].ShootIntoCD)
+            {
+                Animator[] animators = _PlayerCtr.PlayersData[ID].GetComponentsInChildren<Animator>();
+                animators[0].SetTrigger("doAttack");
 
-            Animator[] animators = _PlayerCtr.PlayersData[ID].GetComponentsInChildren<Animator>();
-            animators[0].SetTrigger("doAttack");
-
-            //_PlayerCtr.PlayersData[_PlayerCtr.ControlPlayerID].gameObject.GetComponentInChildren<ShootKeeper>().SetParama(ShotPos, ID);
-            _PlayerCtr.PlayersData[_PlayerCtr.ControlPlayerID].gameObject.GetComponentInChildren<ShootKeeper>().SetParama(_ShootDir, ID);
+                //_PlayerCtr.PlayersData[_PlayerCtr.ControlPlayerID].gameObject.GetComponentInChildren<ShootKeeper>().SetParama(ShotPos, ID);
+                _PlayerCtr.PlayersData[ID].gameObject.GetComponentInChildren<ShootKeeper>().SetParama(_PlayerCtr.PlayersData[ID].ShootPos, ID);
+                _PlayerCtr.PlayersData[ID].ShootIntoCD = true;
+            }
         }
     }
 
@@ -140,11 +145,12 @@ public class ShootBottonCtr : MonoBehaviour
         CanShot = false;
 
         ChaUICtr = FindObjectOfType<CharacterUIController>();
-
+        PCtr = FindObjectOfType<PlayerController>();
     }
 
     private void Update()
     {
+        /*
         if (KeyShootDown < 0)
         {
             ShootCDTimer += Time.deltaTime;
@@ -155,6 +161,13 @@ public class ShootBottonCtr : MonoBehaviour
             KeyShootDown = 0;
             ShootCDTimer = 0.0f;
         }
+        */
+
+        for(int i = 0; i < PCtr.PlayersData.Count;i++)
+        {
+            PCtr.PlayersData[i].ShootCDFunc();
+        }
+
         ChaUICtr.CDMaskUpdate(0);
     }
 }

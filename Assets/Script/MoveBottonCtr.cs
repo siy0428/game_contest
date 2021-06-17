@@ -28,6 +28,8 @@ public class MoveBottonCtr : MonoBehaviour
     //キーの状態　　　Space
     BehaviorData KeySpace = new BehaviorData();
 
+    BehaviorData KeyWS = new BehaviorData();
+
     int KeyADown = 0;
     int KeyDDown = 0;
     int KeySpaceDown = 0;
@@ -88,7 +90,7 @@ public class MoveBottonCtr : MonoBehaviour
     public void MoveBottonUse(PlayerController _PlayerCtr)
     {
         //記録が許可がある場合のみ、操作できる
-        if (_PlayerCtr.StartBehaviourRecord)
+        if (_PlayerCtr.StartBehaviourRecord && _PlayerCtr.PlayersData[_PlayerCtr.ControlPlayerID].EnableMoveJump)
         {
             //移動量計算
             float moveX = 0.0f;
@@ -253,12 +255,36 @@ public class MoveBottonCtr : MonoBehaviour
 
             if (keyWDown > 0)
             {
-                keyWDown = 0;
+                if(KeySpace.BottonID!=43)
+                {
+                    //データ記録作成
+                    KeyWS.StartTime = _PlayerCtr.Timer;
+                    KeyWS.BottonID = 6;
+                    KeyWS.PlayerID = _PlayerCtr.ControlPlayerID;
+
+                    //記録リストに追加
+                    _PlayerCtr.RecordBehaviour.AddBehaviour(KeyWS);
+                }
+
             }
 
             if (keyWDown < 0)
             {
                 keyWDown = 0;
+            }
+
+            if (keySDown > 0)
+            {
+                if (KeySpace.BottonID != 44)
+                {
+                    //データ記録作成
+                    KeyWS.StartTime = _PlayerCtr.Timer;
+                    KeyWS.BottonID = 8;
+                    KeyWS.PlayerID = _PlayerCtr.ControlPlayerID;
+
+                    //記録リストに追加
+                    _PlayerCtr.RecordBehaviour.AddBehaviour(KeyWS);
+                }
             }
 
             if (keySDown < 0)
