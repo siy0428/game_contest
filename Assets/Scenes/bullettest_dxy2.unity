@@ -935,7 +935,7 @@ MonoBehaviour:
   IsAlive: 0
   StartPoStartPositon: {x: 0, y: 0, z: 0}
   PlayersForward: {x: 0, y: 0, z: 0}
-  Bullet: {fileID: 5598220327185535831, guid: 15cc9d124acaf274cb63fd1f74a0d31b, type: 3}
+  Bullet: {fileID: 3142873562492474777, guid: 64c9f48f6976bc2469fbcbbb08253b77, type: 3}
   BulletSpeed: 150
   ShootCD: 0.5
   ShootTimer: 0
@@ -976,9 +976,9 @@ CircleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.01651764, y: 0.2745514}
+  m_Offset: {x: 0.008514404, y: 0.2745514}
   serializedVersion: 2
-  m_Radius: 0.17177582
+  m_Radius: 0.13972473
 --- !u!1 &381955500
 GameObject:
   m_ObjectHideFlags: 0
@@ -8748,6 +8748,7 @@ GameObject:
   - component: {fileID: 343770375}
   - component: {fileID: 343770373}
   - component: {fileID: 343770374}
+  - component: {fileID: 3959712125273613722}
   m_Layer: 0
   m_Name: Little_Hunter
   m_TagString: Player
@@ -8755,6 +8756,22 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!58 &3959712125273613722
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3959712125273613721}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: -0.017295837, y: 0.5421696}
+  serializedVersion: 2
+  m_Radius: 0.2182846
 --- !u!95 &3959712125458564330
 Animator:
   serializedVersion: 3
