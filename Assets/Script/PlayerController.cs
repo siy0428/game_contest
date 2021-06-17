@@ -103,6 +103,7 @@ public class PlayerController : MonoBehaviour
                                     PlayersData[savedata[i].PlayerID].IsMove = -1;
                                     PlayersData[savedata[i].PlayerID].PlayersForward = new Vector3(-1.0f, 1.0f, 0.0f);
                                     animators[1].SetBool("isMoving", true);
+                                    PlayersData[savedata[i].PlayerID].ShootSensorDir = new Vector2(-1, 0);
                                     break;
                                 case 1:
                                     PlayersData[savedata[i].PlayerID].IsMove = 0;
@@ -112,6 +113,7 @@ public class PlayerController : MonoBehaviour
                                     PlayersData[savedata[i].PlayerID].IsMove = 1;
                                     PlayersData[savedata[i].PlayerID].PlayersForward = new Vector3(1.0f, 1.0f, 0.0f);
                                     animators[1].SetBool("isMoving", true);
+                                    PlayersData[savedata[i].PlayerID].ShootSensorDir = new Vector2(1, 0);
                                     break;
                                 case 3:
                                     PlayersData[savedata[i].PlayerID].IsMove = 0;
@@ -475,7 +477,7 @@ public class PlayerController : MonoBehaviour
         float rate = 0.0f;
 
         rate = 1.0f - PlayersData[ControlPlayerID].ShootTimer / PlayersData[ControlPlayerID].ShootCD;
-        if(PlayersData[ControlPlayerID].CanShoot)
+        if(PlayersData[ControlPlayerID].CanShoot && !PlayersData[ControlPlayerID].ShootIntoCD)
         {
             rate = 0;
         }

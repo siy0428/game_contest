@@ -86,12 +86,16 @@ public class Player : MonoBehaviour
     //普通の攻撃アイコン
     public Sprite AttackIconObj;
 
+    public Sprite AttackMaskImObj;
+
     //スキルアイコン
     public Sprite SkillIconObj;
 
     //スキルのボタンイメージ
     public Sprite SkillBottonIm;
-    
+
+    public Sprite SkillMaskImObj;
+
     // Start is called before the first frame update
     void Awake()
     {
