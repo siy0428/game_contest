@@ -51,7 +51,12 @@ public class Collision : MonoBehaviour
                 {
                     en.Hurt(py.Bullet.GetComponent<BulletData>().m_Attack + py.ATK);
                     BulletData bd = gameObject.GetComponent<BulletData>();
-                    DriveOff(gameObject, collider.gameObject, bd.m_Type);
+
+                    if(en.SkillIDs[0] != SkillID.Stealth || (en.SkillIDs[0] == SkillID.Stealth && !PlayerCtr.SkillDataCtr.UseStealth))
+                    {
+                        DriveOff(gameObject, collider.gameObject, bd.m_Type);
+                    }
+
                     ShootBottonCtr sbc = FindObjectOfType<ShootBottonCtr>();
                     sbc.m_BulletsList.Remove(this.gameObject);
                     GameObject.Destroy(this.gameObject);

@@ -103,6 +103,7 @@ public class PlayerController : MonoBehaviour
                                     PlayersData[savedata[i].PlayerID].IsMove = -1;
                                     PlayersData[savedata[i].PlayerID].PlayersForward = new Vector3(-1.0f, 1.0f, 0.0f);
                                     animators[1].SetBool("isMoving", true);
+                                    PlayersData[savedata[i].PlayerID].ShootSensorDir = new Vector2(-1, 0);
                                     break;
                                 case 1:
                                     PlayersData[savedata[i].PlayerID].IsMove = 0;
@@ -112,6 +113,7 @@ public class PlayerController : MonoBehaviour
                                     PlayersData[savedata[i].PlayerID].IsMove = 1;
                                     PlayersData[savedata[i].PlayerID].PlayersForward = new Vector3(1.0f, 1.0f, 0.0f);
                                     animators[1].SetBool("isMoving", true);
+                                    PlayersData[savedata[i].PlayerID].ShootSensorDir = new Vector2(1, 0);
                                     break;
                                 case 3:
                                     PlayersData[savedata[i].PlayerID].IsMove = 0;
@@ -170,10 +172,16 @@ public class PlayerController : MonoBehaviour
                                     SkillDataCtr.UseCut = true;
                                     animators[1].SetBool("isKamae", true) ;
                                     break;
+                                case 62:
+                                    SkillDataCtr.UseStealth = true;
+                                    break;
                                 case 66:
                                     ShootCtr.ShootKeyDown_Skill(this, savedata[i].PlayerID, SkillDataCtr.CutBulletObj, savedata[i].ShootDir);
                                     SkillDataCtr.UseCut = false;
                                     animators[1].SetBool("isKamae", false);
+                                    break;
+                                case 67:
+                                    SkillDataCtr.UseStealth = false;
                                     break;
                                 default:
                                     break;
@@ -205,6 +213,7 @@ public class PlayerController : MonoBehaviour
                         {
                             Jump(i);
                         }
+                        SkillDataCtr.playerStealth(PlayersData[i]);
                         ShootCtr.ShootKeyDown(this, i);
                     }
                     else if (i == ControlPlayerID)//ëÄçÏëŒè€
@@ -223,13 +232,17 @@ public class PlayerController : MonoBehaviour
                             case SkillID.Cut:
                                 limittime = SkillDataCtr.CutLimitTime;
                                 maxtime = SkillDataCtr.MaxLimitTime;
+                                SkillCtr.CheakSKillOver(limittime, maxtime);
+                                break;
+                            case SkillID.Stealth:
+                                break;
+                            default:
                                 break;
                         }
-                        SkillCtr.CheakSKillOver(limittime,maxtime);
                     }
 
                     JumpSmarsh(i);
-
+                    SkillDataCtr.playerStealth(PlayersData[i]);
                     animators[1].SetFloat("vspeed", Players[i].GetComponent<Rigidbody2D>().velocity.y);
 
                     if (Players[i].GetComponent<Rigidbody2D>().velocity.y == 0)
@@ -363,8 +376,11 @@ public class PlayerController : MonoBehaviour
             PlayersData[i].IsJump = false;
             PlayersData[i].IsAlive = true;
             PlayersData[i].ShootTimer = 0.0f;
+            PlayersData[i].ShotTimes = 0;
             PlayersData[i].ShootIntoCD = false;
             PlayersData[i].CanShoot = false;
+            PlayersData[i].EnableMoveJump = true;
+            PlayersData[i].EnableMoveJump2 = true;
             Players[i].GetComponent<Transform>().position = PlayersData[i].StartPoStartPositon;
             Players[i].SetActive(true);
         }
@@ -385,7 +401,7 @@ public class PlayerController : MonoBehaviour
         SkillCtr.SkillIntoCD = false;
         SkillDataCtr.EnableUseCut = true;
         SkillDataCtr.UseCut = false;
-
+        SkillDataCtr.StealthReset();
         ControlPlayerID++;
         ControlPlayerID %= Players.Count;
 
@@ -410,8 +426,11 @@ public class PlayerController : MonoBehaviour
             PlayersData[i].IsJump = false;
             PlayersData[i].IsAlive = true;
             PlayersData[i].ShootTimer = 0.0f;
+            PlayersData[i].ShotTimes = 0;
             PlayersData[i].ShootIntoCD = false;
             PlayersData[i].CanShoot = false;
+            PlayersData[i].EnableMoveJump = true;
+            PlayersData[i].EnableMoveJump2 = true;
             Players[i].GetComponent<Transform>().position = PlayersData[i].StartPoStartPositon;
             Players[i].SetActive(true);
         }
@@ -432,6 +451,7 @@ public class PlayerController : MonoBehaviour
         SkillCtr.SkillIntoCD = false;
         SkillDataCtr.EnableUseCut = true;
         SkillDataCtr.UseCut = false;
+        SkillDataCtr.StealthReset();
 
         for (int i = 0; i < SavedBehaviour.GetBehaviourData().Count; i++)
         {
@@ -464,6 +484,13 @@ public class PlayerController : MonoBehaviour
                     rate = 0;
                 }
                 break;
+            case SkillID.Stealth:
+                rate = 1.0f - SkillDataCtr.StealthCDTimer / SkillDataCtr.StealthCDTime;
+                if(!SkillDataCtr.UseStealth && !SkillCtr.SkillIntoCD)
+                {
+                    rate = 0;
+                }
+                break;
             default:
                 break;
         }
@@ -475,11 +502,27 @@ public class PlayerController : MonoBehaviour
         float rate = 0.0f;
 
         rate = 1.0f - PlayersData[ControlPlayerID].ShootTimer / PlayersData[ControlPlayerID].ShootCD;
-        if(PlayersData[ControlPlayerID].CanShoot)
+        if(PlayersData[ControlPlayerID].CanShoot && !PlayersData[ControlPlayerID].ShootIntoCD)
         {
             rate = 0;
         }
 
         return rate;
+    }
+
+    public bool BreakStealth(int ID)
+    {
+
+        if(PlayersData[ID].SkillIDs[0] == SkillID.Stealth && SkillDataCtr.UseStealth)
+        {
+            return true;
+            //SkillDataCtr.UseStealth = false;
+            //PlayersData[ID].EnableMoveJump2 = true;
+            //if (ID == ControlPlayerID)
+            //{
+            //    SkillCtr.SkillIntoCD = true;
+            //}
+        }
+        return false;
     }
 }

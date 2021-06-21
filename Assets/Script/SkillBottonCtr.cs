@@ -33,14 +33,17 @@ public class SkillBottonCtr : MonoBehaviour
         {
             _PlayerCtr.SkillDataCtr.EnableUseCut = false;
         }
+        if (_PlayerCtr.PlayersData[_PlayerCtr.ControlPlayerID].SkillIDs[0] == SkillID.Stealth)
+        {
+            _PlayerCtr.SkillDataCtr.UseStealth = true;
+            _PlayerCtr.PlayersData[_PlayerCtr.ControlPlayerID].EnableMoveJump2 = false;
+            _PlayerCtr.SkillDataCtr.EnableUseStealth = false;
+        }
+
     }
 
     public void SkillBottonIsDowning(InputAction.CallbackContext obj)
     {
-        if(SkillKeyDown == 1)
-        {
-            SkillTimer += Time.deltaTime;
-        }
     }
 
 
@@ -52,6 +55,15 @@ public class SkillBottonCtr : MonoBehaviour
             _PlayerCtr.SkillDataCtr.UseCut = true;
         }
 
+        if (_PlayerCtr.PlayersData[_PlayerCtr.ControlPlayerID].SkillIDs[0] == SkillID.Stealth)
+        {
+            if (_PlayerCtr.SkillDataCtr.UseStealth)
+            {
+                UpKeyRecord();
+                SkillIntoCD = true;
+                _PlayerCtr.SkillDataCtr.UseStealth = false;
+            }
+        }
     }
 
     // Start is called before the first frame update
@@ -66,35 +78,66 @@ public class SkillBottonCtr : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
-        if(SkillIntoCD && SkillKeyDown == 0)
+        if (SkillKeyDown == 1)
         {
-            SkillCD = FindObjectOfType<SkillData>().GetSkillCDTime(_PlayerCtr.PlayersData[_PlayerCtr.ControlPlayerID].SkillIDs[0]);
+            float t = Time.deltaTime;
+            SkillTimer += t;
            
-            SkillCDTimer += Time.deltaTime;
-            if (SkillCDTimer >= SkillCD)
+            if (_PlayerCtr.PlayersData[_PlayerCtr.ControlPlayerID].SkillIDs[0] == SkillID.Stealth)
             {
-                SkillIntoCD = false;
-                SkillCDTimer = 0.0f;
-                if (_PlayerCtr.PlayersData[_PlayerCtr.ControlPlayerID].SkillIDs[0] == SkillID.Cut)
+                SkillIntoCD = _PlayerCtr.SkillDataCtr.Stealth(SkillTimer, t);
+                if(SkillIntoCD)
                 {
-                    _PlayerCtr.SkillDataCtr.EnableUseCut = true;
-                    _PlayerCtr.SkillDataCtr.UseCut = false;
+                    SkillKeyDown = 0;
+                    _PlayerCtr.PlayersData[_PlayerCtr.ControlPlayerID].EnableMoveJump2 = true;
                 }
-            }
+            }           
         }
-        ChaUICtr.CDMaskUpdate(1);
-    }
 
-    public void UseSkill(int ID)
-    {
-        if (_PlayerCtr.StartBehaviourRecord)
+        switch (_PlayerCtr.PlayersData[_PlayerCtr.ControlPlayerID].SkillIDs[0])
         {
-            if (ID == _PlayerCtr.ControlPlayerID)
-            {
-                SkillCD = _PlayerCtr.SkillDataCtr.GetSkillCDTime(_PlayerCtr.PlayersData[ID].SkillIDs[0]);
-            }
+            case SkillID.JUMPSMARSH:
+                if (SkillIntoCD && SkillKeyDown == 0)
+                {
+                    SkillCD = FindObjectOfType<SkillData>().GetSkillCDTime(_PlayerCtr.PlayersData[_PlayerCtr.ControlPlayerID].SkillIDs[0]);
+
+                    SkillCDTimer += Time.deltaTime;
+                    if (SkillCDTimer >= SkillCD)
+                    {
+                        SkillIntoCD = false;
+                        SkillCDTimer = 0.0f;
+                    }
+                }
+                break;
+            case SkillID.Cut:
+                if (SkillIntoCD && SkillKeyDown == 0)
+                {
+                    SkillCD = FindObjectOfType<SkillData>().GetSkillCDTime(_PlayerCtr.PlayersData[_PlayerCtr.ControlPlayerID].SkillIDs[0]);
+
+                    SkillCDTimer += Time.deltaTime;
+                    if (SkillCDTimer >= SkillCD)
+                    {
+                        SkillIntoCD = false;
+                        SkillCDTimer = 0.0f;
+                        _PlayerCtr.SkillDataCtr.EnableUseCut = true;
+                        _PlayerCtr.SkillDataCtr.UseCut = false;
+                    }
+                }
+                break;
+            case SkillID.Stealth:
+                SkillIntoCD = _PlayerCtr.SkillDataCtr.StealthCDFunc(SkillIntoCD);
+                if (!_PlayerCtr.SkillDataCtr.UseStealth)
+                {
+                    _PlayerCtr.PlayersData[_PlayerCtr.ControlPlayerID].EnableMoveJump2 = true;
+                }
+
+                break;
+            default:
+                break;
         }
+
+
+        ChaUICtr.CDMaskUpdate(1);
     }
 
     public bool CheakSKillOver( float _LimitTime, float _MaxLimit = -1.0f)
@@ -146,10 +189,16 @@ public class SkillBottonCtr : MonoBehaviour
                 animators[0].SetBool("isKamae", true);
                 animators[1].SetBool("isKamae", true);
                 break;
+            case SkillID.Stealth:
+                KeySkill.BottonID = 62;
+                KeySkill.StartTime = _PlayerCtr.Timer;
+                KeySkill.Used = false;
+                KeySkill.PlayerID = _PlayerCtr.ControlPlayerID;
+                break;
             default:
                 break;
         }
-
+        _PlayerCtr.RecordBehaviour.AddBehaviour(KeySkill);
     }
 
     private void UpKeyRecord()
@@ -167,8 +216,15 @@ public class SkillBottonCtr : MonoBehaviour
                 animators[0].SetBool("isKamae", false);
                 animators[1].SetBool("isKamae", false);
                 break;
+            case SkillID.Stealth:
+                KeySkill.BottonID = 67;
+                KeySkill.StartTime = _PlayerCtr.Timer;
+                KeySkill.Used = false;
+                KeySkill.PlayerID = _PlayerCtr.ControlPlayerID;
+                break;
             default:
                 break;
         }
+        _PlayerCtr.RecordBehaviour.AddBehaviour(KeySkill);
     }
 }

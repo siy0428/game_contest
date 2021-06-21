@@ -57,9 +57,13 @@ public class CharacterUIController : MonoBehaviour
 
         AttackIconObj.GetComponent<Image>().sprite = py.AttackIconObj;
 
+        AttackIconCDMaskObj.GetComponent<Image>().sprite = py.AttackMaskImObj;
+
         SkillIconObj.GetComponent<Image>().sprite = py.SkillIconObj;
 
         SkillBottonImObj.GetComponent<Image>().sprite = py.SkillBottonIm;
+
+        SkillIconCDMaskObj.GetComponent<Image>().sprite = py.SkillMaskImObj;
 
         AttackIconCDMaskObj.GetComponent<Image>().fillAmount = 0;
 
