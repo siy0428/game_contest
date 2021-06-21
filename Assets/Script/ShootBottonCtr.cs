@@ -56,6 +56,11 @@ public class ShootBottonCtr : MonoBehaviour
             //éÀåÇâ¬î\Ç»èÍçá
             if (_PlayerCtr.PlayersData[ID].CanShoot && !_PlayerCtr.PlayersData[ID].ShootIntoCD)
             {
+                if (_PlayerCtr.BreakStealth(ID))
+                {
+                    return;
+                }
+
                 Animator[] animators = _PlayerCtr.PlayersData[_PlayerCtr.ControlPlayerID].GetComponentsInChildren<Animator>();
                 animators[0].SetTrigger("doAttack");
 
@@ -86,7 +91,9 @@ public class ShootBottonCtr : MonoBehaviour
                 //KeyShootDown = -1;
 
                 _PlayerCtr.PlayersData[ID].gameObject.GetComponentInChildren<ShootKeeper>().SetParama(_PlayerCtr.PlayersData[ID].ShootPos, ID);
+                _PlayerCtr.PlayersData[ID].ShotTimes++;
                 _PlayerCtr.PlayersData[ID].ShootIntoCD = true;
+               
                 //clone.GetComponent<Collision>().PlayerID = ID;
                 //m_BulletsList.Add(clone);
             }
@@ -111,12 +118,22 @@ public class ShootBottonCtr : MonoBehaviour
             //m_BulletsList.Add(clone);
             if (_PlayerCtr.PlayersData[ID].CanShoot && !_PlayerCtr.PlayersData[ID].ShootIntoCD)
             {
+                if (_PlayerCtr.BreakStealth(ID))
+                {
+                    return;
+                }
+
                 Animator[] animators = _PlayerCtr.PlayersData[ID].GetComponentsInChildren<Animator>();
                 animators[0].SetTrigger("doAttack");
 
                 //_PlayerCtr.PlayersData[_PlayerCtr.ControlPlayerID].gameObject.GetComponentInChildren<ShootKeeper>().SetParama(ShotPos, ID);
                 _PlayerCtr.PlayersData[ID].gameObject.GetComponentInChildren<ShootKeeper>().SetParama(_PlayerCtr.PlayersData[ID].ShootPos, ID);
-                _PlayerCtr.PlayersData[ID].ShootIntoCD = true;
+                _PlayerCtr.PlayersData[ID].ShotTimes++;
+                if (_PlayerCtr.PlayersData[ID].ShotTimes >= _PlayerCtr.PlayersData[ID].EnableShootTimes)
+                {
+                    _PlayerCtr.PlayersData[ID].ShootIntoCD = true;
+                }
+               
             }
         }
     }
