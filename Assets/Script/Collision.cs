@@ -8,7 +8,6 @@ public enum CollisionDir
     LEFTRIGHT
 }
 
-
 public class Collision : MonoBehaviour
 {
     public int PlayerID;
@@ -56,7 +55,7 @@ public class Collision : MonoBehaviour
                     ShootBottonCtr sbc = FindObjectOfType<ShootBottonCtr>();
                     sbc.m_BulletsList.Remove(this.gameObject);
                     GameObject.Destroy(this.gameObject);
-                  
+
                     if (en.HP <= 0)
                     {
                         //PlayerCtr.PlayersData[collider.gameObject.GetComponent<Player>().PlayerID].IsAlive = false;
@@ -109,6 +108,7 @@ public class Collision : MonoBehaviour
             {
                 if(bd.m_Type == BulletType.Sword_1)
                 {
+
                 }
                 else
                 {

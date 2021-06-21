@@ -4,19 +4,25 @@ using UnityEngine;
 
 public class TimeBody : MonoBehaviour
 {
+    [SerializeField]
+    private ShootKeeper sk;
+
     //逆再生用変数
     private bool isRewinding;
     private Rigidbody2D rb2d;
-    private List<Vector3> positions;
+    private List<TimeBodyObject> objects;
     private TimeBodyManager tbm;
+    private TimeBodyBulletManager tbbm;
 
     // Start is called before the first frame update
     void Start()
     {
+        //初期化
         isRewinding = false;
-        positions = new List<Vector3>();
+        objects = new List<TimeBodyObject>();
         rb2d = GetComponent<Rigidbody2D>();
         tbm = FindObjectOfType<TimeBodyManager>();
+        tbbm = FindObjectOfType<TimeBodyBulletManager>();
     }
 
     void Update()
@@ -52,26 +58,27 @@ public class TimeBody : MonoBehaviour
     /// </summary>
     void Rewind()
     {
-        if (positions.Count > 0)
+        if (objects.Count > 0)
         {
             //リストの先頭から座標を参照
-            transform.position = positions[0];
+            transform.position = objects[0].position;
             //逆再生の速度調整
             for (int i = 0; i < tbm.GetMagniflication(); i++)
             {
                 //リストの中身が空っぽになったら処理をしない
-                if (positions.Count <= 0)
+                if (objects.Count <= 0)
                 {
                     break;
                 }
-                positions.RemoveAt(0);  //座標リストの先頭を削除
+                objects.RemoveAt(0);  //座標リストの先頭を削除
             }
         }
         else
         {
-            StopRewind();
-            tbm.SetIsUse(false);
-            positions.Clear();
+            Debug.Log(gameObject.name + "の逆再生終了");
+            StopRewind();           //逆再生の記録を停止
+            tbm.SetIsUse(false);    //逆再生を停止
+            objects.Clear();        //記録した座標を消去
         }
     }
 
@@ -80,10 +87,16 @@ public class TimeBody : MonoBehaviour
     /// </summary>
     void Record()
     {
-        //リストの先頭に座標を記録
-        positions.Insert(0, transform.position);
-    }
+        TimeBodyObject obj = new TimeBodyObject();
+        obj.position = transform.position;
+        if (sk)
+        {
+            obj.isShot = sk.GetShotPerFrame();
+        }
 
+        //リストの先頭に座標を記録
+        objects.Insert(0, obj);
+    }
 
     /// <summary>
     /// 逆再生の開始

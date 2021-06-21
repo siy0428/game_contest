@@ -108,7 +108,7 @@ public class BulletData : MonoBehaviour
     {
         Vector3 temp = m_Target - transform.position;
 
-        if((temp.x > 0 && m_Dir.x <= 0 || temp.x <= 0 && m_Dir.x >0))
+        if((temp.x > 0 && m_Dir.x <= 0 || temp.x <= 0 && m_Dir.x > 0))
         {
             if(!aimed)
             {
