@@ -218,7 +218,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03233d0ee5017814db5bfb8e002d9f60, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isActive: 1
+  isActive: 0
 --- !u!114 &7310034727424979686
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -231,4 +231,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3cf8c3306a437fb4a86c4033f6d29a57, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isRewinding: 0

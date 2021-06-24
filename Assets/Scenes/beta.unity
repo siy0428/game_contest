@@ -746,6 +746,7 @@ GameObject:
   m_Component:
   - component: {fileID: 369267334}
   - component: {fileID: 369267333}
+  - component: {fileID: 369267335}
   m_Layer: 0
   m_Name: TimeBodyManager
   m_TagString: Untagged
@@ -780,6 +781,19 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 20
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &369267335
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 369267332}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b2d06dcad887d5a40943b885a9ad2887, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bullet: {fileID: 7875155880049078745, guid: 4839e46db498cb746b2a122371cf0455, type: 3}
 --- !u!1 &391261550
 GameObject:
   m_ObjectHideFlags: 0
@@ -4112,7 +4126,7 @@ MonoBehaviour:
   spawns:
   - {x: 237.34, y: 35.121, z: 0}
   defeat_count: 0
-  time_limit: 5
+  time_limit: 10
 --- !u!4 &736465875
 Transform:
   m_ObjectHideFlags: 0
@@ -5012,6 +5026,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3cf8c3306a437fb4a86c4033f6d29a57, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  sk: {fileID: 1591278134}
 --- !u!1 &1051253786 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7810114061666317829, guid: f8a3a832c518d514ea1b683c9b9a6305, type: 3}
@@ -5302,6 +5317,7 @@ MonoBehaviour:
   target1: {fileID: 1049415922}
   target2: {fileID: 1266795358}
   offset: {x: 4, y: 5}
+  DistanceSize: 3.5
 --- !u!114 &1158529092
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5602,6 +5618,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3cf8c3306a437fb4a86c4033f6d29a57, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  sk: {fileID: 936621888}
 --- !u!1 &1276534350
 GameObject:
   m_ObjectHideFlags: 0

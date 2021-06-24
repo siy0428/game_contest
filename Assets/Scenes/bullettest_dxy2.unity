@@ -152,6 +152,7 @@ MonoBehaviour:
   IsMove: 0
   OnBox: 1
   EnableMoveJump: 1
+  EnableMoveJump2: 1
   DisableMoveTime: 0.3
   DMTimer: 0
   IsJump: 0
@@ -166,6 +167,9 @@ MonoBehaviour:
   ShootPos: {x: 0, y: 0, z: 0}
   CanShoot: 0
   ShootIntoCD: 0
+  EnableShootTimes: 1
+  ShotTimes: 0
+  ShootCD2: 0.1
   ShootSensorDir: {x: 1, y: 0}
   ShootFixPostion: {x: 0, y: 0.45, z: 0}
   Offset: {x: 0, y: 0.35, z: 0}
@@ -536,6 +540,14 @@ MonoBehaviour:
   CutFixPosition: {x: 0.31, y: -0.639, z: 0}
   EnableUseCut: 1
   CutBulletObj: {fileID: 475518525311703989, guid: 76314cd0434328247b77d5d56946f8fb, type: 3}
+  UseStealth: 0
+  EnableUseStealth: 1
+  StealthCDTimer: 0
+  StealthCDBasicTime: 0.5
+  StealthCDTime: 0.5
+  StealthMaxLimitTime: 5
+  StealthCDrate: 2
+  StealthTime: 0
 --- !u!4 &232380060
 Transform:
   m_ObjectHideFlags: 0
@@ -924,10 +936,11 @@ MonoBehaviour:
   MoveSpeed: 3
   JumpStep: 1
   JumpMass: 3
-  SkillIDs: 01000000
+  SkillIDs: 03000000
   IsMove: 0
   OnBox: 1
   EnableMoveJump: 1
+  EnableMoveJump2: 1
   DisableMoveTime: 0.3
   DMTimer: 0
   IsJump: 0
@@ -935,13 +948,16 @@ MonoBehaviour:
   IsAlive: 0
   StartPoStartPositon: {x: 0, y: 0, z: 0}
   PlayersForward: {x: 0, y: 0, z: 0}
-  Bullet: {fileID: 3142873562492474777, guid: 64c9f48f6976bc2469fbcbbb08253b77, type: 3}
+  Bullet: {fileID: 3605381615004023268, guid: a3fa9ecb3c7fc4e47a225a6fa6910254, type: 3}
   BulletSpeed: 150
-  ShootCD: 0.5
+  ShootCD: 2
   ShootTimer: 0
   ShootPos: {x: 0, y: 0, z: 0}
   CanShoot: 0
   ShootIntoCD: 0
+  EnableShootTimes: 2
+  ShotTimes: 0
+  ShootCD2: 0.01
   ShootSensorDir: {x: 1, y: 0}
   ShootFixPostion: {x: 0, y: 0.45, z: 0}
   Offset: {x: 0, y: 0.35, z: 0}
@@ -2311,6 +2327,7 @@ MonoBehaviour:
   IsMove: 0
   OnBox: 1
   EnableMoveJump: 1
+  EnableMoveJump2: 1
   DisableMoveTime: 0.3
   DMTimer: 0
   IsJump: 0
@@ -2325,6 +2342,9 @@ MonoBehaviour:
   ShootPos: {x: 0, y: 0, z: 0}
   CanShoot: 0
   ShootIntoCD: 0
+  EnableShootTimes: 1
+  ShotTimes: 0
+  ShootCD2: 0.1
   ShootSensorDir: {x: 1, y: 0}
   ShootFixPostion: {x: 0.3, y: 0.3, z: 0}
   Offset: {x: 0, y: 0.45, z: 0}
