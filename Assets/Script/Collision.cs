@@ -22,6 +22,7 @@ public class Collision : MonoBehaviour
 
     private CharacterUIController CUICtr;
 
+    private List<Vector3> m_DirList = new List<Vector3>();
     // Start is called before the first frame update
     void Start()
     {
@@ -30,6 +31,16 @@ public class Collision : MonoBehaviour
         CUICtr = FindObjectOfType<CharacterUIController>();
         em = FindObjectOfType<EnemyManager>();
         lm = FindObjectOfType<LoopManager>();
+
+        m_DirList.Add(new Vector3(1, 0, 0));//âE
+        m_DirList.Add(new Vector3(-1, 0, 0));//ç∂
+        m_DirList.Add(new Vector3(0, 1, 0));//è„
+        m_DirList.Add(new Vector3(0, -1, 0));//â∫
+        m_DirList.Add(new Vector3(1, 1, 0).normalized);//âEè„
+        m_DirList.Add(new Vector3(1, -1, 0).normalized);//âEâ∫
+        m_DirList.Add(new Vector3(-1, 1, 0).normalized);//ç∂è„
+        m_DirList.Add(new Vector3(-1, -1, 0).normalized);//ç∂â∫
+
     }
 
     void Update()
@@ -58,10 +69,17 @@ public class Collision : MonoBehaviour
                         DriveOff(gameObject, collider.gameObject, bd.m_Type);
                     }
 
-                    ShootBottonCtr sbc = FindObjectOfType<ShootBottonCtr>();
-                    sbc.m_BulletsList.Remove(this.gameObject);
-                    GameObject.Destroy(this.gameObject);
-                  
+                    if(bd.m_Type != BulletType.Armorpiercing)
+                    {
+                        ShootBottonCtr sbc = FindObjectOfType<ShootBottonCtr>();
+                        if (bd.m_Type == BulletType.Boom)
+                        {
+                            KumaBoom(PlayerCtr, bd, sbc, PlayerID, transform.position);
+                        }
+                        sbc.m_BulletsList.Remove(this.gameObject);
+                        GameObject.Destroy(this.gameObject);
+                    }
+
                     if (en.HP <= 0)
                     {
                         //PlayerCtr.PlayersData[collider.gameObject.GetComponent<Player>().PlayerID].IsAlive = false;
@@ -118,6 +136,10 @@ public class Collision : MonoBehaviour
                 else
                 {
                     ShootBottonCtr sbc = FindObjectOfType<ShootBottonCtr>();
+                    if (bd.m_Type == BulletType.Boom)
+                    {
+                        KumaBoom(PlayerCtr, bd, sbc, PlayerID, transform.position);
+                    }
                     sbc.m_BulletsList.Remove(this.gameObject);
                     GameObject.Destroy(this.gameObject);
                 }
@@ -139,6 +161,10 @@ public class Collision : MonoBehaviour
                 else
                 {
                     ShootBottonCtr sbc = FindObjectOfType<ShootBottonCtr>();
+                    if (bd.m_Type == BulletType.Boom)
+                    {
+                        KumaBoom(PlayerCtr, bd, sbc, PlayerID, transform.position);
+                    }
                     sbc.m_BulletsList.Remove(this.gameObject);
                     GameObject.Destroy(this.gameObject);
                     sbc.m_BulletsList.Remove(collider.gameObject);
@@ -152,10 +178,17 @@ public class Collision : MonoBehaviour
             BulletData bd = gameObject.GetComponent<BulletData>();
             DriveOff(gameObject, collider.gameObject, bd.m_Type);
 
-            //íeÇÃçÌèú
             ShootBottonCtr sbc = FindObjectOfType<ShootBottonCtr>();
-            sbc.m_BulletsList.Remove(this.gameObject);
-            GameObject.Destroy(this.gameObject);
+            if (bd.m_Type != BulletType.Armorpiercing)
+            {
+                //íeÇÃçÌèú
+                if (bd.m_Type == BulletType.Boom)
+                {
+                    KumaBoom(PlayerCtr, bd, sbc, PlayerID, transform.position);
+                }
+                sbc.m_BulletsList.Remove(this.gameObject);
+                GameObject.Destroy(this.gameObject);
+            }
 
             //ìGÇÃçÌèú
             sbc.m_BulletsList.Remove(collider.gameObject);
@@ -195,6 +228,15 @@ public class Collision : MonoBehaviour
             {
                 Targetobj.GetComponent<Player>().EnableMoveJump = false;
             }
+        }
+    }
+
+    public void KumaBoom(PlayerController pc, BulletData bd,ShootBottonCtr sbc,int ID,Vector3 pos)
+    {
+
+        for(int i = 0; i<m_DirList.Count;i++)
+        {
+            sbc.CreateBullet(pc, ID, pos, m_DirList[i]);
         }
     }
 }
