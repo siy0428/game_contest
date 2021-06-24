@@ -8,7 +8,8 @@ public enum BulletType
      Arrow,
      Rebound,
      Sword,
-     Sword_1
+     Sword_1,
+     Hunter
 }
 
 
@@ -54,7 +55,7 @@ public class BulletData : MonoBehaviour
     public float DriveOffAngleMin = 12.0f;
 
     public float DriveOffAngleMax = 32.0f;
-    
+
     // Start is called before the first frame update
     void Start()
     {
@@ -93,6 +94,9 @@ public class BulletData : MonoBehaviour
             case BulletType.Sword_1:
                 Sword_1Move();
                 break;
+            case BulletType.Hunter:
+                HunterMove();
+                break;
             default:
                 break;
         }
@@ -108,7 +112,7 @@ public class BulletData : MonoBehaviour
     {
         Vector3 temp = m_Target - transform.position;
 
-        if((temp.x > 0 && m_Dir.x <= 0 || temp.x <= 0 && m_Dir.x >0))
+        if((temp.x > 0 && m_Dir.x <= 0 || temp.x <= 0 && m_Dir.x > 0))
         {
             if(!aimed)
             {
@@ -193,6 +197,11 @@ public class BulletData : MonoBehaviour
     private void Sword_1Move()
     {
 
+    }
+
+    private void HunterMove()
+    {
+        transform.position += m_Dir * BulletSpeed * Time.deltaTime;
     }
 
     public void SetTarget(Vector3 _Target)

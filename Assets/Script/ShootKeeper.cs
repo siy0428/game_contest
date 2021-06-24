@@ -16,6 +16,9 @@ public class ShootKeeper : MonoBehaviour
     private Player shootOrigin;
 
     private bool isShot = false;
+    private bool isShotPerFrame = false;
+
+    private TimeBodyBulletManager tbbm;
 
     public void SetParama(Vector3 _TargetPos, int ID)
     {
@@ -27,6 +30,7 @@ public class ShootKeeper : MonoBehaviour
     void Start()
     {
         shootOrigin = transform.parent.gameObject.GetComponent<Player>();
+        tbbm = FindObjectOfType<TimeBodyBulletManager>();
     }
 
     // Update is called once per frame
@@ -36,6 +40,9 @@ public class ShootKeeper : MonoBehaviour
         {
             isShot = false;
         }
+
+        isShotPerFrame = false;
+
         if (doShoot && !isShot)
         {
             // 弾（ゲームオブジェクト）の生成
@@ -46,6 +53,18 @@ public class ShootKeeper : MonoBehaviour
             shootbottonctr.m_BulletsList.Add(clone);
 
             isShot = true;
+            isShotPerFrame = true;
+
+            tbbm.SetRealTime();
         }
+    }
+
+    /// <summary>
+    /// 弾を打ったフレームかどうか
+    /// </summary>
+    /// <returns>弾を打ったかどうか</returns>
+    public bool GetShotPerFrame()
+    {
+        return isShotPerFrame;
     }
 }

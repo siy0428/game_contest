@@ -13,6 +13,7 @@ public class LoopManager : MonoBehaviour
     private float time;         //ループごとの時間制限
     private PlayerController pc;
     private TimeBodyManager tbm;
+    private TimeBodyBulletManager tbbm;
 
     // Start is called before the first frame update
     void Start()
@@ -24,6 +25,7 @@ public class LoopManager : MonoBehaviour
         time = loops[loop_id].GetTime();    //1つ目のループの時間取得
         pc = FindObjectOfType<PlayerController>();
         tbm = FindObjectOfType<TimeBodyManager>();
+        tbbm = FindObjectOfType<TimeBodyBulletManager>();
     }
 
     // Update is called once per frame
@@ -78,7 +80,11 @@ public class LoopManager : MonoBehaviour
             {
                 LoopAgain();
             }
+
             isRewindStart = false;
+
+            //時刻の代入
+            tbbm.SetFirstTime();
         }
     }
 

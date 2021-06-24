@@ -37,6 +37,7 @@ public class Player : MonoBehaviour
     public bool OnBox = true;
 
     public bool EnableMoveJump = true;
+    public bool EnableMoveJump2 = true;
 
     public float DisableMoveTime = 0.3f;
 
@@ -74,6 +75,12 @@ public class Player : MonoBehaviour
 
     public bool ShootIntoCD = false;
 
+    public int EnableShootTimes = 1;
+
+    public int ShotTimes = 0;
+
+    public float ShootCD2 = 0.1f;
+
     public Vector2 ShootSensorDir = new Vector2(1, 0);
 
     public Vector3 ShootFixPostion = new Vector3();
@@ -86,12 +93,16 @@ public class Player : MonoBehaviour
     //普通の攻撃アイコン
     public Sprite AttackIconObj;
 
+    public Sprite AttackMaskImObj;
+
     //スキルアイコン
     public Sprite SkillIconObj;
 
     //スキルのボタンイメージ
     public Sprite SkillBottonIm;
-    
+
+    public Sprite SkillMaskImObj;
+
     // Start is called before the first frame update
     void Awake()
     {
@@ -140,7 +151,19 @@ public class Player : MonoBehaviour
 
     public void Hurt(float _Demage)
     {
-        HP -= _Demage;
+
+        if(SkillIDs[0] != SkillID.Stealth)
+        {
+            HP -= _Demage;
+        }
+        else
+        {
+            SkillData sd = FindObjectOfType<SkillData>();
+            if(!sd.UseStealth)
+            {
+                HP -= _Demage;
+            }
+        }
     }
 
     public void OnCollisionEnter2D(UnityEngine.Collision2D collision)
@@ -157,10 +180,24 @@ public class Player : MonoBehaviour
         {
             ShootTimer += Time.deltaTime;
 
-            if(ShootTimer >= ShootCD)
+
+            if(EnableShootTimes - ShotTimes < 1)
             {
-                ShootTimer = 0.0f;
-                ShootIntoCD = false;
+                if (ShootTimer >= ShootCD)
+                {
+                    ShootTimer = 0.0f;
+                    ShootIntoCD = false;
+                    ShotTimes = 0;
+                }
+            }
+            else
+            {
+                if (ShootTimer >= ShootCD2)
+                {
+                    ShootTimer = 0.0f;
+                    ShootIntoCD = false;
+                }
+
             }
         }
     }

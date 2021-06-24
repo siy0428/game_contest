@@ -90,7 +90,7 @@ public class MoveBottonCtr : MonoBehaviour
     public void MoveBottonUse(PlayerController _PlayerCtr)
     {
         //‹L˜^‚ª‹–‰Â‚ª‚ ‚éê‡‚Ì‚İA‘€ì‚Å‚«‚é
-        if (_PlayerCtr.StartBehaviourRecord && _PlayerCtr.PlayersData[_PlayerCtr.ControlPlayerID].EnableMoveJump)
+        if (_PlayerCtr.StartBehaviourRecord && _PlayerCtr.PlayersData[_PlayerCtr.ControlPlayerID].EnableMoveJump && _PlayerCtr.PlayersData[_PlayerCtr.ControlPlayerID].EnableMoveJump2)
         {
             //ˆÚ“®—ÊŒvZ
             float moveX = 0.0f;
