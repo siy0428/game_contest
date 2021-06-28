@@ -295,6 +295,7 @@ MonoBehaviour:
   IsMove: 0
   OnBox: 1
   EnableMoveJump: 1
+  EnableMoveJump2: 1
   DisableMoveTime: 0.3
   DMTimer: 0
   IsJump: 0
@@ -309,13 +310,18 @@ MonoBehaviour:
   ShootPos: {x: 0, y: 0, z: 0}
   CanShoot: 0
   ShootIntoCD: 0
+  EnableShootTimes: 1
+  ShotTimes: 0
+  ShootCD2: 0.1
   ShootSensorDir: {x: 1, y: 0}
   ShootFixPostion: {x: 0, y: 0.1, z: 0}
   Offset: {x: 0, y: 0, z: 0}
   AvatarObj: {fileID: 0}
   AttackIconObj: {fileID: 0}
+  AttackMaskImObj: {fileID: 0}
   SkillIconObj: {fileID: 0}
   SkillBottonIm: {fileID: 0}
+  SkillMaskImObj: {fileID: 0}
 --- !u!4 &75480355 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7810114061052543293, guid: f8a3a832c518d514ea1b683c9b9a6305, type: 3}
@@ -408,6 +414,7 @@ GameObject:
   - component: {fileID: 205336565}
   - component: {fileID: 205336568}
   - component: {fileID: 205336567}
+  - component: {fileID: 205336569}
   m_Layer: 0
   m_Name: SoundManager
   m_TagString: Untagged
@@ -551,6 +558,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   BGMAudioSource: {fileID: 0}
+--- !u!114 &205336569
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 205336564}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86a4843dbbc16cb4d9df38573002ea28, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  audioClip:
+  - {fileID: 8300000, guid: e86b1d10575a8d34fb021348bbb1d6b3, type: 3}
+  - {fileID: 8300000, guid: 501233c0d2c2d9a4e95f11d419589124, type: 3}
 --- !u!1 &333073644
 GameObject:
   m_ObjectHideFlags: 0
@@ -761,6 +783,7 @@ MonoBehaviour:
   IsMove: 0
   OnBox: 1
   EnableMoveJump: 1
+  EnableMoveJump2: 1
   DisableMoveTime: 0.3
   DMTimer: 0
   IsJump: 0
@@ -775,13 +798,18 @@ MonoBehaviour:
   ShootPos: {x: 0, y: 0, z: 0}
   CanShoot: 0
   ShootIntoCD: 0
+  EnableShootTimes: 1
+  ShotTimes: 0
+  ShootCD2: 0.1
   ShootSensorDir: {x: 1, y: 0}
   ShootFixPostion: {x: 0, y: 0.5, z: 0}
   Offset: {x: 0, y: 0, z: 0}
   AvatarObj: {fileID: 21300000, guid: 05243ba111e0070428d11607d4bdd6dd, type: 3}
   AttackIconObj: {fileID: 3361893691445635442, guid: e27b8589df343f4489d0989a386683ff, type: 3}
+  AttackMaskImObj: {fileID: 0}
   SkillIconObj: {fileID: -5703202164605339356, guid: e27b8589df343f4489d0989a386683ff, type: 3}
   SkillBottonIm: {fileID: 21300000, guid: f6567620734688f4c894a199a1dac1a0, type: 3}
+  SkillMaskImObj: {fileID: 0}
 --- !u!4 &468725019 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8612584339121283431, guid: 72f6788a664521b46848276c594fedf4, type: 3}
@@ -2629,7 +2657,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f2021003704e8d047928af3fbd2c204b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  AvatarObj: {fileID: 0}
+  AvatarObj: {fileID: 563771457}
   AttackIconObj: {fileID: 0}
   AttackIconCDMaskObj: {fileID: 0}
   SkillIconObj: {fileID: 0}
@@ -3080,6 +3108,14 @@ MonoBehaviour:
   CutFixPosition: {x: 0.31, y: -0.639, z: 0}
   EnableUseCut: 1
   CutBulletObj: {fileID: 475518525311703989, guid: 76314cd0434328247b77d5d56946f8fb, type: 3}
+  UseStealth: 0
+  EnableUseStealth: 1
+  StealthCDTimer: 0
+  StealthCDBasicTime: 0.5
+  StealthCDTime: 0.5
+  StealthMaxLimitTime: 5
+  StealthCDrate: 2
+  StealthTime: 0
 --- !u!4 &900299464
 Transform:
   m_ObjectHideFlags: 0
