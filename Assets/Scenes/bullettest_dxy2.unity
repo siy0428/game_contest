@@ -550,8 +550,8 @@ MonoBehaviour:
   StealthTime: 0
   BoomCD: 3
   BoomCDTimer: 0
-  UseBoom: 0
   EnableUseBoom: 1
+  KumaBoomBulletObj: {fileID: 3091347883700298844, guid: 448cd0d2fb293b74a9fc9ab4048f330f, type: 3}
 --- !u!4 &232380060
 Transform:
   m_ObjectHideFlags: 0
@@ -8622,7 +8622,7 @@ MonoBehaviour:
   MoveSpeed: 3
   JumpStep: 1
   JumpMass: 3
-  SkillIDs: 03000000
+  SkillIDs: 04000000
   IsMove: 0
   OnBox: 1
   EnableMoveJump: 1
@@ -8634,9 +8634,9 @@ MonoBehaviour:
   IsAlive: 0
   StartPoStartPositon: {x: 0, y: 0, z: 0}
   PlayersForward: {x: 0, y: 0, z: 0}
-  Bullet: {fileID: 3091347883700298844, guid: 448cd0d2fb293b74a9fc9ab4048f330f, type: 3}
+  Bullet: {fileID: 6546303353339061648, guid: 91f3ae446e15b5c41bf62bd6c96080f3, type: 3}
   BulletSpeed: 150
-  ShootCD: 0.5
+  ShootCD: 1
   ShootTimer: 0
   ShootPos: {x: 0, y: 0, z: 0}
   CanShoot: 0
@@ -8649,8 +8649,8 @@ MonoBehaviour:
   Offset: {x: 0, y: 0, z: 0}
   AvatarObj: {fileID: 21300000, guid: 815e7b8e10767a540aee96d6d4103955, type: 3}
   AttackIconObj: {fileID: -3434423769935831825, guid: e27b8589df343f4489d0989a386683ff, type: 3}
-  AttackMaskImObj: {fileID: -3308940200514882895, guid: e27b8589df343f4489d0989a386683ff, type: 3}
-  SkillIconObj: {fileID: 2857645534148245744, guid: 76f07a04e7afc9a44990d74c6bdedf3d, type: 3}
+  AttackMaskImObj: {fileID: 2857645534148245744, guid: 76f07a04e7afc9a44990d74c6bdedf3d, type: 3}
+  SkillIconObj: {fileID: -3308940200514882895, guid: e27b8589df343f4489d0989a386683ff, type: 3}
   SkillBottonIm: {fileID: 21300000, guid: 07f74ccd1073bd144add86f8bb2a04f2, type: 3}
   SkillMaskImObj: {fileID: 3565514721544537874, guid: 76f07a04e7afc9a44990d74c6bdedf3d, type: 3}
 --- !u!114 &7796321309056465860

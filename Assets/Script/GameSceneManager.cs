@@ -14,7 +14,7 @@ public class GameSceneManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        ////ƒL[æ“¾
+        ////ã‚­ãƒ¼å–å¾—
         ////Input = FindObjectOfType<PlayerInput>();
         //InputActionMap ActionMap = pInput.currentActionMap;
         //Scene = ActionMap["Scene"];
@@ -28,11 +28,11 @@ public class GameSceneManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //ƒV[ƒ“‚Ì‘JˆÚ
+        //ã‚·ãƒ¼ãƒ³ã®é·ç§»
         ChangeScene();
     }
 
-    //ƒV[ƒ“‚ÌØ‚è‘Ö‚¦
+    //ã‚·ãƒ¼ãƒ³ã®åˆ‡ã‚Šæ›¿ãˆ
     void ChangeScene()
     {
         if(change)
@@ -40,28 +40,28 @@ public class GameSceneManager : MonoBehaviour
             return;
         }
 
-        //Œ»İ‘€ì‚µ‚Ä‚¢‚éƒvƒŒƒCƒ„[‚ÌID
+        //ç¾åœ¨æ“ä½œã—ã¦ã„ã‚‹ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®ID
         int player_id = pc.ControlPlayerID;
 
         foreach (var player in pc.PlayersData)
         {
-            //‘€ì‚µ‚Ä‚¢‚éƒvƒŒƒCƒ„[‚ğQÆ‚µ‚Ä‚¢‚½ê‡‚ÍŸ‚Ìƒ‹[ƒv
+            //æ“ä½œã—ã¦ã„ã‚‹ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã‚’å‚ç…§ã—ã¦ã„ãŸå ´åˆã¯æ¬¡ã®ãƒ«ãƒ¼ãƒ—
             if (player_id == player.PlayerID)
             {
                 continue;
             }
 
-            //¶‚«‚Ä‚¢‚éƒvƒŒƒCƒ„[‚ª‚¢‚ê‚ÎƒV[ƒ“‚ğ‘JˆÚ‚µ‚È‚¢
+            //ç”Ÿãã¦ã„ã‚‹ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ãŒã„ã‚Œã°ã‚·ãƒ¼ãƒ³ã‚’é·ç§»ã—ãªã„
             if (player.IsAlive2)
             {
-                //Debug.Log("¶‚«‚Ä‚Ü‚·");
+                //Debug.Log("ç”Ÿãã¦ã¾ã™");
                 return;
             }
         }
 
         SceneManager.LoadScene("ResultScene");
         change = true;
-        //Debug.Log("©•ªˆÈŠO‘Sˆõ€‚ñ‚Å‚¢‚é‚Ì‚Å‘JˆÚ");
+        //Debug.Log("è‡ªåˆ†ä»¥å¤–å…¨å“¡æ­»ã‚“ã§ã„ã‚‹ã®ã§é·ç§»");
     }
 
     //void InputKey(InputAction.CallbackContext obj)
