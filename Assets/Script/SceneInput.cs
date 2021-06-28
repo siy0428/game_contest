@@ -5,6 +5,7 @@ using UnityEngine.InputSystem;
 
 public class SceneInput : MonoBehaviour
 {
+    public static SceneInput instance;
     private InputAction enter;
     private int press;
     private int old_press;
@@ -12,6 +13,17 @@ public class SceneInput : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        //シングルトン
+        if (instance == null)
+        {
+            instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+            DontDestroyOnLoad(gameObject);
+        }
+
         PlayerInput _input = FindObjectOfType<PlayerInput>();
         InputActionMap actionMap = _input.currentActionMap;
 
@@ -26,7 +38,7 @@ public class SceneInput : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //最後に入力の更新
+        //入力の情報更新
         InputUpdate();
     }
 
@@ -39,6 +51,16 @@ public class SceneInput : MonoBehaviour
         }
 
         old_press = press;
+    }
+
+    public bool GetIsDown()
+    {
+        return press == 1;
+    }
+
+    public bool GetIsUp()
+    {
+        return press == -1;
     }
 
     private void IsDown(InputAction.CallbackContext obj)

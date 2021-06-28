@@ -64,7 +64,7 @@ public class BulletData : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(Timer >= LiveTime)
+        if (Timer >= LiveTime)
         {
             ShootBottonCtr sbc = FindObjectOfType<ShootBottonCtr>();
             sbc.m_BulletsList.Remove(this.gameObject);
