@@ -8,6 +8,7 @@ public class TitleSceneManager : MonoBehaviour
 {
     public PlayerInput pInput;
     private InputAction Scene;
+    public float FadeTime = 0.0f;
 
     // Start is called before the first frame update
     void Start()
@@ -16,20 +17,21 @@ public class TitleSceneManager : MonoBehaviour
         //Input = FindObjectOfType<PlayerInput>();
         InputActionMap ActionMap = pInput.currentActionMap;
         Scene = ActionMap["Scene"];
-
         Scene.started += InputKey;
     }
 
     // Update is called once per frame
     void Update()
     {
-
+       
     }
 
     //ÉVÅ[ÉìÇÃêÿÇËë÷Ç¶
     void ChangeScene()
     {
-        SceneManager.LoadScene("MainScene");
+        //SceneManager.LoadScene("MainScene");
+        if (SceneManager.GetActiveScene().name == "title")
+            FadeManager.Instance.LoadScene("MainScene", FadeTime);
     }
 
     void InputKey(InputAction.CallbackContext obj)
