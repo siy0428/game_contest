@@ -8,7 +8,10 @@ public enum BulletType
      Arrow,
      Rebound,
      Sword,
-     Sword_1
+     Sword_1,
+     Hunter,
+     Armorpiercing,
+     Boom
 }
 
 
@@ -54,7 +57,8 @@ public class BulletData : MonoBehaviour
     public float DriveOffAngleMin = 12.0f;
 
     public float DriveOffAngleMax = 32.0f;
-    
+
+    public GameObject subBullet;
     // Start is called before the first frame update
     void Start()
     {
@@ -66,6 +70,13 @@ public class BulletData : MonoBehaviour
         if(Timer >= LiveTime)
         {
             ShootBottonCtr sbc = FindObjectOfType<ShootBottonCtr>();
+            if(m_Type == BulletType.Boom)
+            {
+                PlayerController pc = FindObjectOfType<PlayerController>();
+                int id = this.gameObject.GetComponent<Collision>().PlayerID;
+                this.gameObject.GetComponent<Collision>().KumaBoom(pc, this, sbc, id, transform.position);
+            }
+
             sbc.m_BulletsList.Remove(this.gameObject);
             GameObject.Destroy(gameObject);
         }
@@ -93,6 +104,15 @@ public class BulletData : MonoBehaviour
             case BulletType.Sword_1:
                 Sword_1Move();
                 break;
+            case BulletType.Hunter:
+                HunterMove();
+                break;
+            case BulletType.Armorpiercing:
+                APMove();
+                break;
+            case BulletType.Boom:
+                BoomMove();
+                break;
             default:
                 break;
         }
@@ -108,7 +128,7 @@ public class BulletData : MonoBehaviour
     {
         Vector3 temp = m_Target - transform.position;
 
-        if((temp.x > 0 && m_Dir.x <= 0 || temp.x <= 0 && m_Dir.x >0))
+        if((temp.x > 0 && m_Dir.x <= 0 || temp.x <= 0 && m_Dir.x > 0))
         {
             if(!aimed)
             {
@@ -193,6 +213,21 @@ public class BulletData : MonoBehaviour
     private void Sword_1Move()
     {
 
+    }
+
+    private void HunterMove()
+    {
+        transform.position += m_Dir * BulletSpeed * Time.deltaTime;
+    }
+
+    private void APMove()
+    {
+        transform.position += m_Dir * BulletSpeed * Time.deltaTime;
+    }
+
+    private void BoomMove()
+    {
+        transform.position += m_Dir * BulletSpeed * Time.deltaTime;
     }
 
     public void SetTarget(Vector3 _Target)
