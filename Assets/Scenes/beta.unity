@@ -305,6 +305,10 @@ PrefabInstance:
       value: -0.6129608
       objectReference: {fileID: 0}
     - target: {fileID: 8612584339121283430, guid: 72f6788a664521b46848276c594fedf4, type: 3}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8612584339121283430, guid: 72f6788a664521b46848276c594fedf4, type: 3}
       propertyPath: m_TagString
       value: Player
       objectReference: {fileID: 0}
@@ -319,6 +323,18 @@ PrefabInstance:
     - target: {fileID: 8612584339121283431, guid: 72f6788a664521b46848276c594fedf4, type: 3}
       propertyPath: m_LocalPosition.z
       value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 8612584339425296964, guid: 72f6788a664521b46848276c594fedf4, type: 3}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8612584340025995360, guid: 72f6788a664521b46848276c594fedf4, type: 3}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8612584340168865549, guid: 72f6788a664521b46848276c594fedf4, type: 3}
+      propertyPath: m_Layer
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 72f6788a664521b46848276c594fedf4, type: 3}
@@ -4124,7 +4140,7 @@ MonoBehaviour:
   spawns:
   - {x: 237.34, y: 35.121, z: 0}
   defeat_count: 0
-  time_limit: 5
+  time_limit: 999
 --- !u!4 &736465875
 Transform:
   m_ObjectHideFlags: 0
@@ -6177,6 +6193,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3959712124094135316, guid: 2fc7d37ccb3636f408736707558ca2c3, type: 3}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3959712125756348574, guid: 2fc7d37ccb3636f408736707558ca2c3, type: 3}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 3959712125982472679, guid: 2fc7d37ccb3636f408736707558ca2c3, type: 3}
       propertyPath: m_RootOrder
       value: 2
@@ -6224,6 +6248,10 @@ PrefabInstance:
     - target: {fileID: 3959712125982472683, guid: 2fc7d37ccb3636f408736707558ca2c3, type: 3}
       propertyPath: m_Name
       value: Little_Hunter
+      objectReference: {fileID: 0}
+    - target: {fileID: 3959712125982472683, guid: 2fc7d37ccb3636f408736707558ca2c3, type: 3}
+      propertyPath: m_Layer
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 3959712125982472683, guid: 2fc7d37ccb3636f408736707558ca2c3, type: 3}
       propertyPath: m_IsActive
@@ -6551,6 +6579,10 @@ PrefabInstance:
       propertyPath: m_Offset.y
       value: 0.1
       objectReference: {fileID: 0}
+    - target: {fileID: 7810114060887426641, guid: f8a3a832c518d514ea1b683c9b9a6305, type: 3}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 7810114061052543293, guid: f8a3a832c518d514ea1b683c9b9a6305, type: 3}
       propertyPath: m_RootOrder
       value: 1
@@ -6568,12 +6600,20 @@ PrefabInstance:
       value: 33.75
       objectReference: {fileID: 0}
     - target: {fileID: 7810114061052543294, guid: f8a3a832c518d514ea1b683c9b9a6305, type: 3}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7810114061052543294, guid: f8a3a832c518d514ea1b683c9b9a6305, type: 3}
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7810114061052543294, guid: f8a3a832c518d514ea1b683c9b9a6305, type: 3}
       propertyPath: m_TagString
       value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 7810114061666317829, guid: f8a3a832c518d514ea1b683c9b9a6305, type: 3}
+      propertyPath: m_Layer
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f8a3a832c518d514ea1b683c9b9a6305, type: 3}
@@ -6590,7 +6630,7 @@ GameObject:
   - component: {fileID: 1798655826}
   - component: {fileID: 1798655825}
   - component: {fileID: 1798655824}
-  m_Layer: 7
+  m_Layer: 2
   m_Name: Fun
   m_TagString: Untagged
   m_Icon: {fileID: 0}
