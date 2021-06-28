@@ -29,7 +29,7 @@ public class TitleSceneManager : MonoBehaviour
     //ƒV[ƒ“‚ÌØ‚è‘Ö‚¦
     void ChangeScene()
     {
-        SceneManager.LoadScene("MainScene");
+        SceneManager.LoadScene("beta");
     }
 
     void InputKey(InputAction.CallbackContext obj)
