@@ -8,7 +8,7 @@ public class ResultSceneManager : MonoBehaviour
 {
     public PlayerInput pInput;
     private InputAction Scene;
-    private bool enter;
+    public float FadeTime = 0.0f;
 
     // Start is called before the first frame update
     void Start()
@@ -19,26 +19,24 @@ public class ResultSceneManager : MonoBehaviour
         Scene = ActionMap["Scene"];
 
         Scene.started += InputKey;
-        enter = false;
     }
 
     // Update is called once per frame
     void Update()
     {
-        ChangeScene();
+        
     }
 
     //ÉVÅ[ÉìÇÃêÿÇËë÷Ç¶
     void ChangeScene()
     {
-        if (enter)
-        {
-            SceneManager.LoadScene("title");
-        }
+        //SceneManager.LoadScene("title");
+        if (SceneManager.GetActiveScene().name == "ResultScene")
+            FadeManager.Instance.LoadScene("title", FadeTime);
     }
 
     void InputKey(InputAction.CallbackContext obj)
     {
-        enter = true;
+        ChangeScene();
     }
 }
