@@ -2,12 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.InputSystem;
 
 public class GameSceneManager : MonoBehaviour
 {
-    //public PlayerInput pInput;
-    //private InputAction Scene;
+    public static GameSceneManager instance;
     private PlayerController pc;
     private bool change;
 
@@ -17,12 +15,15 @@ public class GameSceneManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        ////キー取得
-        ////Input = FindObjectOfType<PlayerInput>();
-        //InputActionMap ActionMap = pInput.currentActionMap;
-        //Scene = ActionMap["Scene"];
-
-        //Scene.started += InputKey;
+        if (instance == null)
+        {
+            instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+            DontDestroyOnLoad(gameObject);
+        }
 
         pc = FindObjectOfType<PlayerController>();
         change = false;
@@ -57,19 +58,17 @@ public class GameSceneManager : MonoBehaviour
             //生きているプレイヤーがいればシーンを遷移しない
             if (player.IsAlive2)
             {
-                //Debug.Log("生きてます");
                 return;
             }
         }
+        Change();
 
-        if (SceneManager.GetActiveScene().name == "beta")
-            FadeManager.Instance.LoadScene("ResultScene", FadeTime);
         change = true;
-        //Debug.Log("自分以外全員死んでいるので遷移");
     }
 
-    //void InputKey(InputAction.CallbackContext obj)
-    //{
-    //    ChangeScene();
-    //}
+    public void Change()
+    {
+        if (SceneManager.GetActiveScene().name == "beta")
+            FadeManager.Instance.LoadScene("ResultScene", FadeTime);
+    }
 }
