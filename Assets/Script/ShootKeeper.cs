@@ -45,8 +45,13 @@ public class ShootKeeper : MonoBehaviour
 
         if (doShoot && !isShot)
         {
+            PlayerController _PlayerCtr = FindObjectOfType<PlayerController>();
+            Vector3 shotForward = new Vector3(_PlayerCtr.PlayersData[ShootOriginID].PlayersForward.x, 0.0f, 0.0f);
+            Vector3 fixpos = _PlayerCtr.Players[ShootOriginID].GetComponent<Player>().ShootFixPostion;
+            fixpos = new Vector3(fixpos.x * shotForward.x, fixpos.y, fixpos.z);
+
             // 弾（ゲームオブジェクト）の生成
-            GameObject clone = Instantiate(shootOrigin.Bullet, shootOrigin.GetComponent<Transform>().position + shootOrigin.GetComponent<Player>().ShootFixPostion, Quaternion.identity);
+            GameObject clone = Instantiate(shootOrigin.Bullet, shootOrigin.GetComponent<Transform>().position + fixpos, Quaternion.identity);
             clone.GetComponent<BulletData>().SetTarget(TargetPos);    //弾の方向
             clone.GetComponent<BulletData>().SetShootPosition(new Vector3(clone.transform.position.x, clone.transform.position.y, 1.0f));
             clone.GetComponent<Collision>().PlayerID = ShootOriginID;

@@ -68,12 +68,12 @@ public class Collision : MonoBehaviour
                         DriveOff(gameObject, collider.gameObject, bd.m_Type);
                     }
 
-                    if(bd.m_Type != BulletType.Armorpiercing)
+                    if (bd.m_Type != BulletType.Armorpiercing)
                     {
                         ShootBottonCtr sbc = FindObjectOfType<ShootBottonCtr>();
                         if (bd.m_Type == BulletType.Boom)
                         {
-                            KumaBoom(PlayerCtr, bd, sbc, PlayerID, transform.position);
+                            KumaBoom(bd, sbc, PlayerID, transform.position);
                         }
                         sbc.m_BulletsList.Remove(this.gameObject);
                         GameObject.Destroy(this.gameObject);
@@ -138,7 +138,7 @@ public class Collision : MonoBehaviour
                     ShootBottonCtr sbc = FindObjectOfType<ShootBottonCtr>();
                     if (bd.m_Type == BulletType.Boom)
                     {
-                        KumaBoom(PlayerCtr, bd, sbc, PlayerID, transform.position);
+                        KumaBoom(bd, sbc, PlayerID, transform.position);
                     }
                     sbc.m_BulletsList.Remove(this.gameObject);
                     GameObject.Destroy(this.gameObject);
@@ -163,7 +163,7 @@ public class Collision : MonoBehaviour
                     ShootBottonCtr sbc = FindObjectOfType<ShootBottonCtr>();
                     if (bd.m_Type == BulletType.Boom)
                     {
-                        KumaBoom(PlayerCtr, bd, sbc, PlayerID, transform.position);
+                        KumaBoom(bd, sbc, PlayerID, transform.position);
                     }
                     sbc.m_BulletsList.Remove(this.gameObject);
                     GameObject.Destroy(this.gameObject);
@@ -184,7 +184,7 @@ public class Collision : MonoBehaviour
                 //弾の削除
                 if (bd.m_Type == BulletType.Boom)
                 {
-                    KumaBoom(PlayerCtr, bd, sbc, PlayerID, transform.position);
+                    KumaBoom(bd, sbc, PlayerID, transform.position);
                 }
                 sbc.m_BulletsList.Remove(this.gameObject);
                 GameObject.Destroy(this.gameObject);
@@ -231,12 +231,12 @@ public class Collision : MonoBehaviour
         }
     }
 
-    public void KumaBoom(PlayerController pc, BulletData bd,ShootBottonCtr sbc,int ID,Vector3 pos)
+    public void KumaBoom(BulletData bd,ShootBottonCtr sbc,int ID,Vector3 pos)
     {
 
         for(int i = 0; i<m_DirList.Count;i++)
         {
-            sbc.CreateBullet(pc, ID, pos, m_DirList[i]);
+            sbc.CreateBullet(ID, pos, m_DirList[i]);
         }
     }
 }
