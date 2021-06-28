@@ -375,6 +375,7 @@ public class PlayerController : MonoBehaviour
             PlayersData[i].HP = PlayersData[i].MaxHP;
             PlayersData[i].IsJump = false;
             PlayersData[i].IsAlive = true;
+            PlayersData[i].IsAlive2 = true;
             PlayersData[i].ShootTimer = 0.0f;
             PlayersData[i].ShotTimes = 0;
             PlayersData[i].ShootIntoCD = false;
@@ -425,6 +426,7 @@ public class PlayerController : MonoBehaviour
             PlayersData[i].HP = PlayersData[i].MaxHP;
             PlayersData[i].IsJump = false;
             PlayersData[i].IsAlive = true;
+            PlayersData[i].IsAlive2 = true;
             PlayersData[i].ShootTimer = 0.0f;
             PlayersData[i].ShotTimes = 0;
             PlayersData[i].ShootIntoCD = false;
