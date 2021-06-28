@@ -35,17 +35,15 @@ public class ShootBottonCtr : MonoBehaviour
         //ShotPos = pos;
     }
 
-    private bool CanShot;
 
     public void SetCanShot(int id ,bool can)
     {
         PCtr.PlayersData[id].CanShoot = can;
-        //CanShot = can;
     }
 
-    public bool GetCanShot()
+    public bool GetCanShot(int id)
     {
-        return CanShot;
+        return PCtr.PlayersData[id].CanShoot;
     }
 
     //IDÇÕìÆçÏÇÃéÂ
@@ -92,7 +90,7 @@ public class ShootBottonCtr : MonoBehaviour
 
                 Vector3 fixpos = _PlayerCtr.Players[ID].GetComponent<Player>().ShootFixPostion;
                 fixpos = new Vector3(fixpos.x * shotForward.x, fixpos.y, fixpos.z);
-                _PlayerCtr.PlayersData[ID].gameObject.GetComponentInChildren<ShootKeeper>().SetParama(_PlayerCtr.PlayersData[ID].ShootPos + fixpos, ID);
+                _PlayerCtr.PlayersData[ID].gameObject.GetComponentInChildren<ShootKeeper>().SetParama(_PlayerCtr.PlayersData[ID].ShootPos, ID);
                 _PlayerCtr.PlayersData[ID].ShotTimes++;
                 _PlayerCtr.PlayersData[ID].ShootIntoCD = true;
                
@@ -133,7 +131,7 @@ public class ShootBottonCtr : MonoBehaviour
                 fixpos = new Vector3(fixpos.x * shotForward.x, fixpos.y, fixpos.z);
 
                 //_PlayerCtr.PlayersData[_PlayerCtr.ControlPlayerID].gameObject.GetComponentInChildren<ShootKeeper>().SetParama(ShotPos, ID);
-                _PlayerCtr.PlayersData[ID].gameObject.GetComponentInChildren<ShootKeeper>().SetParama(_PlayerCtr.PlayersData[ID].ShootPos + fixpos, ID);
+                _PlayerCtr.PlayersData[ID].gameObject.GetComponentInChildren<ShootKeeper>().SetParama(_PlayerCtr.PlayersData[ID].ShootPos, ID);
                 _PlayerCtr.PlayersData[ID].ShotTimes++;
                 if (_PlayerCtr.PlayersData[ID].ShotTimes >= _PlayerCtr.PlayersData[ID].EnableShootTimes)
                 {
@@ -146,28 +144,44 @@ public class ShootBottonCtr : MonoBehaviour
 
     public void ShootKeyDown_Skill(PlayerController _PlayerCtr, int ID, GameObject _SkillBulletObj, Vector2 _ShootDir = new Vector2())
     {
-        GameObject clone = Instantiate(_SkillBulletObj, _PlayerCtr.Players[ID].GetComponent<Transform>().position, Quaternion.identity);
+        Vector3 shotForward = new Vector3(_PlayerCtr.PlayersData[ID].PlayersForward.x, 0.0f, 0.0f);
+        Vector3 fixpos = _PlayerCtr.Players[ID].GetComponent<Player>().ShootFixPostion;
+        fixpos = new Vector3(fixpos.x * shotForward.x, fixpos.y, fixpos.z);
+        GameObject clone = new GameObject();
+        if (_PlayerCtr.PlayersData[ID].SkillIDs[0] == SkillID.Cut)
+        {
+            clone = Instantiate(_SkillBulletObj, _PlayerCtr.Players[ID].GetComponent<Transform>().position, Quaternion.identity);
+
+        }
+        if (_PlayerCtr.PlayersData[ID].SkillIDs[0] == SkillID.Boom)
+        {
+            clone = Instantiate(_SkillBulletObj, _PlayerCtr.PlayersData[ID].transform.position + fixpos, Quaternion.identity);          
+        }
         clone.GetComponent<BulletData>().SetTarget(_ShootDir);    //íeÇÃï˚å¸
         clone.GetComponent<BulletData>().SetShootPosition(clone.transform.position);
-        if (_ShootDir.x > 0)
+
+        if (_PlayerCtr.PlayersData[ID].SkillIDs[0] == SkillID.Cut)
         {
-            clone.transform.localScale = new Vector3(-clone.transform.localScale.x, clone.transform.localScale.y, 0);
-            clone.transform.position = new Vector3(clone.transform.position.x + _PlayerCtr.SkillDataCtr.CutFixPosition.x, clone.transform.position.y - _PlayerCtr.SkillDataCtr.CutFixPosition.y,0);
-        }
-        else
-        {
-            clone.transform.position -= _PlayerCtr.SkillDataCtr.CutFixPosition;
+            if (_ShootDir.x > 0)
+            {
+                clone.transform.localScale = new Vector3(-clone.transform.localScale.x, clone.transform.localScale.y, 0);
+                clone.transform.position = new Vector3(clone.transform.position.x + _PlayerCtr.SkillDataCtr.CutFixPosition.x, clone.transform.position.y - _PlayerCtr.SkillDataCtr.CutFixPosition.y, 0);
+            }
+            else
+            {
+                clone.transform.position -= _PlayerCtr.SkillDataCtr.CutFixPosition;
+            }
         }
         clone.GetComponent<Collision>().PlayerID = ID;
         m_BulletsList.Add(clone);
     }
     
-    public void CreateBullet(PlayerController _PlayerCtr, int ID,Vector3 pos, Vector3 dir)
+    public void CreateBullet(int ID,Vector3 pos, Vector3 dir)
     {
-        Player pl = _PlayerCtr.PlayersData[ID];
-        if(pl.Bullet.GetComponent<BulletData>().subBullet)
+        SkillData sd = FindObjectOfType<SkillData>();
+        if(sd.KumaBoomBulletObj.GetComponent<BulletData>().subBullet)
         {
-            GameObject clone = Instantiate(pl.Bullet.GetComponent<BulletData>().subBullet, pos, Quaternion.identity);
+            GameObject clone = Instantiate(sd.KumaBoomBulletObj.GetComponent<BulletData>().subBullet, pos, Quaternion.identity);
             clone.GetComponent<BulletData>().SetTarget(pos + 1000 * dir);    //íeÇÃï˚å¸
             clone.GetComponent<BulletData>().SetShootPosition(new Vector3(clone.transform.position.x, clone.transform.position.y, 1.0f));
             clone.GetComponent<Collision>().PlayerID = ID;
@@ -178,7 +192,6 @@ public class ShootBottonCtr : MonoBehaviour
     private void Start()
     {
         ShotPos = new Vector3(0.0f, 0.0f, 0.0f);
-        CanShot = false;
 
         ChaUICtr = FindObjectOfType<CharacterUIController>();
         PCtr = FindObjectOfType<PlayerController>();

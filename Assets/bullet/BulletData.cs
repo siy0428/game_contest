@@ -72,9 +72,8 @@ public class BulletData : MonoBehaviour
             ShootBottonCtr sbc = FindObjectOfType<ShootBottonCtr>();
             if(m_Type == BulletType.Boom)
             {
-                PlayerController pc = FindObjectOfType<PlayerController>();
                 int id = this.gameObject.GetComponent<Collision>().PlayerID;
-                this.gameObject.GetComponent<Collision>().KumaBoom(pc, this, sbc, id, transform.position);
+                this.gameObject.GetComponent<Collision>().KumaBoom(this, sbc, id, transform.position);
             }
 
             sbc.m_BulletsList.Remove(this.gameObject);

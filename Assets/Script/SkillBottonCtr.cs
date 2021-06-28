@@ -39,7 +39,13 @@ public class SkillBottonCtr : MonoBehaviour
             _PlayerCtr.PlayersData[_PlayerCtr.ControlPlayerID].EnableMoveJump2 = false;
             _PlayerCtr.SkillDataCtr.EnableUseStealth = false;
         }
-
+        if(_PlayerCtr.PlayersData[_PlayerCtr.ControlPlayerID].SkillIDs[0] == SkillID.Boom && _PlayerCtr.SkillDataCtr.EnableUseBoom && Sbc.GetCanShot(_PlayerCtr.ControlPlayerID))
+        {
+            Debug.Log("ASF");
+            _PlayerCtr.SkillDataCtr.EnableUseBoom = false;
+            Sbc.ShootKeyDown_Skill(_PlayerCtr, _PlayerCtr.ControlPlayerID, _PlayerCtr.SkillDataCtr.KumaBoomBulletObj, _PlayerCtr.PlayersData[_PlayerCtr.ControlPlayerID].ShootPos);
+            SkillIntoCD = true;
+        }
     }
 
     public void SkillBottonIsDowning(InputAction.CallbackContext obj)
@@ -132,6 +138,9 @@ public class SkillBottonCtr : MonoBehaviour
                 }
 
                 break;
+            case SkillID.Boom:
+                SkillIntoCD = _PlayerCtr.SkillDataCtr.BoomCDFunc(SkillIntoCD);
+                break;
             default:
                 break;
         }
@@ -195,6 +204,13 @@ public class SkillBottonCtr : MonoBehaviour
                 KeySkill.Used = false;
                 KeySkill.PlayerID = _PlayerCtr.ControlPlayerID;
                 break;
+            case SkillID.Boom:
+                KeySkill.BottonID = 63;
+                KeySkill.StartTime = _PlayerCtr.Timer;
+                KeySkill.ShootDir = _PlayerCtr.PlayersData[_PlayerCtr.ControlPlayerID].ShootPos;
+                KeySkill.Used = false;
+                KeySkill.PlayerID = _PlayerCtr.ControlPlayerID;
+                break;
             default:
                 break;
         }
@@ -221,6 +237,14 @@ public class SkillBottonCtr : MonoBehaviour
                 KeySkill.StartTime = _PlayerCtr.Timer;
                 KeySkill.Used = false;
                 KeySkill.PlayerID = _PlayerCtr.ControlPlayerID;
+                break;
+            case SkillID.Boom:
+                KeySkill.BottonID = 68;
+                KeySkill.StartTime = _PlayerCtr.Timer;
+                KeySkill.ShootDir = _PlayerCtr.PlayersData[_PlayerCtr.ControlPlayerID].ShootPos;
+                KeySkill.Used = false;
+                KeySkill.PlayerID = _PlayerCtr.ControlPlayerID;
+
                 break;
             default:
                 break;
