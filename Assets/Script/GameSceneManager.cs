@@ -11,6 +11,9 @@ public class GameSceneManager : MonoBehaviour
     private PlayerController pc;
     private bool change;
 
+    [SerializeField]
+    private float FadeTime = 0.0f;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -59,7 +62,8 @@ public class GameSceneManager : MonoBehaviour
             }
         }
 
-        SceneManager.LoadScene("ResultScene");
+        if (SceneManager.GetActiveScene().name == "beta")
+            FadeManager.Instance.LoadScene("ResultScene", FadeTime);
         change = true;
         //Debug.Log("自分以外全員死んでいるので遷移");
     }
