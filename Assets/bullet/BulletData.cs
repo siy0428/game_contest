@@ -67,7 +67,7 @@ public class BulletData : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(Timer >= LiveTime)
+        if (Timer >= LiveTime)
         {
             ShootBottonCtr sbc = FindObjectOfType<ShootBottonCtr>();
             if(m_Type == BulletType.Boom)
@@ -127,7 +127,7 @@ public class BulletData : MonoBehaviour
     {
         Vector3 temp = m_Target - transform.position;
 
-        if((temp.x > 0 && m_Dir.x <= 0 || temp.x <= 0 && m_Dir.x >0))
+        if((temp.x > 0 && m_Dir.x <= 0 || temp.x <= 0 && m_Dir.x > 0))
         {
             if(!aimed)
             {
