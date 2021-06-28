@@ -8,7 +8,6 @@ public enum CollisionDir
     LEFTRIGHT
 }
 
-
 public class Collision : MonoBehaviour
 {
     public int PlayerID;
@@ -32,14 +31,14 @@ public class Collision : MonoBehaviour
         em = FindObjectOfType<EnemyManager>();
         lm = FindObjectOfType<LoopManager>();
 
-        m_DirList.Add(new Vector3(1, 0, 0));//‰E
-        m_DirList.Add(new Vector3(-1, 0, 0));//¶
-        m_DirList.Add(new Vector3(0, 1, 0));//ã
-        m_DirList.Add(new Vector3(0, -1, 0));//‰º
-        m_DirList.Add(new Vector3(1, 1, 0).normalized);//‰Eã
-        m_DirList.Add(new Vector3(1, -1, 0).normalized);//‰E‰º
-        m_DirList.Add(new Vector3(-1, 1, 0).normalized);//¶ã
-        m_DirList.Add(new Vector3(-1, -1, 0).normalized);//¶‰º
+        m_DirList.Add(new Vector3(1, 0, 0));//å³
+        m_DirList.Add(new Vector3(-1, 0, 0));//å·¦
+        m_DirList.Add(new Vector3(0, 1, 0));//ä¸Š
+        m_DirList.Add(new Vector3(0, -1, 0));//ä¸‹
+        m_DirList.Add(new Vector3(1, 1, 0).normalized);//å³ä¸Š
+        m_DirList.Add(new Vector3(1, -1, 0).normalized);//å³ä¸‹
+        m_DirList.Add(new Vector3(-1, 1, 0).normalized);//å·¦ä¸Š
+        m_DirList.Add(new Vector3(-1, -1, 0).normalized);//å·¦ä¸‹
 
     }
 
@@ -56,7 +55,7 @@ public class Collision : MonoBehaviour
         if (collider.gameObject.tag == "Player")
         {
             Player en = collider.gameObject.GetComponent<Player>();
-            if (PlayerID != en.PlayerID)    //©•ª©g‚É“–‚½‚ç‚È‚¢ˆ—
+            if (PlayerID != en.PlayerID)    //è‡ªåˆ†è‡ªèº«ã«å½“ãŸã‚‰ãªã„å‡¦ç†
             {
                 Player py = PlayerCtr.PlayersData[PlayerID];
                 if (en.HP > 0)
@@ -86,7 +85,7 @@ public class Collision : MonoBehaviour
                         collider.gameObject.SetActive(false);
                         //if (PlayerID != PlayerCtr.ControlPlayerID)
                         //{
-                        //    lm.LoopAgain(); //“¯‚¶ƒ‹[ƒv‚Ì¶¬
+                        //    lm.LoopAgain(); //åŒã˜ãƒ«ãƒ¼ãƒ—ã®ç”Ÿæˆ
                         //}
                     }
                     else
@@ -94,7 +93,7 @@ public class Collision : MonoBehaviour
                         if (PlayerID != PlayerCtr.ControlPlayerID)
                         {
                             CUICtr.ChangeHP(en.PlayerID);
-                            Debug.Log(en + "‚ÌHP:" + en.HP);
+                            Debug.Log(en + "ã®HP:" + en.HP);
                         }
                     }
                 }
@@ -132,6 +131,7 @@ public class Collision : MonoBehaviour
             {
                 if(bd.m_Type == BulletType.Sword_1)
                 {
+
                 }
                 else
                 {
@@ -181,7 +181,7 @@ public class Collision : MonoBehaviour
             ShootBottonCtr sbc = FindObjectOfType<ShootBottonCtr>();
             if (bd.m_Type != BulletType.Armorpiercing)
             {
-                //’e‚Ìíœ
+                //å¼¾ã®å‰Šé™¤
                 if (bd.m_Type == BulletType.Boom)
                 {
                     KumaBoom(PlayerCtr, bd, sbc, PlayerID, transform.position);
@@ -190,14 +190,14 @@ public class Collision : MonoBehaviour
                 GameObject.Destroy(this.gameObject);
             }
 
-            //“G‚Ìíœ
+            //æ•µã®å‰Šé™¤
             sbc.m_BulletsList.Remove(collider.gameObject);
             GameObject.Destroy(collider.gameObject);
 
-            //ƒŠƒXƒg‚©‚ç“G‚Ìíœ
+            //ãƒªã‚¹ãƒˆã‹ã‚‰æ•µã®å‰Šé™¤
             em.DestroyEnemy(collider.gameObject);
 
-            //‘€ì‚µ‚Ä‚¢‚éƒvƒŒƒCƒ„[‚ª“|‚µ‚½‚©‚Ç‚¤‚©
+            //æ“ä½œã—ã¦ã„ã‚‹ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ãŒå€’ã—ãŸã‹ã©ã†ã‹
             if (PlayerID == PlayerCtr.ControlPlayerID)
             {
                 lm.AddDefeat();

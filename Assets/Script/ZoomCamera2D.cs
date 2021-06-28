@@ -4,8 +4,14 @@ using System.Collections;
 public class ZoomCamera2D : MonoBehaviour
 {
 
-    [SerializeField] Transform target1 = null, target2 = null;
-    [SerializeField] Vector2 offset = new Vector2(1, 1);
+    [SerializeField]
+    private Transform target1 = null;
+    [SerializeField]
+    private Transform target2 = null;
+    [SerializeField]
+    private Vector2 offset = new Vector2(1, 1);
+    [SerializeField]
+    private float DistanceSize = 0.0f;
 
     private float screenAspect = 0;
     private Camera _camera = null;
@@ -45,6 +51,10 @@ public class ZoomCamera2D : MonoBehaviour
         {
             targetOrthographicSize = targetsVector.x * (1 / _camera.aspect) * 0.5f;
         }
+
+        //ãﬂÇ∑Ç¨ÇΩèÍçáãóó£Çï€Ç¬
+        targetOrthographicSize = Mathf.Max(targetOrthographicSize, DistanceSize);
+
         _camera.orthographicSize = targetOrthographicSize;
     }
 
