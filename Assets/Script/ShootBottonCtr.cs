@@ -90,7 +90,9 @@ public class ShootBottonCtr : MonoBehaviour
 
                 //KeyShootDown = -1;
 
-                _PlayerCtr.PlayersData[ID].gameObject.GetComponentInChildren<ShootKeeper>().SetParama(_PlayerCtr.PlayersData[ID].ShootPos, ID);
+                Vector3 fixpos = _PlayerCtr.Players[ID].GetComponent<Player>().ShootFixPostion;
+                fixpos = new Vector3(fixpos.x * shotForward.x, fixpos.y, fixpos.z);
+                _PlayerCtr.PlayersData[ID].gameObject.GetComponentInChildren<ShootKeeper>().SetParama(_PlayerCtr.PlayersData[ID].ShootPos + fixpos, ID);
                 _PlayerCtr.PlayersData[ID].ShotTimes++;
                 _PlayerCtr.PlayersData[ID].ShootIntoCD = true;
                
@@ -126,8 +128,12 @@ public class ShootBottonCtr : MonoBehaviour
                 Animator[] animators = _PlayerCtr.PlayersData[ID].GetComponentsInChildren<Animator>();
                 animators[0].SetTrigger("doAttack");
 
+                Vector3 shotForward = new Vector3(_PlayerCtr.PlayersData[ID].PlayersForward.x, 0.0f, 0.0f);
+                Vector3 fixpos = _PlayerCtr.Players[ID].GetComponent<Player>().ShootFixPostion;
+                fixpos = new Vector3(fixpos.x * shotForward.x, fixpos.y, fixpos.z);
+
                 //_PlayerCtr.PlayersData[_PlayerCtr.ControlPlayerID].gameObject.GetComponentInChildren<ShootKeeper>().SetParama(ShotPos, ID);
-                _PlayerCtr.PlayersData[ID].gameObject.GetComponentInChildren<ShootKeeper>().SetParama(_PlayerCtr.PlayersData[ID].ShootPos, ID);
+                _PlayerCtr.PlayersData[ID].gameObject.GetComponentInChildren<ShootKeeper>().SetParama(_PlayerCtr.PlayersData[ID].ShootPos + fixpos, ID);
                 _PlayerCtr.PlayersData[ID].ShotTimes++;
                 if (_PlayerCtr.PlayersData[ID].ShotTimes >= _PlayerCtr.PlayersData[ID].EnableShootTimes)
                 {
@@ -155,7 +161,20 @@ public class ShootBottonCtr : MonoBehaviour
         clone.GetComponent<Collision>().PlayerID = ID;
         m_BulletsList.Add(clone);
     }
-        
+    
+    public void CreateBullet(PlayerController _PlayerCtr, int ID,Vector3 pos, Vector3 dir)
+    {
+        Player pl = _PlayerCtr.PlayersData[ID];
+        if(pl.Bullet.GetComponent<BulletData>().subBullet)
+        {
+            GameObject clone = Instantiate(pl.Bullet.GetComponent<BulletData>().subBullet, pos, Quaternion.identity);
+            clone.GetComponent<BulletData>().SetTarget(pos + 1000 * dir);    //’e‚Ì•ûŒü
+            clone.GetComponent<BulletData>().SetShootPosition(new Vector3(clone.transform.position.x, clone.transform.position.y, 1.0f));
+            clone.GetComponent<Collision>().PlayerID = ID;
+            m_BulletsList.Add(clone);
+        }
+    }
+
     private void Start()
     {
         ShotPos = new Vector3(0.0f, 0.0f, 0.0f);

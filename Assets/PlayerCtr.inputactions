@@ -70,17 +70,9 @@
                     "interactions": ""
                 },
                 {
-                    "name": "Enter",
+                    "name": "Scene",
                     "type": "Button",
-                    "id": "18d1955f-5adc-4012-a131-e38aaff177dd",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": ""
-                },
-                {
-                    "name": "FunTrigger",
-                    "type": "Button",
-                    "id": "793caab3-75f3-4fb2-8a2e-8b597dafb007",
+                    "id": "e7c94a88-9283-4c96-a757-08db1b451609",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": ""
@@ -331,23 +323,12 @@
                 },
                 {
                     "name": "",
-                    "id": "76c36178-cbd4-4e6c-a536-0aae4162560b",
+                    "id": "8298c4ab-2965-4cc7-b326-04c296bc0a9a",
                     "path": "<Keyboard>/enter",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Enter",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "67cea0a9-8d53-4831-9728-f193b2d5f149",
-                    "path": "<Keyboard>/h",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "FunTrigger",
+                    "action": "Scene",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

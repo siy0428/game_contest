@@ -9,7 +9,9 @@ public enum BulletType
      Rebound,
      Sword,
      Sword_1,
-     Hunter
+     Hunter,
+     Armorpiercing,
+     Boom
 }
 
 
@@ -56,6 +58,7 @@ public class BulletData : MonoBehaviour
 
     public float DriveOffAngleMax = 32.0f;
 
+    public GameObject subBullet;
     // Start is called before the first frame update
     void Start()
     {
@@ -67,6 +70,13 @@ public class BulletData : MonoBehaviour
         if (Timer >= LiveTime)
         {
             ShootBottonCtr sbc = FindObjectOfType<ShootBottonCtr>();
+            if(m_Type == BulletType.Boom)
+            {
+                PlayerController pc = FindObjectOfType<PlayerController>();
+                int id = this.gameObject.GetComponent<Collision>().PlayerID;
+                this.gameObject.GetComponent<Collision>().KumaBoom(pc, this, sbc, id, transform.position);
+            }
+
             sbc.m_BulletsList.Remove(this.gameObject);
             GameObject.Destroy(gameObject);
         }
@@ -96,6 +106,12 @@ public class BulletData : MonoBehaviour
                 break;
             case BulletType.Hunter:
                 HunterMove();
+                break;
+            case BulletType.Armorpiercing:
+                APMove();
+                break;
+            case BulletType.Boom:
+                BoomMove();
                 break;
             default:
                 break;
@@ -200,6 +216,16 @@ public class BulletData : MonoBehaviour
     }
 
     private void HunterMove()
+    {
+        transform.position += m_Dir * BulletSpeed * Time.deltaTime;
+    }
+
+    private void APMove()
+    {
+        transform.position += m_Dir * BulletSpeed * Time.deltaTime;
+    }
+
+    private void BoomMove()
     {
         transform.position += m_Dir * BulletSpeed * Time.deltaTime;
     }

@@ -2517,6 +2517,7 @@ GameObject:
   - component: {fileID: 1654634609}
   - component: {fileID: 1654634611}
   - component: {fileID: 1654634610}
+  - component: {fileID: 1654634612}
   m_Layer: 0
   m_Name: Canna
   m_TagString: Untagged
@@ -2608,6 +2609,20 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &1654634612
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1654634608}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbf0cd27a1559534394308e95ec5a6af, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  doShoot: 0
+  shootbottonctr: {fileID: 0}
 --- !u!1 &1714505327 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 8612584340025995360, guid: 72f6788a664521b46848276c594fedf4, type: 3}
@@ -5791,6 +5806,25 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 10f7e857cb223a54bb31d02bb44f80a4, type: 3}
+--- !u!1 &4498981499333040524 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4498981499778727212, guid: 10f7e857cb223a54bb31d02bb44f80a4, type: 3}
+  m_PrefabInstance: {fileID: 4498981499333040523}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &4498981499333040525
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4498981499333040524}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbf0cd27a1559534394308e95ec5a6af, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  doShoot: 0
+  shootbottonctr: {fileID: 0}
 --- !u!1001 &5574030254944326636
 PrefabInstance:
   m_ObjectHideFlags: 0
