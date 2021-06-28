@@ -54,14 +54,12 @@ public class GameSceneManager : MonoBehaviour
             //生きているプレイヤーがいればシーンを遷移しない
             if (player.IsAlive2)
             {
-                //Debug.Log("生きてます");
                 return;
             }
         }
 
         SceneManager.LoadScene("ResultScene");
         change = true;
-        //Debug.Log("自分以外全員死んでいるので遷移");
     }
 
     //void InputKey(InputAction.CallbackContext obj)

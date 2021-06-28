@@ -8,6 +8,7 @@ public class TitleSceneManager : MonoBehaviour
 {
     public PlayerInput pInput;
     private InputAction Scene;
+    private bool enter;
 
     // Start is called before the first frame update
     void Start()
@@ -18,22 +19,27 @@ public class TitleSceneManager : MonoBehaviour
         Scene = ActionMap["Scene"];
 
         Scene.started += InputKey;
+
+        enter = false;
     }
 
     // Update is called once per frame
     void Update()
     {
-
+        ChangeScene();
     }
 
     //ƒV[ƒ“‚ÌØ‚è‘Ö‚¦
     void ChangeScene()
     {
-        SceneManager.LoadScene("beta");
+        if (enter)
+        {
+            SceneManager.LoadScene("beta");
+        }
     }
 
     void InputKey(InputAction.CallbackContext obj)
     {
-        ChangeScene();
+        enter = true;
     }
 }
