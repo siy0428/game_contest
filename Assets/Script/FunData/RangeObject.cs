@@ -360,7 +360,6 @@ public class RangeObject : MonoBehaviour
         //扇に当たっている敵の取得
         foreach (var obj in objects)
         {
-
             //敵の名前と操作しているプレイヤーが同じだったら次の処理
             if (obj.name == Player.name)
             {

@@ -75,7 +75,7 @@ public class TimeBody : MonoBehaviour
         }
         else
         {
-            Debug.Log(gameObject.name + "‚Ì‹tÄ¶I—¹");
+            //Debug.Log(gameObject.name + "‚Ì‹tÄ¶I—¹");
             StopRewind();           //‹tÄ¶‚Ì‹L˜^‚ğ’â~
             tbm.SetIsUse(false);    //‹tÄ¶‚ğ’â~
             objects.Clear();        //‹L˜^‚µ‚½À•W‚ğÁ‹
