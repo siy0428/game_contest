@@ -7,7 +7,8 @@ public enum SkillID
     NONE,
     JUMPSMARSH,
     Cut,
-    Stealth
+    Stealth,
+    Boom
 }
 
 
@@ -39,7 +40,13 @@ public class SkillData : MonoBehaviour
     public float StealthMaxLimitTime = 5.0f;
     public float StealthCDrate = 2.0f;
     public float StealthTime = 0.0f;
-    
+
+    //ŒF
+    public float BoomCD = 3.0f;
+    public float BoomCDTimer = 0.0f;
+    public bool UseBoom = false;
+    public bool EnableUseBoom = true;
+
     public bool JumpSmarsh()
     {
         if(UseJumpSmarsh)
@@ -129,6 +136,23 @@ public class SkillData : MonoBehaviour
         StealthTime = 0.0f;
     }
 
+    public bool BoomCDFunc(bool intocd)
+    {
+        bool res = intocd;
+        if (res)
+        {
+            BoomCDTimer += Time.deltaTime;
+            if (BoomCDTimer >= BoomCD)
+            {
+                BoomCDTimer = 0.0f;
+                res = false;
+                EnableUseBoom = true;
+            }
+        }
+        return res;
+
+    }
+
     //
     public float GetSkillCDTime(SkillID _skillID)
     {
@@ -142,6 +166,9 @@ public class SkillData : MonoBehaviour
                 break;
             case SkillID.Stealth:
                 value = StealthCDTime;
+                break;
+            case SkillID.Boom:
+                value = BoomCD;
                 break;
             default:
                 break;

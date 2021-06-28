@@ -285,7 +285,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pInput: {fileID: 116545756}
+<<<<<<< HEAD
   FadeTime: 0.3
+=======
+>>>>>>> 7c7833d64c323403aee1c7aa7571e0abd6d0e43e
 --- !u!1 &953069567
 GameObject:
   m_ObjectHideFlags: 0
