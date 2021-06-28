@@ -8,6 +8,7 @@ public class ResultSceneManager : MonoBehaviour
 {
     public PlayerInput pInput;
     private InputAction Scene;
+    public float FadeTime = 0.0f;
 
     // Start is called before the first frame update
     void Start()
@@ -29,7 +30,9 @@ public class ResultSceneManager : MonoBehaviour
     //ƒV[ƒ“‚ÌØ‚è‘Ö‚¦
     void ChangeScene()
     {
-        SceneManager.LoadScene("title");
+        //SceneManager.LoadScene("title");
+        if (SceneManager.GetActiveScene().name == "ResultScene")
+            FadeManager.Instance.LoadScene("title", FadeTime);
     }
 
     void InputKey(InputAction.CallbackContext obj)
