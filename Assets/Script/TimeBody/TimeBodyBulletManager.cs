@@ -26,7 +26,6 @@ public class TimeBodyBulletManager : MonoBehaviour
         if (!tbm.GetIsUse())
         {
             float time = real_time - first_time;
-            Debug.Log("·•ªŠÔ:" + time);
         }
 
         //‹tÄ¶’†‚Ì’e‚Ì¶¬

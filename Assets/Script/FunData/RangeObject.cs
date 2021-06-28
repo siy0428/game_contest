@@ -28,8 +28,11 @@ public class RangeObject : MonoBehaviour
     private ShootBottonCtr sbc;
     private float RotSpeed = 1.0f;
     private InputAction arrow;
+    private InputAction fun_trigger;
+    private bool trigger;
     private float FinishAngle;
     private Player m_player;
+
     /// <summary>
     /// 他スクリプトから参照用メソッド
     /// </summary>
@@ -44,20 +47,22 @@ public class RangeObject : MonoBehaviour
         PlayerInput _input = FindObjectOfType<PlayerInput>();
         InputActionMap actionMap = _input.currentActionMap;
         arrow = actionMap["Move"];
+        fun_trigger = actionMap["FunTrigger"];
+        fun_trigger.started += IsDown;
         pc = FindObjectOfType<PlayerController>();
         sbc = FindObjectOfType<ShootBottonCtr>();
         m_player = Player.GetComponent<Player>();
         Direction = Vector3.up;
         FinishAngle = 0.0f;
         GetRotateAngle = FinishAngle;
+        trigger = false;
     }
 
     // Update is called once per frame
     void Update()
     {
-
         Vector2 dir;
-        if(m_player.PlayerID == pc.ControlPlayerID)
+        if (m_player.PlayerID == pc.ControlPlayerID)
         {
             dir = arrow.ReadValue<Vector2>();
         }
@@ -131,6 +136,11 @@ public class RangeObject : MonoBehaviour
         }
 
         Direction.Normalize();
+    }
+
+    private void IsDown(InputAction.CallbackContext obj)
+    {
+        trigger = !trigger;
     }
 
     /// <summary>
@@ -260,17 +270,15 @@ public class RangeObject : MonoBehaviour
         var renderer = GetComponent<MeshRenderer>();
         int id = pc.ControlPlayerID;
 
-        //操作していないプレイヤーの扇は描画しない
-        if (pc.Players[id].gameObject.name != Player.name)
-        {
-            renderer.material = Material;
-            renderer.enabled = false;
-            //return;
-        }
-
-        //扇の描画
+        //扇の描画をするかどうか
         renderer.material = Material;
-        renderer.enabled = true;
+        renderer.enabled = false;
+
+        //キー入力で扇の表示
+        if((pc.Players[id].gameObject.name == Player.name) && trigger)
+        {
+            renderer.enabled = true;
+        }
 
         //扇メッシュの描画
         DrawFunMesh();
@@ -283,17 +291,17 @@ public class RangeObject : MonoBehaviour
             sbc.SetCanShot(m_player.PlayerID, true);
             if (hit_obj.tag == "Player")
             {
-                sbc.SetShotPos(m_player.PlayerID,hit_obj.transform.position + new Vector3(0.0f, 0.25f, 0.0f));
-            } 
+                sbc.SetShotPos(m_player.PlayerID, hit_obj.transform.position + new Vector3(0.0f, 0.25f, 0.0f));
+            }
             else
             {
-                sbc.SetShotPos(m_player.PlayerID,hit_obj.transform.position);
+                sbc.SetShotPos(m_player.PlayerID, hit_obj.transform.position);
             }
         }
         //扇に敵がいない場合
         else
         {
-            sbc.SetCanShot(m_player.PlayerID,false);
+            sbc.SetCanShot(m_player.PlayerID, false);
         }
     }
 

@@ -295,6 +295,7 @@ MonoBehaviour:
   IsMove: 0
   OnBox: 1
   EnableMoveJump: 1
+  EnableMoveJump2: 1
   DisableMoveTime: 0.3
   DMTimer: 0
   IsJump: 0
@@ -309,13 +310,18 @@ MonoBehaviour:
   ShootPos: {x: 0, y: 0, z: 0}
   CanShoot: 0
   ShootIntoCD: 0
+  EnableShootTimes: 1
+  ShotTimes: 0
+  ShootCD2: 0.1
   ShootSensorDir: {x: 1, y: 0}
   ShootFixPostion: {x: 0, y: 0.1, z: 0}
   Offset: {x: 0, y: 0, z: 0}
   AvatarObj: {fileID: 0}
   AttackIconObj: {fileID: 0}
+  AttackMaskImObj: {fileID: 0}
   SkillIconObj: {fileID: 0}
   SkillBottonIm: {fileID: 0}
+  SkillMaskImObj: {fileID: 0}
 --- !u!4 &75480355 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7810114061052543293, guid: f8a3a832c518d514ea1b683c9b9a6305, type: 3}
@@ -519,7 +525,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 205336564}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 237.64377, y: 32.74604, z: -133.24919}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -761,6 +767,7 @@ MonoBehaviour:
   IsMove: 0
   OnBox: 1
   EnableMoveJump: 1
+  EnableMoveJump2: 1
   DisableMoveTime: 0.3
   DMTimer: 0
   IsJump: 0
@@ -775,13 +782,18 @@ MonoBehaviour:
   ShootPos: {x: 0, y: 0, z: 0}
   CanShoot: 0
   ShootIntoCD: 0
+  EnableShootTimes: 1
+  ShotTimes: 0
+  ShootCD2: 0.1
   ShootSensorDir: {x: 1, y: 0}
   ShootFixPostion: {x: 0, y: 0.5, z: 0}
   Offset: {x: 0, y: 0, z: 0}
   AvatarObj: {fileID: 21300000, guid: 05243ba111e0070428d11607d4bdd6dd, type: 3}
   AttackIconObj: {fileID: 3361893691445635442, guid: e27b8589df343f4489d0989a386683ff, type: 3}
+  AttackMaskImObj: {fileID: 0}
   SkillIconObj: {fileID: -5703202164605339356, guid: e27b8589df343f4489d0989a386683ff, type: 3}
   SkillBottonIm: {fileID: 21300000, guid: f6567620734688f4c894a199a1dac1a0, type: 3}
+  SkillMaskImObj: {fileID: 0}
 --- !u!4 &468725019 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8612584339121283431, guid: 72f6788a664521b46848276c594fedf4, type: 3}
@@ -3080,6 +3092,18 @@ MonoBehaviour:
   CutFixPosition: {x: 0.31, y: -0.639, z: 0}
   EnableUseCut: 1
   CutBulletObj: {fileID: 475518525311703989, guid: 76314cd0434328247b77d5d56946f8fb, type: 3}
+  UseStealth: 0
+  EnableUseStealth: 1
+  StealthCDTimer: 0
+  StealthCDBasicTime: 0.5
+  StealthCDTime: 0.5
+  StealthMaxLimitTime: 5
+  StealthCDrate: 2
+  StealthTime: 0
+  BoomCD: 3
+  BoomCDTimer: 0
+  UseBoom: 0
+  EnableUseBoom: 1
 --- !u!4 &900299464
 Transform:
   m_ObjectHideFlags: 0
