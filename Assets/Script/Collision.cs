@@ -21,6 +21,7 @@ public class Collision : MonoBehaviour
 
     private CharacterUIController CUICtr;
 
+    private List<Vector3> m_DirList = new List<Vector3>();
     // Start is called before the first frame update
     void Start()
     {
@@ -29,6 +30,16 @@ public class Collision : MonoBehaviour
         CUICtr = FindObjectOfType<CharacterUIController>();
         em = FindObjectOfType<EnemyManager>();
         lm = FindObjectOfType<LoopManager>();
+
+        m_DirList.Add(new Vector3(1, 0, 0));//Âè≥
+        m_DirList.Add(new Vector3(-1, 0, 0));//Â∑¶
+        m_DirList.Add(new Vector3(0, 1, 0));//‰∏ä
+        m_DirList.Add(new Vector3(0, -1, 0));//‰∏ã
+        m_DirList.Add(new Vector3(1, 1, 0).normalized);//Âè≥‰∏ä
+        m_DirList.Add(new Vector3(1, -1, 0).normalized);//Âè≥‰∏ã
+        m_DirList.Add(new Vector3(-1, 1, 0).normalized);//Â∑¶‰∏ä
+        m_DirList.Add(new Vector3(-1, -1, 0).normalized);//Â∑¶‰∏ã
+
     }
 
     void Update()
@@ -44,7 +55,7 @@ public class Collision : MonoBehaviour
         if (collider.gameObject.tag == "Player")
         {
             Player en = collider.gameObject.GetComponent<Player>();
-            if (PlayerID != en.PlayerID)    //é©ï™é©êgÇ…ìñÇΩÇÁÇ»Ç¢èàóù
+            if (PlayerID != en.PlayerID)    //Ëá™ÂàÜËá™Ë∫´„Å´ÂΩì„Åü„Çâ„Å™„ÅÑÂá¶ÁêÜ
             {
                 Player py = PlayerCtr.PlayersData[PlayerID];
                 if (en.HP > 0)
@@ -57,9 +68,16 @@ public class Collision : MonoBehaviour
                         DriveOff(gameObject, collider.gameObject, bd.m_Type);
                     }
 
-                    ShootBottonCtr sbc = FindObjectOfType<ShootBottonCtr>();
-                    sbc.m_BulletsList.Remove(this.gameObject);
-                    GameObject.Destroy(this.gameObject);
+                    if(bd.m_Type != BulletType.Armorpiercing)
+                    {
+                        ShootBottonCtr sbc = FindObjectOfType<ShootBottonCtr>();
+                        if (bd.m_Type == BulletType.Boom)
+                        {
+                            KumaBoom(PlayerCtr, bd, sbc, PlayerID, transform.position);
+                        }
+                        sbc.m_BulletsList.Remove(this.gameObject);
+                        GameObject.Destroy(this.gameObject);
+                    }
 
                     if (en.HP <= 0)
                     {
@@ -67,7 +85,7 @@ public class Collision : MonoBehaviour
                         collider.gameObject.SetActive(false);
                         //if (PlayerID != PlayerCtr.ControlPlayerID)
                         //{
-                        //    lm.LoopAgain(); //ìØÇ∂ÉãÅ[ÉvÇÃê∂ê¨
+                        //    lm.LoopAgain(); //Âêå„Åò„É´„Éº„Éó„ÅÆÁîüÊàê
                         //}
                     }
                     else
@@ -75,7 +93,7 @@ public class Collision : MonoBehaviour
                         if (PlayerID != PlayerCtr.ControlPlayerID)
                         {
                             CUICtr.ChangeHP(en.PlayerID);
-                            Debug.Log(en + "ÇÃHP:" + en.HP);
+                            Debug.Log(en + "„ÅÆHP:" + en.HP);
                         }
                     }
                 }
@@ -118,6 +136,10 @@ public class Collision : MonoBehaviour
                 else
                 {
                     ShootBottonCtr sbc = FindObjectOfType<ShootBottonCtr>();
+                    if (bd.m_Type == BulletType.Boom)
+                    {
+                        KumaBoom(PlayerCtr, bd, sbc, PlayerID, transform.position);
+                    }
                     sbc.m_BulletsList.Remove(this.gameObject);
                     GameObject.Destroy(this.gameObject);
                 }
@@ -139,6 +161,10 @@ public class Collision : MonoBehaviour
                 else
                 {
                     ShootBottonCtr sbc = FindObjectOfType<ShootBottonCtr>();
+                    if (bd.m_Type == BulletType.Boom)
+                    {
+                        KumaBoom(PlayerCtr, bd, sbc, PlayerID, transform.position);
+                    }
                     sbc.m_BulletsList.Remove(this.gameObject);
                     GameObject.Destroy(this.gameObject);
                     sbc.m_BulletsList.Remove(collider.gameObject);
@@ -152,19 +178,26 @@ public class Collision : MonoBehaviour
             BulletData bd = gameObject.GetComponent<BulletData>();
             DriveOff(gameObject, collider.gameObject, bd.m_Type);
 
-            //íeÇÃçÌèú
             ShootBottonCtr sbc = FindObjectOfType<ShootBottonCtr>();
-            sbc.m_BulletsList.Remove(this.gameObject);
-            GameObject.Destroy(this.gameObject);
+            if (bd.m_Type != BulletType.Armorpiercing)
+            {
+                //Âºæ„ÅÆÂâäÈô§
+                if (bd.m_Type == BulletType.Boom)
+                {
+                    KumaBoom(PlayerCtr, bd, sbc, PlayerID, transform.position);
+                }
+                sbc.m_BulletsList.Remove(this.gameObject);
+                GameObject.Destroy(this.gameObject);
+            }
 
-            //ìGÇÃçÌèú
+            //Êïµ„ÅÆÂâäÈô§
             sbc.m_BulletsList.Remove(collider.gameObject);
             GameObject.Destroy(collider.gameObject);
 
-            //ÉäÉXÉgÇ©ÇÁìGÇÃçÌèú
+            //„É™„Çπ„Éà„Åã„ÇâÊïµ„ÅÆÂâäÈô§
             em.DestroyEnemy(collider.gameObject);
 
-            //ëÄçÏÇµÇƒÇ¢ÇÈÉvÉåÉCÉÑÅ[Ç™ì|ÇµÇΩÇ©Ç«Ç§Ç©
+            //Êìç‰Ωú„Åó„Å¶„ÅÑ„Çã„Éó„É¨„Ç§„É§„Éº„ÅåÂÄí„Åó„Åü„Åã„Å©„ÅÜ„Åã
             if (PlayerID == PlayerCtr.ControlPlayerID)
             {
                 lm.AddDefeat();
@@ -195,6 +228,15 @@ public class Collision : MonoBehaviour
             {
                 Targetobj.GetComponent<Player>().EnableMoveJump = false;
             }
+        }
+    }
+
+    public void KumaBoom(PlayerController pc, BulletData bd,ShootBottonCtr sbc,int ID,Vector3 pos)
+    {
+
+        for(int i = 0; i<m_DirList.Count;i++)
+        {
+            sbc.CreateBullet(pc, ID, pos, m_DirList[i]);
         }
     }
 }
