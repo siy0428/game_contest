@@ -17,22 +17,58 @@ public class SoundExample1 : MonoBehaviour
 
     void Update()
     {
+
+        DebugPlaySE();
+        DebugPlayBGM();
+
+    }
+
+    //SE関連
+    public void DebugPlaySE()
+    {
         // 左
-        if (Input.GetKey(KeyCode.LeftArrow))
+        if (Input.GetKeyDown(KeyCode.LeftArrow))
         {
             //音を鳴らす
             audioSource.PlayOneShot(audioClip[0]);
         }
-        PlaySE();
-    }
 
-    public void PlaySE()
-    {
-        if (Input.GetKey(KeyCode.RightArrow))
+        //右キー
+        if (Input.GetKeyDown(KeyCode.RightArrow))
         {
             //音
             audioSource.PlayOneShot(audioClip[1]);
         }
+
+    }
+
+    //BGM関連
+    public void DebugPlayBGM()
+    {
+        //上
+        if (Input.GetKeyDown(KeyCode.UpArrow))
+        {
+            // BGMの再生
+            audioSource.Play();
+        }
+        //下
+        if (Input.GetKeyDown(KeyCode.DownArrow))
+        {
+            //BGMの停止
+            audioSource.Stop();
+        }
+
+        if (Input.GetKeyDown(KeyCode.Return))
+        {
+            // BGMの一時停止
+            audioSource.Pause();
+        }
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            // BGMの再開
+            audioSource.UnPause();
+        }
+
 
     }
 }

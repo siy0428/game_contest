@@ -3116,6 +3116,10 @@ MonoBehaviour:
   StealthMaxLimitTime: 5
   StealthCDrate: 2
   StealthTime: 0
+  BoomCD: 3
+  BoomCDTimer: 0
+  UseBoom: 0
+  EnableUseBoom: 1
 --- !u!4 &900299464
 Transform:
   m_ObjectHideFlags: 0
