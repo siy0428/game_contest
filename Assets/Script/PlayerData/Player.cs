@@ -155,6 +155,7 @@ public class Player : MonoBehaviour
         if(SkillIDs[0] != SkillID.Stealth)
         {
             HP -= _Demage;
+            GetComponentInChildren<LostLifeCtr>().AddLostLife((int)_Demage);
         }
         else
         {
@@ -162,6 +163,7 @@ public class Player : MonoBehaviour
             if(!sd.UseStealth)
             {
                 HP -= _Demage;
+                GetComponentInChildren<LostLifeCtr>().AddLostLife((int)_Demage);
             }
         }
     }

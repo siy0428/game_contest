@@ -58,6 +58,7 @@ public class BulletData : MonoBehaviour
 
     public float DriveOffAngleMax = 32.0f;
 
+    public bool EnableHurt = true;
     public GameObject subBullet;
     // Start is called before the first frame update
     void Start()
