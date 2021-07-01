@@ -104,7 +104,7 @@ MonoBehaviour:
   m_Dir: {x: 0, y: 0, z: 0}
   EnableRebound: 0
   Aiming: 0
-  BulletSpeed: 6
+  BulletSpeed: 10
   BulletGra: -10
   Timer: 0
   LiveTime: 5
