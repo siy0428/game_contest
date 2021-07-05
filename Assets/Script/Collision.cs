@@ -60,10 +60,17 @@ public class Collision : MonoBehaviour
                 Player py = PlayerCtr.PlayersData[PlayerID];
                 if (en.HP > 0)
                 {
-                    en.Hurt(py.Bullet.GetComponent<BulletData>().m_Attack + py.ATK);
                     BulletData bd = gameObject.GetComponent<BulletData>();
+                    if(bd.EnableHurt)
+                    {
+                        en.Hurt(py.Bullet.GetComponent<BulletData>().m_Attack + py.ATK);
+                        if(bd.m_Type == BulletType.Armorpiercing)
+                        {
+                            bd.EnableHurt = false;
+                        }
+                    }
 
-                    if(en.SkillIDs[0] != SkillID.Stealth || (en.SkillIDs[0] == SkillID.Stealth && !PlayerCtr.SkillDataCtr.UseStealth))
+                    if (en.SkillIDs[0] != SkillID.Stealth || (en.SkillIDs[0] == SkillID.Stealth && !PlayerCtr.SkillDataCtr.UseStealth))
                     {
                         DriveOff(gameObject, collider.gameObject, bd.m_Type);
                     }
