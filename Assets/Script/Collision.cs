@@ -22,6 +22,8 @@ public class Collision : MonoBehaviour
     private CharacterUIController CUICtr;
 
     private List<Vector3> m_DirList = new List<Vector3>();
+
+    public GameObject AddScorePreb;
     // Start is called before the first frame update
     void Start()
     {
@@ -63,7 +65,12 @@ public class Collision : MonoBehaviour
                     BulletData bd = gameObject.GetComponent<BulletData>();
                     if(bd.EnableHurt)
                     {
-                        en.Hurt(py.Bullet.GetComponent<BulletData>().m_Attack + py.ATK);
+                        bool isaddscore = false;
+                        if(PlayerID == PlayerCtr.ControlPlayerID)
+                        {
+                            isaddscore = true;
+                        }
+                        en.Hurt(py.Bullet.GetComponent<BulletData>().m_Attack + py.ATK, isaddscore);
                         if(bd.m_Type == BulletType.Armorpiercing)
                         {
                             bd.EnableHurt = false;
@@ -196,6 +203,11 @@ public class Collision : MonoBehaviour
                 }
                 sbc.m_BulletsList.Remove(this.gameObject);
                 GameObject.Destroy(this.gameObject);
+            }
+            if (PlayerID == PlayerCtr.ControlPlayerID)
+            {
+                CharacterUIController cuc = FindObjectOfType<CharacterUIController>();
+                cuc.AddScore(collider.GetComponent<Enemy>().GetScore());
             }
 
             //敵の削除

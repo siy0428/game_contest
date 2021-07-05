@@ -217,6 +217,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   PlayerID: 0
+  AddScorePreb: {fileID: 6795812322398897353, guid: a585cc91890f69848a98c62cbce31c66, type: 3}
 --- !u!114 &5598220327185535830
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -248,4 +249,5 @@ MonoBehaviour:
   DriveOffFactor: 100
   DriveOffAngleMin: 32
   DriveOffAngleMax: 64
+  EnableHurt: 1
   subBullet: {fileID: 0}
