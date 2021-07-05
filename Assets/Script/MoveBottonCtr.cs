@@ -111,7 +111,7 @@ public class MoveBottonCtr : MonoBehaviour
                     KeyA.PlayerID = _PlayerCtr.ControlPlayerID;
 
                     //記録リストに追加
-                    _PlayerCtr.RecordBehaviour.AddBehaviour(KeyA);
+                    _PlayerCtr.PlayersData[_PlayerCtr.ControlPlayerID].RecordBehaviour.AddBehaviour(KeyA);
 
                     Animator[] animators = _PlayerCtr.PlayersData[_PlayerCtr.ControlPlayerID].GetComponentsInChildren<Animator>();
                     animators[1].SetBool("isMoving", true);
@@ -134,7 +134,7 @@ public class MoveBottonCtr : MonoBehaviour
                     KeyD.PlayerID = _PlayerCtr.ControlPlayerID;
 
                     //記録リストに追加
-                    _PlayerCtr.RecordBehaviour.AddBehaviour(KeyD);
+                    _PlayerCtr.PlayersData[_PlayerCtr.ControlPlayerID].RecordBehaviour.AddBehaviour(KeyD);
 
                     Animator[] animators = _PlayerCtr.PlayersData[_PlayerCtr.ControlPlayerID].GetComponentsInChildren<Animator>();
                     animators[1].SetBool("isMoving", true);
@@ -156,7 +156,7 @@ public class MoveBottonCtr : MonoBehaviour
                     KeyA.PlayerID = _PlayerCtr.ControlPlayerID;
 
                     //記録リストに追加
-                    _PlayerCtr.RecordBehaviour.AddBehaviour(KeyA);
+                    _PlayerCtr.PlayersData[_PlayerCtr.ControlPlayerID].RecordBehaviour.AddBehaviour(KeyA);
 
                     Animator[] animators = _PlayerCtr.PlayersData[_PlayerCtr.ControlPlayerID].GetComponentsInChildren<Animator>();
                     animators[1].SetBool("isMoving", false);
@@ -180,7 +180,7 @@ public class MoveBottonCtr : MonoBehaviour
                     KeyD.PlayerID = _PlayerCtr.ControlPlayerID;
 
                     //記録リストに追加
-                    _PlayerCtr.RecordBehaviour.AddBehaviour(KeyD);
+                    _PlayerCtr.PlayersData[_PlayerCtr.ControlPlayerID].RecordBehaviour.AddBehaviour(KeyD);
 
                     Animator[] animators = _PlayerCtr.PlayersData[_PlayerCtr.ControlPlayerID].GetComponentsInChildren<Animator>();
                     animators[1].SetBool("isMoving", false);
@@ -248,7 +248,7 @@ public class MoveBottonCtr : MonoBehaviour
                     KeySpace.PlayerID = _PlayerCtr.ControlPlayerID;
 
                     //記録リストに追加
-                    _PlayerCtr.RecordBehaviour.AddBehaviour(KeySpace);
+                    _PlayerCtr.PlayersData[_PlayerCtr.ControlPlayerID].RecordBehaviour.AddBehaviour(KeySpace);
                 }
                 KeySpaceDown = 0;
             }
@@ -263,7 +263,7 @@ public class MoveBottonCtr : MonoBehaviour
                     KeyWS.PlayerID = _PlayerCtr.ControlPlayerID;
 
                     //記録リストに追加
-                    _PlayerCtr.RecordBehaviour.AddBehaviour(KeyWS);
+                    _PlayerCtr.PlayersData[_PlayerCtr.ControlPlayerID].RecordBehaviour.AddBehaviour(KeyWS);
                 }
 
             }
@@ -283,7 +283,7 @@ public class MoveBottonCtr : MonoBehaviour
                     KeyWS.PlayerID = _PlayerCtr.ControlPlayerID;
 
                     //記録リストに追加
-                    _PlayerCtr.RecordBehaviour.AddBehaviour(KeyWS);
+                    _PlayerCtr.PlayersData[_PlayerCtr.ControlPlayerID].RecordBehaviour.AddBehaviour(KeyWS);
                 }
             }
 
