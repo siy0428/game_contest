@@ -90,6 +90,7 @@ public class Collision : MonoBehaviour
                     {
                         PlayerCtr.PlayersData[collider.gameObject.GetComponent<Player>().PlayerID].IsAlive2 = false;
                         collider.gameObject.SetActive(false);
+                        
                         //if (PlayerID != PlayerCtr.ControlPlayerID)
                         //{
                         //    lm.LoopAgain(); //同じループの生成
@@ -100,7 +101,7 @@ public class Collision : MonoBehaviour
                         if (PlayerID != PlayerCtr.ControlPlayerID)
                         {
                             CUICtr.ChangeHP(en.PlayerID);
-                            Debug.Log(en + "のHP:" + en.HP);
+                            //Debug.Log(en + "のHP:" + en.HP);
                         }
                     }
                 }

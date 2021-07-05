@@ -301,6 +301,7 @@ MonoBehaviour:
   IsJump: 0
   JumpedTimes: 0
   IsAlive: 0
+  IsAlive2: 0
   StartPoStartPositon: {x: 0, y: 0, z: 0}
   PlayersForward: {x: 1, y: 1, z: 0}
   Bullet: {fileID: 3142873562492474777, guid: 64c9f48f6976bc2469fbcbbb08253b77, type: 3}
@@ -789,6 +790,7 @@ MonoBehaviour:
   IsJump: 0
   JumpedTimes: 0
   IsAlive: 0
+  IsAlive2: 0
   StartPoStartPositon: {x: 0, y: 0, z: 0}
   PlayersForward: {x: 0, y: 0, z: 0}
   Bullet: {fileID: 7875155880049078745, guid: 4839e46db498cb746b2a122371cf0455, type: 3}

@@ -18,8 +18,6 @@ public class ShootKeeper : MonoBehaviour
     private bool isShot = false;
     private bool isShotPerFrame = false;
 
-    private TimeBodyBulletManager tbbm;
-
     public void SetParama(Vector3 _TargetPos, int ID)
     {
         TargetPos = _TargetPos;
@@ -30,7 +28,6 @@ public class ShootKeeper : MonoBehaviour
     void Start()
     {
         shootOrigin = transform.parent.gameObject.GetComponent<Player>();
-        tbbm = FindObjectOfType<TimeBodyBulletManager>();
     }
 
     // Update is called once per frame
@@ -59,8 +56,6 @@ public class ShootKeeper : MonoBehaviour
 
             isShot = true;
             isShotPerFrame = true;
-
-            tbbm.SetRealTime();
         }
     }
 

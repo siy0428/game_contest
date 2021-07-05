@@ -18,6 +18,8 @@ public class LoopFinish : Loop
 
     override public void Create()
     {
+        GameSceneManager.instance.Result();
+
         Debug.Log("クリア!!");
         //敵リストの削除
         em.AllDestroyEnemy();
