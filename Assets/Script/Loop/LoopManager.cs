@@ -66,6 +66,7 @@ public class LoopManager : MonoBehaviour
             //目標撃破数に到達していた場合次のループ
             if (defeat_player >= loops[loop_id].GetDefeatCount())
             {
+                loops[loop_id].AddPlayer();
                 pc.ChangePlayer();                  //次のプレイヤーへ操作変更
                 loop_id++;
                 defeat_player = 0;
@@ -132,6 +133,7 @@ public class LoopManager : MonoBehaviour
     /// </summary>
     public void LoopAgain()
     {
+        loops[loop_id].AddPlayer();
         pc.PlayerWithoutLoop();             //同じプレイヤーの操作処理
         defeat_player = 0;
         loops[loop_id].Create();            //同じループの生成

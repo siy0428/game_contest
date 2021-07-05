@@ -756,6 +756,7 @@ MonoBehaviour:
   spawns: []
   defeat_count: 9999
   time_limit: 9999
+  player_add: 0
 --- !u!4 &348979261
 Transform:
   m_ObjectHideFlags: 0
@@ -3630,6 +3631,7 @@ MonoBehaviour:
   - {x: 242.99, y: 31.17, z: 0}
   defeat_count: 0
   time_limit: 10
+  player_add: 1
 --- !u!4 &414436407
 Transform:
   m_ObjectHideFlags: 0
@@ -3721,6 +3723,7 @@ MonoBehaviour:
   - {x: 237.34, y: 31.17, z: 0}
   defeat_count: 0
   time_limit: 7
+  player_add: 0
 --- !u!4 &464922761
 Transform:
   m_ObjectHideFlags: 0
@@ -4201,7 +4204,8 @@ MonoBehaviour:
   spawns:
   - {x: 237.34, y: 35.121, z: 0}
   defeat_count: 0
-  time_limit: 999
+  time_limit: 5
+  player_add: 0
 --- !u!4 &736465875
 Transform:
   m_ObjectHideFlags: 0
@@ -5349,6 +5353,7 @@ MonoBehaviour:
   - {x: 232.29, y: 30.93, z: 0}
   defeat_count: 0
   time_limit: 15
+  player_add: 1
 --- !u!4 &1201409513
 Transform:
   m_ObjectHideFlags: 0
@@ -6344,6 +6349,7 @@ MonoBehaviour:
   Timer: 0
   JumpFocre: 1
   PlayersData: []
+  DisPlayPlayerNums: 2
 --- !u!4 &1880378539
 Transform:
   m_ObjectHideFlags: 0
@@ -6620,6 +6626,10 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 6682969945611191959, guid: 78a64cc31c7e78b4c85a9d98f86fc5ca, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8815979021111486816, guid: 78a64cc31c7e78b4c85a9d98f86fc5ca, type: 3}
       propertyPath: m_Layer
       value: 2
@@ -6782,6 +6792,7 @@ MonoBehaviour:
   - {fileID: 1368599232}
   - {fileID: 918823175}
   - {fileID: 988024752}
+  ScoreObj: {fileID: 0}
   HealthPointIconsList:
   - {fileID: 21300000, guid: d7b6cc0c959cb0041a20ce2f9b7a39b3, type: 3}
   - {fileID: 21300000, guid: 7c9587e8dbb235f459ec1d6e045303f8, type: 3}
@@ -6789,6 +6800,9 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 8d819c1a8ae08184ea878ed391cbd433, type: 3}
   - {fileID: 21300000, guid: 99f0100ffd5dfa54aad6ee6540f7ad09, type: 3}
   - {fileID: 21300000, guid: 89dd4c4bdb3dfc8428f5a41b3f9c0454, type: 3}
+  AddScoreLimitTime: 0.5
+  Score: 0
+  AddScoreTimer: 0
 --- !u!4 &1963407637
 Transform:
   m_ObjectHideFlags: 0
