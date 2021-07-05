@@ -17,22 +17,22 @@ public class SoundExample1 : MonoBehaviour
 
     void Update()
     {
-        // ç∂
-        if (Input.GetKey(KeyCode.LeftArrow))
-        {
-            //âπÇñ¬ÇÁÇ∑
-            audioSource.PlayOneShot(audioClip[0]);
-        }
+        //// ç∂
+        //if (Input.GetKey(KeyCode.LeftArrow))
+        //{
+        //    //âπÇñ¬ÇÁÇ∑
+        //    audioSource.PlayOneShot(audioClip[0]);
+        //}
         PlaySE();
     }
 
     public void PlaySE()
     {
-        if (Input.GetKey(KeyCode.RightArrow))
-        {
-            //âπ
-            audioSource.PlayOneShot(audioClip[1]);
-        }
+        //if (Input.GetKey(KeyCode.RightArrow))
+        //{
+        //    //âπ
+        //    audioSource.PlayOneShot(audioClip[1]);
+        //}
 
     }
 }
