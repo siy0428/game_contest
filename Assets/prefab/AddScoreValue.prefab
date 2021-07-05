@@ -33,8 +33,8 @@ RectTransform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 999, y: -494}
   m_SizeDelta: {x: 41.43, y: 8.78}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -152,7 +152,7 @@ MonoBehaviour:
   Score: 0
   LimitTime: 0.5
   Timer: 0
-  movedistance: {x: 0, y: 0}
+  movedistance: {x: 0, y: 100}
   StartPos: {x: 0, y: 0}
   currentPos: {x: 0, y: 0}
   canvasObj: {fileID: 0}

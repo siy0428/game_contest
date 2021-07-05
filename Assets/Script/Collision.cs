@@ -66,11 +66,15 @@ public class Collision : MonoBehaviour
                     if(bd.EnableHurt)
                     {
                         bool isaddscore = false;
-                        if(PlayerID == PlayerCtr.ControlPlayerID)
+                        GameObject temp = null;
+
+                        if (PlayerID == PlayerCtr.ControlPlayerID)
                         {
                             isaddscore = true;
+                            temp = Instantiate(AddScorePreb);
+                            temp.GetComponent<AddScoreCtr>().SetStartPos(en.transform.position);
                         }
-                        en.Hurt(py.Bullet.GetComponent<BulletData>().m_Attack + py.ATK, isaddscore);
+                        en.Hurt(py.Bullet.GetComponent<BulletData>().m_Attack + py.ATK, isaddscore, temp);
                         if(bd.m_Type == BulletType.Armorpiercing)
                         {
                             bd.EnableHurt = false;
@@ -207,7 +211,11 @@ public class Collision : MonoBehaviour
             if (PlayerID == PlayerCtr.ControlPlayerID)
             {
                 CharacterUIController cuc = FindObjectOfType<CharacterUIController>();
-                cuc.AddScore(collider.GetComponent<Enemy>().GetScore());
+                int killscore = collider.GetComponent<Enemy>().GetScore();
+                cuc.AddScore(killscore);
+                GameObject temp = Instantiate(AddScorePreb);
+                temp.GetComponent<AddScoreCtr>().SetStartPos(collider.transform.position);
+                temp.GetComponent<AddScoreCtr>().SetAddScore(killscore);
             }
 
             //敵の削除

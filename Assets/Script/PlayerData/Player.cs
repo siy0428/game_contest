@@ -181,7 +181,7 @@ public class Player : MonoBehaviour
             CharacterUIController cuc = FindObjectOfType<CharacterUIController>();
             int s = (int)_Demage;
             cuc.AddScore(s * 100);
-            //obj.GetComponent<AddScoreCtr>().
+            obj.GetComponent<AddScoreCtr>().SetAddScore(s * 100);
         }
     }
 
