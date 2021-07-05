@@ -29,13 +29,9 @@ public class TitleSceneManager : MonoBehaviour
     //ƒV[ƒ“‚ÌØ‚è‘Ö‚¦
     void ChangeScene()
     {
-<<<<<<< HEAD
         //SceneManager.LoadScene("MainScene");
         if (SceneManager.GetActiveScene().name == "title")
             FadeManager.Instance.LoadScene("MainScene", FadeTime);
-=======
-        SceneManager.LoadScene("beta");
->>>>>>> 7c7833d64c323403aee1c7aa7571e0abd6d0e43e
     }
 
     void InputKey(InputAction.CallbackContext obj)
