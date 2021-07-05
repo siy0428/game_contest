@@ -42,7 +42,8 @@ ExportedObj/
 *.mdb
 *.opendb
 *.VC.db
-
+corp_round_v1 SDF.asset
+corp_round_v1 SDF.asset.meta
 # Unity3D generated meta files
 *.pidb.meta
 *.pdb.meta

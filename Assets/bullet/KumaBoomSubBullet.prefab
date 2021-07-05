@@ -118,6 +118,7 @@ MonoBehaviour:
   DriveOffFactor: 10
   DriveOffAngleMin: 12
   DriveOffAngleMax: 32
+  EnableHurt: 1
   subBullet: {fileID: 0}
 --- !u!114 &376945541460945308
 MonoBehaviour:
@@ -144,6 +145,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   PlayerID: 0
+  AddScorePreb: {fileID: 6795812322398897353, guid: a585cc91890f69848a98c62cbce31c66, type: 3}
 --- !u!58 &1051442008443375144
 CircleCollider2D:
   m_ObjectHideFlags: 0

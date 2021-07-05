@@ -30,4 +30,9 @@ public class Enemy : MonoBehaviour
             rb2d.AddForce(new Vector3(0.0f, 300.0f, 0.0f));
         }
     }
+
+    public int GetScore()
+    {
+        return KillScore;
+    }
 }
