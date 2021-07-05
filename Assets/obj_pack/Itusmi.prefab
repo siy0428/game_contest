@@ -113,7 +113,6 @@ GameObject:
   - component: {fileID: 7810114061052543293}
   - component: {fileID: 7810114061052543292}
   - component: {fileID: 7810114061052543295}
-  - component: {fileID: 4047888613230863135}
   m_Layer: 0
   m_Name: Itusmi
   m_TagString: Untagged
@@ -184,22 +183,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.25, y: 0.14332485}
   m_EdgeRadius: 0
---- !u!58 &4047888613230863135
-CircleCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7810114061052543294}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: -0.02200666, y: 0.21068078}
-  serializedVersion: 2
-  m_Radius: 0.17731771
 --- !u!1 &7810114061666317829
 GameObject:
   m_ObjectHideFlags: 0

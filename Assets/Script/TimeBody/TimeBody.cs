@@ -4,9 +4,6 @@ using UnityEngine;
 
 public class TimeBody : MonoBehaviour
 {
-    [SerializeField]
-    private ShootKeeper sk;
-
     //‹tÄ¶—p•Ï”
     private bool isRewinding;
     private Rigidbody2D rb2d;
@@ -75,7 +72,7 @@ public class TimeBody : MonoBehaviour
         }
         else
         {
-            Debug.Log(gameObject.name + "‚Ì‹tÄ¶I—¹");
+            //Debug.Log(gameObject.name + "‚Ì‹tÄ¶I—¹");
             StopRewind();           //‹tÄ¶‚Ì‹L˜^‚ğ’â~
             tbm.SetIsUse(false);    //‹tÄ¶‚ğ’â~
             objects.Clear();        //‹L˜^‚µ‚½À•W‚ğÁ‹
@@ -89,10 +86,6 @@ public class TimeBody : MonoBehaviour
     {
         TimeBodyObject obj = new TimeBodyObject();
         obj.position = transform.position;
-        if (sk)
-        {
-            obj.isShot = sk.GetShotPerFrame();
-        }
 
         //ƒŠƒXƒg‚Ìæ“ª‚ÉÀ•W‚ğ‹L˜^
         objects.Insert(0, obj);
