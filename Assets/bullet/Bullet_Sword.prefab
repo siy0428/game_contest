@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 5598220327185535832}
   - component: {fileID: 5598220327185535833}
   - component: {fileID: 5598220327185535830}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Bullet_Sword
   m_TagString: Bullet
   m_Icon: {fileID: 0}
@@ -248,3 +248,4 @@ MonoBehaviour:
   DriveOffFactor: 100
   DriveOffAngleMin: 32
   DriveOffAngleMax: 64
+  subBullet: {fileID: 0}

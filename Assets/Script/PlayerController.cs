@@ -53,6 +53,9 @@ public class PlayerController : MonoBehaviour
     //取得したキャラクターのデータ
     public List<Player> PlayersData = new List<Player>();
 
+    //今のループ内のプレイヤー数
+    public int DisPlayPlayerNums = 2;
+
     // Start is called before the first frame update
     public void Start()
     {
@@ -72,6 +75,15 @@ public class PlayerController : MonoBehaviour
             //{
             //    Players[i].GetComponent<SpriteRenderer>().sortingOrder = 0;
             //}
+
+            if(i < DisPlayPlayerNums)
+            {
+                Players[i].SetActive(true);
+            }
+            else
+            {
+                Players[i].SetActive(false);
+            }
         }
         ChaUICtr.ChangeUI(ControlPlayerID);
     }
@@ -81,118 +93,122 @@ public class PlayerController : MonoBehaviour
     {
         if (!StartFallBack)
         {
-            //最初のループ内相手が動いていないので、下記の操作をジャンプする
-            if (SavedBehaviour.GetBehaviourData().Count > 1)
+            for(int i = 0; i < Players.Count; i++)
             {
-                //保存されたデータの取得操作を一回のみ発生する。
-                var savedata = SavedBehaviour.GetBehaviourData();
-
-                //保存されたデータの反応方法
-                for (int i = 0; i < savedata.Count; i++)
+                //最初のループ内相手が動いていないので、下記の操作をジャンプする
+                if (PlayersData[i].PlayerID != ControlPlayerID && PlayersData[i].SavedBehaviour.GetBehaviourData().Count > 1)
                 {
-                    //記録時点になったら
-                    if (Timer > savedata[i].StartTime)
+                    //保存されたデータの取得操作を一回のみ発生する。
+                    var savedata = PlayersData[i].SavedBehaviour.GetBehaviourData();
+
+                    //保存されたデータの反応方法
+                    for (int j = 0; j < savedata.Count; j++)
                     {
-                        if (!savedata[i].Used && PlayersData[savedata[i].PlayerID].IsAlive)
+                        //記録時点になったら
+                        if (Timer > savedata[j].StartTime)
                         {
-                            Animator[] animators = PlayersData[savedata[i].PlayerID].GetComponentsInChildren<Animator>();
-                            //キーの番号ごとに、対応の状態を変更する
-                            switch (savedata[i].BottonID)
+                            if (!savedata[j].Used && PlayersData[savedata[j].PlayerID].IsAlive)
                             {
-                                case 0:
-                                    PlayersData[savedata[i].PlayerID].IsMove = -1;
-                                    PlayersData[savedata[i].PlayerID].PlayersForward = new Vector3(-1.0f, 1.0f, 0.0f);
-                                    animators[1].SetBool("isMoving", true);
-                                    PlayersData[savedata[i].PlayerID].ShootSensorDir = new Vector2(-1, 0);
-                                    break;
-                                case 1:
-                                    PlayersData[savedata[i].PlayerID].IsMove = 0;
-                                    animators[1].SetBool("isMoving", false);
-                                    break;
-                                case 2:
-                                    PlayersData[savedata[i].PlayerID].IsMove = 1;
-                                    PlayersData[savedata[i].PlayerID].PlayersForward = new Vector3(1.0f, 1.0f, 0.0f);
-                                    animators[1].SetBool("isMoving", true);
-                                    PlayersData[savedata[i].PlayerID].ShootSensorDir = new Vector2(1, 0);
-                                    break;
-                                case 3:
-                                    PlayersData[savedata[i].PlayerID].IsMove = 0;
-                                    animators[1].SetBool("isMoving", false);
-                                    break;
-                                case 4:
-                                    PlayersData[savedata[i].PlayerID].IsJump = true;
-                                    PlayersData[savedata[i].PlayerID].OnBox = false;
-                                    animators[1].SetTrigger("doJump");
-                                    break;
-                                case 5://シュートだけ、直接シュートする
-                                    //ShootCtr.ShootKeyDown(this, savedata[i].PlayerID, savedata[i].ShootDir);
-                                    //animators[0].SetTrigger("doAttack");
-                                    break;
-                                case 6:
-                                    PlayersData[savedata[i].PlayerID].ShootSensorDir = new Vector2(0, 1);
-                                    break;
-                                case 8:
-                                    PlayersData[savedata[i].PlayerID].ShootSensorDir = new Vector2(0, -1);
-                                    break;
-                                case 41:
-                                    SkillDataCtr.JumpSmarshDir = new Vector2(1, 0);
-                                    PlayersData[savedata[i].PlayerID].PlayersForward = new Vector3(1.0f, 1.0f, 0.0f);
-                                    PlayersData[savedata[i].PlayerID].IsJump = true;
-                                    PlayersData[savedata[i].PlayerID].OnBox = false;
-                                    SkillDataCtr.UseJumpSmarsh = true;
-                                    animators[1].SetTrigger("doDash");
-                                    break;
-                                case 42:
-                                    SkillDataCtr.JumpSmarshDir = new Vector2(-1, 0);
-                                    PlayersData[savedata[i].PlayerID].PlayersForward = new Vector3(-1.0f, 1.0f, 0.0f);
-                                    PlayersData[savedata[i].PlayerID].IsJump = true;
-                                    PlayersData[savedata[i].PlayerID].OnBox = false;
-                                    SkillDataCtr.UseJumpSmarsh = true;
-                                    animators[1].SetTrigger("doDash");
-                                    break;
-                                case 43:
-                                    SkillDataCtr.JumpSmarshDir = new Vector2(0, 1);
-                                    PlayersData[savedata[i].PlayerID].PlayersForward = new Vector3(-1.0f, 1.0f, 0.0f);
-                                    PlayersData[savedata[i].PlayerID].IsJump = true;
-                                    PlayersData[savedata[i].PlayerID].OnBox = false;
-                                    SkillDataCtr.UseJumpSmarsh = true;
-                                    PlayersData[savedata[i].PlayerID].ShootSensorDir = new Vector2(0, 1);
-                                    animators[1].SetTrigger("doDash");
-                                    break;
-                                case 44:
-                                    SkillDataCtr.JumpSmarshDir = new Vector2(0, -1);
-                                    PlayersData[savedata[i].PlayerID].PlayersForward = new Vector3(-1.0f, 1.0f, 0.0f);
-                                    PlayersData[savedata[i].PlayerID].IsJump = true;
-                                    PlayersData[savedata[i].PlayerID].OnBox = false;
-                                    SkillDataCtr.UseJumpSmarsh = true;
-                                    PlayersData[savedata[i].PlayerID].ShootSensorDir = new Vector2(0, -1);
-                                    animators[1].SetTrigger("doDash");
-                                    break;
-                                case 61:
-                                    SkillDataCtr.UseCut = true;
-                                    animators[1].SetBool("isKamae", true) ;
-                                    break;
-                                case 62:
-                                    SkillDataCtr.UseStealth = true;
-                                    break;
-                                case 63:
-                                    ShootCtr.ShootKeyDown_Skill(this, savedata[i].PlayerID, SkillDataCtr.KumaBoomBulletObj, savedata[i].ShootDir);
-                                    break;
-                                case 66:
-                                    ShootCtr.ShootKeyDown_Skill(this, savedata[i].PlayerID, SkillDataCtr.CutBulletObj, savedata[i].ShootDir);
-                                    SkillDataCtr.UseCut = false;
-                                    animators[1].SetBool("isKamae", false);
-                                    break;
-                                case 67:
-                                    SkillDataCtr.UseStealth = false;
-                                    break;
-                                default:
-                                    break;
+                                Animator[] animators = PlayersData[savedata[j].PlayerID].GetComponentsInChildren<Animator>();
+                                //キーの番号ごとに、対応の状態を変更する
+                                switch (savedata[j].BottonID)
+                                {
+                                    case 0:
+                                        PlayersData[savedata[j].PlayerID].IsMove = -1;
+                                        PlayersData[savedata[j].PlayerID].PlayersForward = new Vector3(-1.0f, 1.0f, 0.0f);
+                                        animators[1].SetBool("isMoving", true);
+                                        PlayersData[savedata[j].PlayerID].ShootSensorDir = new Vector2(-1, 0);
+                                        break;
+                                    case 1:
+                                        PlayersData[savedata[j].PlayerID].IsMove = 0;
+                                        animators[1].SetBool("isMoving", false);
+                                        break;
+                                    case 2:
+                                        PlayersData[savedata[j].PlayerID].IsMove = 1;
+                                        PlayersData[savedata[j].PlayerID].PlayersForward = new Vector3(1.0f, 1.0f, 0.0f);
+                                        animators[1].SetBool("isMoving", true);
+                                        PlayersData[savedata[j].PlayerID].ShootSensorDir = new Vector2(1, 0);
+                                        break;
+                                    case 3:
+                                        PlayersData[savedata[j].PlayerID].IsMove = 0;
+                                        animators[1].SetBool("isMoving", false);
+                                        break;
+                                    case 4:
+                                        PlayersData[savedata[j].PlayerID].IsJump = true;
+                                        PlayersData[savedata[j].PlayerID].OnBox = false;
+                                        animators[1].SetTrigger("doJump");
+                                        break;
+                                    case 5://シュートだけ、直接シュートする
+                                           //ShootCtr.ShootKeyDown(this, savedata[i].PlayerID, savedata[i].ShootDir);
+                                           //animators[0].SetTrigger("doAttack");
+                                        break;
+                                    case 6:
+                                        PlayersData[savedata[j].PlayerID].ShootSensorDir = new Vector2(0, 1);
+                                        break;
+                                    case 8:
+                                        PlayersData[savedata[j].PlayerID].ShootSensorDir = new Vector2(0, -1);
+                                        break;
+                                    case 41:
+                                        SkillDataCtr.JumpSmarshDir = new Vector2(1, 0);
+                                        PlayersData[savedata[j].PlayerID].PlayersForward = new Vector3(1.0f, 1.0f, 0.0f);
+                                        PlayersData[savedata[j].PlayerID].IsJump = true;
+                                        PlayersData[savedata[j].PlayerID].OnBox = false;
+                                        SkillDataCtr.UseJumpSmarsh = true;
+                                        animators[1].SetTrigger("doDash");
+                                        break;
+                                    case 42:
+                                        SkillDataCtr.JumpSmarshDir = new Vector2(-1, 0);
+                                        PlayersData[savedata[j].PlayerID].PlayersForward = new Vector3(-1.0f, 1.0f, 0.0f);
+                                        PlayersData[savedata[j].PlayerID].IsJump = true;
+                                        PlayersData[savedata[j].PlayerID].OnBox = false;
+                                        SkillDataCtr.UseJumpSmarsh = true;
+                                        animators[1].SetTrigger("doDash");
+                                        break;
+                                    case 43:
+                                        SkillDataCtr.JumpSmarshDir = new Vector2(0, 1);
+                                        PlayersData[savedata[j].PlayerID].PlayersForward = new Vector3(-1.0f, 1.0f, 0.0f);
+                                        PlayersData[savedata[j].PlayerID].IsJump = true;
+                                        PlayersData[savedata[j].PlayerID].OnBox = false;
+                                        SkillDataCtr.UseJumpSmarsh = true;
+                                        PlayersData[savedata[j].PlayerID].ShootSensorDir = new Vector2(0, 1);
+                                        animators[1].SetTrigger("doDash");
+                                        break;
+                                    case 44:
+                                        SkillDataCtr.JumpSmarshDir = new Vector2(0, -1);
+                                        PlayersData[savedata[j].PlayerID].PlayersForward = new Vector3(-1.0f, 1.0f, 0.0f);
+                                        PlayersData[savedata[j].PlayerID].IsJump = true;
+                                        PlayersData[savedata[j].PlayerID].OnBox = false;
+                                        SkillDataCtr.UseJumpSmarsh = true;
+                                        PlayersData[savedata[j].PlayerID].ShootSensorDir = new Vector2(0, -1);
+                                        animators[1].SetTrigger("doDash");
+                                        break;
+                                    case 61:
+                                        SkillDataCtr.UseCut = true;
+                                        animators[1].SetBool("isKamae", true);
+                                        break;
+                                    case 62:
+                                        SkillDataCtr.UseStealth = true;
+                                        break;
+                                    case 63:
+                                        ShootCtr.ShootKeyDown_Skill(this, savedata[j].PlayerID, SkillDataCtr.KumaBoomBulletObj, savedata[j].ShootDir);
+                                        break;
+                                    case 66:
+                                        ShootCtr.ShootKeyDown_Skill(this, savedata[j].PlayerID, SkillDataCtr.CutBulletObj, savedata[j].ShootDir);
+                                        SkillDataCtr.UseCut = false;
+                                        animators[1].SetBool("isKamae", false);
+                                        break;
+                                    case 67:
+                                        SkillDataCtr.UseStealth = false;
+                                        break;
+                                    default:
+                                        break;
+                                }
+                                savedata[j].Used = true;
                             }
-                            savedata[i].Used = true;
                         }
                     }
                 }
+
             }
 
             //全てのプレイヤーの動きを更新する
@@ -377,19 +393,32 @@ public class PlayerController : MonoBehaviour
         Timer = 0.0f;
         for (int i = 0; i < Players.Count; i++)
         {
-            PlayersData[i].HP = PlayersData[i].MaxHP;
-            PlayersData[i].IsJump = false;
-            PlayersData[i].IsAlive = true;
-            PlayersData[i].IsAlive2 = true;
-            PlayersData[i].ShootTimer = 0.0f;
-            PlayersData[i].ShotTimes = 0;
-            PlayersData[i].ShootIntoCD = false;
-            PlayersData[i].CanShoot = false;
-            PlayersData[i].EnableMoveJump = true;
-            PlayersData[i].EnableMoveJump2 = true;
-            Players[i].GetComponentInChildren<LostLifeCtr>().LostLifeReset();
-            Players[i].GetComponent<Transform>().position = PlayersData[i].StartPoStartPositon;
-            Players[i].SetActive(true);
+            if (i < DisPlayPlayerNums)
+            {
+                PlayersData[i].HP = PlayersData[i].MaxHP;
+                PlayersData[i].IsJump = false;
+                PlayersData[i].IsAlive = true;
+                PlayersData[i].ShootTimer = 0.0f;
+                PlayersData[i].ShotTimes = 0;
+                PlayersData[i].ShootIntoCD = false;
+                PlayersData[i].CanShoot = false;
+                PlayersData[i].EnableMoveJump = true;
+                PlayersData[i].EnableMoveJump2 = true;
+                Players[i].GetComponentInChildren<LostLifeCtr>().LostLifeReset();
+                Players[i].GetComponent<Transform>().position = PlayersData[i].StartPoStartPositon;
+                //保存データの更新
+                PlayersData[i].SavedBehaviour = new PlayerBehaviourData(PlayersData[i].RecordBehaviour);
+
+                //記録データの削除
+                PlayersData[i].RecordBehaviour.ClearData();
+
+                Players[i].SetActive(true);
+            }
+            else
+            {
+                Players[i].SetActive(false);
+            }
+
         }
 
         ChaUICtr.ChangeHP(PlayersData[ControlPlayerID].PlayerID);
@@ -414,11 +443,6 @@ public class PlayerController : MonoBehaviour
         ControlPlayerID %= Players.Count;
 
         ChaUICtr.ChangeUI(ControlPlayerID);
-        //保存データの更新
-        SavedBehaviour = new PlayerBehaviourData(RecordBehaviour);
-
-        //記録データの削除
-        RecordBehaviour.ClearData();
 
         //新しい記録準備完了
         StartBehaviourRecord = true;
@@ -430,19 +454,31 @@ public class PlayerController : MonoBehaviour
 
         for (int i = 0; i < Players.Count; i++)
         {
-            PlayersData[i].HP = PlayersData[i].MaxHP;
-            PlayersData[i].IsJump = false;
-            PlayersData[i].IsAlive = true;
-            PlayersData[i].IsAlive2 = true;
-            PlayersData[i].ShootTimer = 0.0f;
-            PlayersData[i].ShotTimes = 0;
-            PlayersData[i].ShootIntoCD = false;
-            PlayersData[i].CanShoot = false;
-            PlayersData[i].EnableMoveJump = true;
-            PlayersData[i].EnableMoveJump2 = true;
-            Players[i].GetComponentInChildren<LostLifeCtr>().LostLifeReset();
-            Players[i].GetComponent<Transform>().position = PlayersData[i].StartPoStartPositon;
-            Players[i].SetActive(true);
+            if (i < DisPlayPlayerNums)
+            {
+                PlayersData[i].HP = PlayersData[i].MaxHP;
+                PlayersData[i].IsJump = false;
+                PlayersData[i].IsAlive = true;
+                PlayersData[i].ShootTimer = 0.0f;
+                PlayersData[i].ShotTimes = 0;
+                PlayersData[i].ShootIntoCD = false;
+                PlayersData[i].CanShoot = false;
+                PlayersData[i].EnableMoveJump = true;
+                PlayersData[i].EnableMoveJump2 = true;
+                Players[i].GetComponentInChildren<LostLifeCtr>().LostLifeReset();
+                Players[i].GetComponent<Transform>().position = PlayersData[i].StartPoStartPositon;
+                for (int j = 0; j < PlayersData[i].SavedBehaviour.GetBehaviourData().Count; j++)
+                {
+                    PlayersData[i].SavedBehaviour.GetBehaviourData()[j].Used = false;
+                }
+                PlayersData[i].RecordBehaviour.ClearData();
+
+                Players[i].SetActive(true);
+            }
+            else
+            {
+                Players[i].SetActive(false);
+            }
         }
 
         ChaUICtr.ChangeHP(PlayersData[ControlPlayerID].PlayerID);
@@ -464,11 +500,6 @@ public class PlayerController : MonoBehaviour
         SkillDataCtr.StealthReset();
         SkillDataCtr.BoomReset();
 
-        for (int i = 0; i < SavedBehaviour.GetBehaviourData().Count; i++)
-        {
-            SavedBehaviour.GetBehaviourData()[i].Used = false;
-        }
-        RecordBehaviour.ClearData();
         StartBehaviourRecord = true;
     }
 

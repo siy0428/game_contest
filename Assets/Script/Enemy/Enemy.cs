@@ -9,6 +9,8 @@ public class Enemy : MonoBehaviour
 
     private Rigidbody2D rb2d;
 
+    [SerializeField]
+    private int KillScore = 100;
     // Start is called before the first frame update
     void Start()
     {

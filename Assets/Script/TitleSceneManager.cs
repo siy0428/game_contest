@@ -23,7 +23,7 @@ public class TitleSceneManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-       
+
     }
 
     //ƒV[ƒ“‚ÌØ‚è‘Ö‚¦
@@ -31,7 +31,8 @@ public class TitleSceneManager : MonoBehaviour
     {
         //SceneManager.LoadScene("MainScene");
         if (SceneManager.GetActiveScene().name == "title")
-            FadeManager.Instance.LoadScene("MainScene", FadeTime);
+            FadeManager.Instance.LoadScene("beta", FadeTime);
+        //SceneManager.LoadScene("beta");
     }
 
     void InputKey(InputAction.CallbackContext obj)

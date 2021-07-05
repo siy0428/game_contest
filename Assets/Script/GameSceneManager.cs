@@ -2,24 +2,28 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.InputSystem;
 
 public class GameSceneManager : MonoBehaviour
 {
-    //public PlayerInput pInput;
-    //private InputAction Scene;
+    public static GameSceneManager instance;
     private PlayerController pc;
     private bool change;
+
+    [SerializeField]
+    private float FadeTime = 0.0f;
 
     // Start is called before the first frame update
     void Start()
     {
-        ////キー取得
-        ////Input = FindObjectOfType<PlayerInput>();
-        //InputActionMap ActionMap = pInput.currentActionMap;
-        //Scene = ActionMap["Scene"];
-
-        //Scene.started += InputKey;
+        if (instance == null)
+        {
+            instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+            DontDestroyOnLoad(gameObject);
+        }
 
         pc = FindObjectOfType<PlayerController>();
         change = false;
@@ -35,7 +39,7 @@ public class GameSceneManager : MonoBehaviour
     //シーンの切り替え
     void ChangeScene()
     {
-        if(change)
+        if (change)
         {
             return;
         }
@@ -43,6 +47,14 @@ public class GameSceneManager : MonoBehaviour
         //現在操作しているプレイヤーのID
         int player_id = pc.ControlPlayerID;
 
+        //操作しているプレイヤーが死んだ場合は次のゲームオーバーシーンへ遷移
+        if(!pc.PlayersData[player_id].IsAlive2)
+        {
+            GameOver();
+            return;
+        }
+
+        //他のプレイヤーを全て倒した場合シーン遷移
         foreach (var player in pc.PlayersData)
         {
             //操作しているプレイヤーを参照していた場合は次のループ
@@ -54,18 +66,32 @@ public class GameSceneManager : MonoBehaviour
             //生きているプレイヤーがいればシーンを遷移しない
             if (player.IsAlive2)
             {
-                //Debug.Log("生きてます");
                 return;
             }
         }
-
-        SceneManager.LoadScene("ResultScene");
-        change = true;
-        //Debug.Log("自分以外全員死んでいるので遷移");
+        //シーンの遷移
+        Result();
     }
 
-    //void InputKey(InputAction.CallbackContext obj)
-    //{
-    //    ChangeScene();
-    //}
+    /// <summary>
+    /// リザルト用シーン遷移
+    /// </summary>
+    public void Result()
+    {
+        change = true;
+
+        if (SceneManager.GetActiveScene().name == "beta")
+            FadeManager.Instance.LoadScene("ResultScene", FadeTime);
+    }
+
+    /// <summary>
+    /// ゲームオーバー用シーン遷移
+    /// </summary>
+    public void GameOver()
+    {
+        change = true;
+
+        if (SceneManager.GetActiveScene().name == "beta")
+            FadeManager.Instance.LoadScene("ResultScene", FadeTime);
+    }
 }

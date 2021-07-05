@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class CharacterUIController : MonoBehaviour
 {
@@ -26,6 +27,9 @@ public class CharacterUIController : MonoBehaviour
     //ヘルスポイント
     public List<GameObject> HealthPointObj;
 
+    //スコア表示
+    public GameObject ScoreObj;
+
     public List<Sprite> HealthPointIconsList;
 
     private PlayerController PlayerCtr;
@@ -33,6 +37,19 @@ public class CharacterUIController : MonoBehaviour
     private ShootBottonCtr ShootCtr;
 
     private SkillBottonCtr SkillCtr;
+
+    private bool IsAddScore = false;
+
+    public float AddScoreLimitTime = 0.5f;
+
+    private int AddScoreValue = 0;
+
+    [SerializeField]
+    private int Score = 0;
+
+    private int preScore = 0;
+
+    public float AddScoreTimer = 0.0f;
     // Start is called before the first frame update
     void Start()
     {
@@ -46,7 +63,24 @@ public class CharacterUIController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if(IsAddScore)
+        {
+            preScore = Score;
+            float dt = Time.deltaTime;
+            AddScoreTimer += dt;
+            if(AddScoreTimer >= AddScoreLimitTime)
+            {
+                AddScoreTimer = 0.0f;
+                IsAddScore = false;
+                Score = preScore + AddScoreValue;
+            }
+            else
+            {
+                Score += (int)(AddScoreValue * (dt / AddScoreLimitTime));
+            }
+            
+            //ScoreObj.get
+        }
     }
 
     public void ChangeUI(int ID)
@@ -68,6 +102,14 @@ public class CharacterUIController : MonoBehaviour
         AttackIconCDMaskObj.GetComponent<Image>().fillAmount = 0;
 
         SkillIconCDMaskObj.GetComponent<Image>().fillAmount = 0;
+
+        IsAddScore = false;
+
+        AddScoreValue = 0;
+
+        preScore = 0;
+
+        AddScoreTimer = 0.0f;
 
         if (py.MaxHP % 2 == 0)
         {
@@ -210,5 +252,11 @@ public class CharacterUIController : MonoBehaviour
 
         }
 
+    }
+
+    public void AddScore(int _Value)
+    {
+        IsAddScore = true;
+        AddScoreValue = _Value;
     }
 }
