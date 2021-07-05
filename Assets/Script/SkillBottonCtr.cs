@@ -214,7 +214,7 @@ public class SkillBottonCtr : MonoBehaviour
             default:
                 break;
         }
-        _PlayerCtr.RecordBehaviour.AddBehaviour(KeySkill);
+        _PlayerCtr.PlayersData[_PlayerCtr.ControlPlayerID].RecordBehaviour.AddBehaviour(KeySkill);
     }
 
     private void UpKeyRecord()
@@ -249,6 +249,6 @@ public class SkillBottonCtr : MonoBehaviour
             default:
                 break;
         }
-        _PlayerCtr.RecordBehaviour.AddBehaviour(KeySkill);
+        _PlayerCtr.PlayersData[_PlayerCtr.ControlPlayerID].RecordBehaviour.AddBehaviour(KeySkill);
     }
 }
