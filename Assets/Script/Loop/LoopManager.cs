@@ -17,13 +17,13 @@ public class LoopManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        pc = FindObjectOfType<PlayerController>();
+        tbm = FindObjectOfType<TimeBodyManager>();
         isRewindStart = false;
         loop_id = 0;
         defeat_player = 0;
         loops[loop_id].Create();            //1つ目のループ生成
         time = loops[loop_id].GetTime();    //1つ目のループの時間取得
-        pc = FindObjectOfType<PlayerController>();
-        tbm = FindObjectOfType<TimeBodyManager>();
     }
 
     // Update is called once per frame
@@ -66,6 +66,7 @@ public class LoopManager : MonoBehaviour
             //目標撃破数に到達していた場合次のループ
             if (defeat_player >= loops[loop_id].GetDefeatCount())
             {
+                loops[loop_id].AddPlayer();
                 pc.ChangePlayer();                  //次のプレイヤーへ操作変更
                 loop_id++;
                 defeat_player = 0;
@@ -132,6 +133,7 @@ public class LoopManager : MonoBehaviour
     /// </summary>
     public void LoopAgain()
     {
+        loops[loop_id].AddPlayer();
         pc.PlayerWithoutLoop();             //同じプレイヤーの操作処理
         defeat_player = 0;
         loops[loop_id].Create();            //同じループの生成
