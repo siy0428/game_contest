@@ -103,6 +103,13 @@ public class Player : MonoBehaviour
 
     public Sprite SkillMaskImObj;
 
+    //読み込み用データ
+    public PlayerBehaviourData SavedBehaviour = new PlayerBehaviourData();
+
+    //記録用データ
+    public PlayerBehaviourData RecordBehaviour = new PlayerBehaviourData();
+
+
     // Start is called before the first frame update
     void Awake()
     {
