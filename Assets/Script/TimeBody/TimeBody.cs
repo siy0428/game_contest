@@ -4,9 +4,6 @@ using UnityEngine;
 
 public class TimeBody : MonoBehaviour
 {
-    [SerializeField]
-    private ShootKeeper sk;
-
     //逆再生用変数
     private bool isRewinding;
     private Rigidbody2D rb2d;
@@ -89,10 +86,6 @@ public class TimeBody : MonoBehaviour
     {
         TimeBodyObject obj = new TimeBodyObject();
         obj.position = transform.position;
-        if (sk)
-        {
-            obj.isShot = sk.GetShotPerFrame();
-        }
 
         //リストの先頭に座標を記録
         objects.Insert(0, obj);

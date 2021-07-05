@@ -5,16 +5,14 @@ public class ZoomCamera2D : MonoBehaviour
 {
 
     [SerializeField]
-    private Transform target1 = null;
-    [SerializeField]
-    private Transform target2 = null;
-    [SerializeField]
     private Vector2 offset = new Vector2(1, 1);
     [SerializeField]
     private float DistanceSize = 0.0f;
 
     private float screenAspect = 0;
     private Camera _camera = null;
+    public Transform LeftBottom;
+    public Transform RightTop;
 
     void Awake()
     {
@@ -31,14 +29,14 @@ public class ZoomCamera2D : MonoBehaviour
     void UpdateCameraPosition()
     {
         // 2点間の中心点からカメラの位置を更新
-        Vector3 center = Vector3.Lerp(target1.position, target2.position, 0.5f);
+        Vector3 center = Vector3.Lerp(LeftBottom.position, RightTop.position, 0.5f);
         transform.position = center + Vector3.forward * -10;
     }
 
     void UpdateOrthographicSize()
     {
         // ２点間のベクトルを取得
-        Vector3 targetsVector = AbsPositionDiff(target1, target2) + (Vector3)offset;
+        Vector3 targetsVector = AbsPositionDiff(LeftBottom, RightTop) + (Vector3)offset;
 
         // アスペクト比が縦長ならyの半分、横長ならxとアスペクト比でカメラのサイズを更新
         float targetsAspect = targetsVector.y / targetsVector.x;
