@@ -4138,7 +4138,7 @@ MonoBehaviour:
   spawns:
   - {x: 237.34, y: 35.121, z: 0}
   defeat_count: 0
-  time_limit: 10
+  time_limit: 50
 --- !u!4 &736465875
 Transform:
   m_ObjectHideFlags: 0
@@ -4756,6 +4756,49 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   doShoot: 0
   shootbottonctr: {fileID: 1716031042}
+--- !u!1 &952103243
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 952103245}
+  - component: {fileID: 952103244}
+  m_Layer: 0
+  m_Name: SceneManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &952103244
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 952103243}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f7a8c4e205e403d4d825629b1fa53cd4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &952103245
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 952103243}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 22
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &959276456
 GameObject:
   m_ObjectHideFlags: 0
@@ -4993,6 +5036,7 @@ MonoBehaviour:
   IsJump: 0
   JumpedTimes: 0
   IsAlive: 0
+  IsAlive2: 0
   StartPoStartPositon: {x: 0, y: 0, z: 0}
   PlayersForward: {x: 1, y: 1, z: 0}
   Bullet: {fileID: 7875155880049078745, guid: 4839e46db498cb746b2a122371cf0455, type: 3}
@@ -5027,9 +5071,9 @@ CircleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.023615837, y: 0.18598747}
+  m_Offset: {x: 0.031951904, y: 0.449744}
   serializedVersion: 2
-  m_Radius: 0.11918163
+  m_Radius: 0.30793118
 --- !u!114 &1049415925
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5572,8 +5616,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   PlayerID: 0
-  HP: 11
-  MaxHP: 11
+  HP: 1
+  MaxHP: 1
   ATK: 0
   DEF: 0
   MoveSpeed: 3
@@ -5589,6 +5633,7 @@ MonoBehaviour:
   IsJump: 0
   JumpedTimes: 0
   IsAlive: 0
+  IsAlive2: 0
   StartPoStartPositon: {x: 0, y: 0, z: 0}
   PlayersForward: {x: 1, y: 1, z: 0}
   Bullet: {fileID: 5598220327185535831, guid: 15cc9d124acaf274cb63fd1f74a0d31b, type: 3}
@@ -5623,9 +5668,9 @@ CircleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.014579773, y: 0.2185831}
+  m_Offset: {x: -0.014579773, y: 0.4684415}
   serializedVersion: 2
-  m_Radius: 0.13082123
+  m_Radius: 0.3806796
 --- !u!114 &1266795361
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6182,6 +6227,7 @@ MonoBehaviour:
   IsJump: 0
   JumpedTimes: 0
   IsAlive: 0
+  IsAlive2: 0
   StartPoStartPositon: {x: 0, y: 0, z: 0}
   PlayersForward: {x: 0, y: 0, z: 0}
   Bullet: {fileID: 3142873562492474777, guid: 64c9f48f6976bc2469fbcbbb08253b77, type: 3}
@@ -6474,11 +6520,14 @@ PrefabInstance:
       value: 33.75
       objectReference: {fileID: 0}
     - target: {fileID: 7810114061052543294, guid: f8a3a832c518d514ea1b683c9b9a6305, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7810114061052543294, guid: f8a3a832c518d514ea1b683c9b9a6305, type: 3}
       propertyPath: m_TagString
       value: Player
       objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 7297981072292206833, guid: f8a3a832c518d514ea1b683c9b9a6305, type: 3}
+    m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f8a3a832c518d514ea1b683c9b9a6305, type: 3}
 --- !u!1 &1798655822
 GameObject:

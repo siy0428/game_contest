@@ -88,7 +88,7 @@ public class Collision : MonoBehaviour
 
                     if (en.HP <= 0)
                     {
-                        //PlayerCtr.PlayersData[collider.gameObject.GetComponent<Player>().PlayerID].IsAlive = false;
+                        PlayerCtr.PlayersData[collider.gameObject.GetComponent<Player>().PlayerID].IsAlive2 = false;
                         collider.gameObject.SetActive(false);
                         //if (PlayerID != PlayerCtr.ControlPlayerID)
                         //{

@@ -51,6 +51,7 @@ public class Player : MonoBehaviour
 
     //生存状態
     public bool IsAlive;
+    public bool IsAlive2;
 
     //キャラクターの初期位置
     public Vector3 StartPoStartPositon;
@@ -109,6 +110,7 @@ public class Player : MonoBehaviour
         IsMove = 0;
         IsJump = false;
         IsAlive = true;
+        IsAlive2 = true;
         JumpedTimes = 0;
         StartPoStartPositon = gameObject.GetComponent<Transform>().position;
         PlayersForward = gameObject.GetComponent<Transform>().localScale;
