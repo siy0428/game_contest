@@ -46,6 +46,7 @@ public class CharacterUIController : MonoBehaviour
 
     [SerializeField]
     private int Score = 0;
+    private float countScore = 0.0f;
 
     private int preScore = 0;
 
@@ -64,8 +65,7 @@ public class CharacterUIController : MonoBehaviour
     void Update()
     {
         if(IsAddScore)
-        {
-            preScore = Score;
+        {            
             float dt = Time.deltaTime;
             AddScoreTimer += dt;
             if(AddScoreTimer >= AddScoreLimitTime)
@@ -76,10 +76,11 @@ public class CharacterUIController : MonoBehaviour
             }
             else
             {
-                Score += (int)(AddScoreValue * (dt / AddScoreLimitTime));
+                countScore += AddScoreValue * (dt / AddScoreLimitTime);
+                Score = (int)countScore;
             }
-            
-            //ScoreObj.get
+
+            ScoreObj.GetComponent<TextMeshProUGUI>().text = Score.ToString();
         }
     }
 
@@ -108,6 +109,8 @@ public class CharacterUIController : MonoBehaviour
         AddScoreValue = 0;
 
         preScore = 0;
+
+        countScore = 0;
 
         AddScoreTimer = 0.0f;
 
@@ -258,5 +261,8 @@ public class CharacterUIController : MonoBehaviour
     {
         IsAddScore = true;
         AddScoreValue = _Value;
+        Debug.Log(AddScoreValue);
+        preScore = Score;
+        countScore = Score;
     }
 }

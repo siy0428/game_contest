@@ -425,8 +425,18 @@ public class PlayerController : MonoBehaviour
                 PlayersData[i].EnableMoveJump2 = true;
                 Players[i].GetComponentInChildren<LostLifeCtr>().LostLifeReset();
                 Players[i].GetComponent<Transform>().position = PlayersData[i].StartPoStartPositon;
-                //保存データの更新
-                PlayersData[i].SavedBehaviour = new PlayerBehaviourData(PlayersData[i].RecordBehaviour);
+                if(i == ControlPlayerID)
+                {
+                    //保存データの更新
+                    PlayersData[i].SavedBehaviour = new PlayerBehaviourData(PlayersData[i].RecordBehaviour);
+                }
+                else
+                {
+                    for (int j = 0; j < PlayersData[i].SavedBehaviour.GetBehaviourData().Count; j++)
+                    {
+                        PlayersData[i].SavedBehaviour.GetBehaviourData()[j].Used = false;
+                    }
+                }
 
                 //記録データの削除
                 PlayersData[i].RecordBehaviour.ClearData();
