@@ -57,7 +57,7 @@ public class PlayerController : MonoBehaviour
     public int DisPlayPlayerNums = 2;
 
     // Start is called before the first frame update
-    public void Start()
+    public void Awake()
     {
         //スクリプト取得
         GetBottonCtr();

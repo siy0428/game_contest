@@ -3723,7 +3723,7 @@ MonoBehaviour:
   - {x: 237.34, y: 31.17, z: 0}
   defeat_count: 0
   time_limit: 7
-  player_add: 0
+  player_add: 1
 --- !u!4 &464922761
 Transform:
   m_ObjectHideFlags: 0
@@ -4646,17 +4646,6 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 6682969945611191959, guid: 78a64cc31c7e78b4c85a9d98f86fc5ca, type: 3}
   m_PrefabInstance: {fileID: 1920937451}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &887541332 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 6682969945611191956, guid: 78a64cc31c7e78b4c85a9d98f86fc5ca, type: 3}
-  m_PrefabInstance: {fileID: 1920937451}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 887541331}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 54433ebaf24a5bd498eadb9ab0735e6c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &889987210
 GameObject:
   m_ObjectHideFlags: 0
@@ -6208,10 +6197,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   InBox: {fileID: 7540531129001430421, guid: 54a77107361b8654eb109ec4a0b71609, type: 3}
-  Players:
-  - {fileID: 1142953588}
-  - {fileID: 2098833418}
-  - {fileID: 887541332}
 --- !u!4 &1810547944
 Transform:
   m_ObjectHideFlags: 0

@@ -17,13 +17,13 @@ public class LoopManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        pc = FindObjectOfType<PlayerController>();
+        tbm = FindObjectOfType<TimeBodyManager>();
         isRewindStart = false;
         loop_id = 0;
         defeat_player = 0;
         loops[loop_id].Create();            //1つ目のループ生成
         time = loops[loop_id].GetTime();    //1つ目のループの時間取得
-        pc = FindObjectOfType<PlayerController>();
-        tbm = FindObjectOfType<TimeBodyManager>();
     }
 
     // Update is called once per frame
