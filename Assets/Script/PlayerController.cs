@@ -176,7 +176,6 @@ public class PlayerController : MonoBehaviour
                                     SkillDataCtr.UseStealth = true;
                                     break;
                                 case 63:
-                                    Debug.Log("23232");
                                     ShootCtr.ShootKeyDown_Skill(this, savedata[i].PlayerID, SkillDataCtr.KumaBoomBulletObj, savedata[i].ShootDir);
                                     break;
                                 case 66:
@@ -388,6 +387,7 @@ public class PlayerController : MonoBehaviour
             PlayersData[i].CanShoot = false;
             PlayersData[i].EnableMoveJump = true;
             PlayersData[i].EnableMoveJump2 = true;
+            Players[i].GetComponentInChildren<LostLifeCtr>().LostLifeReset();
             Players[i].GetComponent<Transform>().position = PlayersData[i].StartPoStartPositon;
             Players[i].SetActive(true);
         }
@@ -440,6 +440,7 @@ public class PlayerController : MonoBehaviour
             PlayersData[i].CanShoot = false;
             PlayersData[i].EnableMoveJump = true;
             PlayersData[i].EnableMoveJump2 = true;
+            Players[i].GetComponentInChildren<LostLifeCtr>().LostLifeReset();
             Players[i].GetComponent<Transform>().position = PlayersData[i].StartPoStartPositon;
             Players[i].SetActive(true);
         }
