@@ -175,6 +175,10 @@ public class PlayerController : MonoBehaviour
                                 case 62:
                                     SkillDataCtr.UseStealth = true;
                                     break;
+                                case 63:
+                                    Debug.Log("23232");
+                                    ShootCtr.ShootKeyDown_Skill(this, savedata[i].PlayerID, SkillDataCtr.KumaBoomBulletObj, savedata[i].ShootDir);
+                                    break;
                                 case 66:
                                     ShootCtr.ShootKeyDown_Skill(this, savedata[i].PlayerID, SkillDataCtr.CutBulletObj, savedata[i].ShootDir);
                                     SkillDataCtr.UseCut = false;
@@ -235,6 +239,8 @@ public class PlayerController : MonoBehaviour
                                 SkillCtr.CheakSKillOver(limittime, maxtime);
                                 break;
                             case SkillID.Stealth:
+                                break;
+                            case SkillID.Boom:
                                 break;
                             default:
                                 break;
@@ -375,6 +381,7 @@ public class PlayerController : MonoBehaviour
             PlayersData[i].HP = PlayersData[i].MaxHP;
             PlayersData[i].IsJump = false;
             PlayersData[i].IsAlive = true;
+            PlayersData[i].IsAlive2 = true;
             PlayersData[i].ShootTimer = 0.0f;
             PlayersData[i].ShotTimes = 0;
             PlayersData[i].ShootIntoCD = false;
@@ -402,6 +409,7 @@ public class PlayerController : MonoBehaviour
         SkillDataCtr.EnableUseCut = true;
         SkillDataCtr.UseCut = false;
         SkillDataCtr.StealthReset();
+        SkillDataCtr.BoomReset();
         ControlPlayerID++;
         ControlPlayerID %= Players.Count;
 
@@ -425,6 +433,7 @@ public class PlayerController : MonoBehaviour
             PlayersData[i].HP = PlayersData[i].MaxHP;
             PlayersData[i].IsJump = false;
             PlayersData[i].IsAlive = true;
+            PlayersData[i].IsAlive2 = true;
             PlayersData[i].ShootTimer = 0.0f;
             PlayersData[i].ShotTimes = 0;
             PlayersData[i].ShootIntoCD = false;
@@ -452,6 +461,7 @@ public class PlayerController : MonoBehaviour
         SkillDataCtr.EnableUseCut = true;
         SkillDataCtr.UseCut = false;
         SkillDataCtr.StealthReset();
+        SkillDataCtr.BoomReset();
 
         for (int i = 0; i < SavedBehaviour.GetBehaviourData().Count; i++)
         {
@@ -487,6 +497,13 @@ public class PlayerController : MonoBehaviour
             case SkillID.Stealth:
                 rate = 1.0f - SkillDataCtr.StealthCDTimer / SkillDataCtr.StealthCDTime;
                 if(!SkillDataCtr.UseStealth && !SkillCtr.SkillIntoCD)
+                {
+                    rate = 0;
+                }
+                break;
+            case SkillID.Boom:
+                rate = 1.0f - SkillDataCtr.BoomCDTimer / SkillDataCtr.BoomCD;
+                if(SkillDataCtr.EnableUseBoom && PlayersData[ControlPlayerID].CanShoot)
                 {
                     rate = 0;
                 }

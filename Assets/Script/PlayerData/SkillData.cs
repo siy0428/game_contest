@@ -44,8 +44,9 @@ public class SkillData : MonoBehaviour
     //ŒF
     public float BoomCD = 3.0f;
     public float BoomCDTimer = 0.0f;
-    public bool UseBoom = false;
     public bool EnableUseBoom = true;
+    public GameObject KumaBoomBulletObj;
+
 
     public bool JumpSmarsh()
     {
@@ -151,6 +152,17 @@ public class SkillData : MonoBehaviour
         }
         return res;
 
+    }
+
+    public void Boom()
+    {
+
+    }
+
+    public void BoomReset()
+    {
+        BoomCDTimer = 0.0f;
+        EnableUseBoom = true;
     }
 
     //
