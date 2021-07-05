@@ -3631,7 +3631,7 @@ MonoBehaviour:
   - {x: 242.99, y: 31.17, z: 0}
   defeat_count: 0
   time_limit: 10
-  player_add: 1
+  player_add: 0
 --- !u!4 &414436407
 Transform:
   m_ObjectHideFlags: 0
@@ -5342,7 +5342,7 @@ MonoBehaviour:
   - {x: 232.29, y: 30.93, z: 0}
   defeat_count: 0
   time_limit: 15
-  player_add: 1
+  player_add: 0
 --- !u!4 &1201409513
 Transform:
   m_ObjectHideFlags: 0
