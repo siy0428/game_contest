@@ -26,6 +26,7 @@ public class AddScoreCtr : MonoBehaviour
     public Vector2 currentPos;
 
     public GameObject canvasObj;
+
     // Start is called before the first frame update
     void Awake()
     {

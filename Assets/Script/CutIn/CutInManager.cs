@@ -10,7 +10,7 @@ public class CutInManager : MonoBehaviour
 
     private void Awake()
     {
-        if(instance == null)
+        if (instance == null)
         {
             instance = this;
         }
@@ -30,18 +30,6 @@ public class CutInManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //if(_time < 3.0f )
-        //{
-        //    Time.timeScale = 0.0f;
-        //}
-        //else if(_time > 5.0f)
-        //{
-        //    Time.timeScale = 1.0f;
-        //    _time = 0.0f;
-        //}
-
-        //_time += Time.deltaTime;
-
-        //Debug.Log(_time);
+        
     }
 }
