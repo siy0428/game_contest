@@ -265,4 +265,9 @@ public class CharacterUIController : MonoBehaviour
         preScore = Score;
         countScore = Score;
     }
+
+    public void PassScoreToResult()
+    {
+        PlayerPrefs.SetInt("Score",Score);
+    }
 }

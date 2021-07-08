@@ -11,9 +11,11 @@ public class AddScoreCtr : MonoBehaviour
 
     public int Score = 0;
 
-    public float LimitTime = 0.5f;
+    public float MoveTime = 0.5f;
 
-    public float LimitTime2 = 0.5f;
+    public float DecreaseTime = 0.5f;
+
+    public float StopTime = 0.5f;
 
     public float Timer = 0.0f;
 
@@ -35,21 +37,21 @@ public class AddScoreCtr : MonoBehaviour
     {
         float dt = Time.deltaTime;
         Timer += dt;
-        if (Timer >= LimitTime + LimitTime2)
+        if (Timer >= MoveTime + DecreaseTime + StopTime)
         {
             Score = 0;
             currentPos = StartPos + movedistance;
             Destroy(gameObject);
         }
-        else if( Timer >= LimitTime)
+        else if( Timer >= MoveTime + StopTime)
         {
             currentPos = StartPos + movedistance;
-            countScore -= AddScoreValue * (dt / LimitTime);
+            countScore -= AddScoreValue * (dt / MoveTime);
             Score = (int)countScore;
         }
-        else
+        else if(Timer < MoveTime)
         {
-            currentPos += movedistance * (dt / LimitTime);
+            currentPos += movedistance * (dt / MoveTime);
         }
 
         GetComponent<TextMeshProUGUI>().text = Score.ToString();

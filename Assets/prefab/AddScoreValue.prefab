@@ -150,7 +150,9 @@ MonoBehaviour:
   AddScoreValue: 0
   countScore: 0
   Score: 0
-  LimitTime: 0.5
+  MoveTime: 0.5
+  DecreaseTime: 0.5
+  StopTime: 0.5
   Timer: 0
   movedistance: {x: 0, y: 100}
   StartPos: {x: 0, y: 0}
