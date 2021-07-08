@@ -270,5 +270,6 @@ public class CharacterUIController : MonoBehaviour
     public void PassScoreToResult()
     {
         PlayerPrefs.SetInt("Score",Score);
+        PlayerPrefs.Save();
     }
 }

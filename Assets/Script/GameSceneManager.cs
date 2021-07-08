@@ -56,7 +56,7 @@ public class GameSceneManager : MonoBehaviour
         }
 
         //他のプレイヤーを全て倒した場合シーン遷移
-        foreach (var player in pc.PlayersData)
+        foreach (var player in pc.GetAppPlayers())
         {
             //操作しているプレイヤーを参照していた場合は次のループ
             if (player_id == player.PlayerID)
@@ -82,6 +82,8 @@ public class GameSceneManager : MonoBehaviour
     {
         change = true;
 
+        FindObjectOfType<CharacterUIController>().PassScoreToResult();
+
         if (SceneManager.GetActiveScene().name == "beta")
             FadeManager.Instance.LoadScene("ResultScene", FadeTime);
     }
@@ -92,6 +94,8 @@ public class GameSceneManager : MonoBehaviour
     public void GameOver()
     {
         change = true;
+
+        FindObjectOfType<CharacterUIController>().PassScoreToResult();
 
         if (SceneManager.GetActiveScene().name == "beta")
             FadeManager.Instance.LoadScene("ResultScene", FadeTime);
