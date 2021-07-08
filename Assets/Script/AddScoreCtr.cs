@@ -11,7 +11,11 @@ public class AddScoreCtr : MonoBehaviour
 
     public int Score = 0;
 
-    public float LimitTime = 0.5f;
+    public float MoveTime = 0.5f;
+
+    public float DecreaseTime = 0.5f;
+
+    public float StopTime = 0.5f;
 
     public float Timer = 0.0f;
 
@@ -33,17 +37,21 @@ public class AddScoreCtr : MonoBehaviour
     {
         float dt = Time.deltaTime;
         Timer += dt;
-        if (Timer >= LimitTime)
+        if (Timer >= MoveTime + DecreaseTime + StopTime)
         {
             Score = 0;
             currentPos = StartPos + movedistance;
-            Destroy(this);
+            Destroy(gameObject);
         }
-        else
+        else if( Timer >= MoveTime + StopTime)
         {
-            countScore += AddScoreValue * (dt / LimitTime);
-            currentPos += movedistance * (dt / LimitTime);
+            currentPos = StartPos + movedistance;
+            countScore -= AddScoreValue * (dt / MoveTime);
             Score = (int)countScore;
+        }
+        else if(Timer < MoveTime)
+        {
+            currentPos += movedistance * (dt / MoveTime);
         }
 
         GetComponent<TextMeshProUGUI>().text = Score.ToString();
@@ -52,9 +60,21 @@ public class AddScoreCtr : MonoBehaviour
 
     public void SetStartPos(Vector3 _Pos)
     {
+        Debug.Log(_Pos);
         Vector2 newpos = Vector2.zero;
+        GetComponent<RectTransform>().SetParent(canvasObj.transform);
         var screenPos = RectTransformUtility.WorldToScreenPoint(Camera.main, _Pos);
         RectTransformUtility.ScreenPointToLocalPointInRectangle(canvasObj.GetComponent<RectTransform>(), screenPos, Camera.main,out newpos);
         StartPos = newpos;
+        currentPos = StartPos;
+        GetComponent<RectTransform>().localScale = new Vector3(5,5,1);
+        Debug.Log(newpos);
+    }
+
+    public void SetAddScore(int _Value)
+    {
+        AddScoreValue = _Value;
+        countScore = AddScoreValue;
+        Score = (int)countScore;
     }
 }
