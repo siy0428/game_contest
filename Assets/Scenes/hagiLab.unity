@@ -433,7 +433,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 9a07e4703600aa145ad02515ac5b446c, type: 3}
+  m_audioClip: {fileID: 8300000, guid: 3bc2910ebbfe14b47854b94045638e91, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
@@ -2398,6 +2398,7 @@ MonoBehaviour:
   Timer: 0
   JumpFocre: 1
   PlayersData: []
+  DisPlayPlayerNums: 2
 --- !u!4 &598980231
 Transform:
   m_ObjectHideFlags: 0
@@ -2673,6 +2674,7 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
+  ScoreObj: {fileID: 0}
   HealthPointIconsList:
   - {fileID: 21300000, guid: d7b6cc0c959cb0041a20ce2f9b7a39b3, type: 3}
   - {fileID: 21300000, guid: 7c9587e8dbb235f459ec1d6e045303f8, type: 3}
@@ -2680,6 +2682,9 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 8d819c1a8ae08184ea878ed391cbd433, type: 3}
   - {fileID: 21300000, guid: 99f0100ffd5dfa54aad6ee6540f7ad09, type: 3}
   - {fileID: 21300000, guid: 89dd4c4bdb3dfc8428f5a41b3f9c0454, type: 3}
+  AddScoreLimitTime: 0.5
+  Score: 0
+  AddScoreTimer: 0
 --- !u!4 &758655998
 Transform:
   m_ObjectHideFlags: 0
@@ -3120,8 +3125,8 @@ MonoBehaviour:
   StealthTime: 0
   BoomCD: 3
   BoomCDTimer: 0
-  UseBoom: 0
   EnableUseBoom: 1
+  KumaBoomBulletObj: {fileID: 0}
 --- !u!4 &900299464
 Transform:
   m_ObjectHideFlags: 0
