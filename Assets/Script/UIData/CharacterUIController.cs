@@ -41,6 +41,7 @@ public class CharacterUIController : MonoBehaviour
     private bool IsAddScore = false;
 
     public float AddScoreLimitTime = 0.5f;
+    public float AddScoreLimitTime2 = 0.5f;
 
     private int AddScoreValue = 0;
 
@@ -69,13 +70,13 @@ public class CharacterUIController : MonoBehaviour
         {            
             float dt = Time.deltaTime;
             AddScoreTimer += dt;
-            if(AddScoreTimer >= AddScoreLimitTime)
+            if(AddScoreTimer >= AddScoreLimitTime + AddScoreLimitTime2)
             {
                 AddScoreTimer = 0.0f;
                 IsAddScore = false;
                 Score = preScore + AddScoreValue;
             }
-            else
+            else if(AddScoreTimer >= AddScoreLimitTime)
             {
                 countScore += AddScoreValue * (dt / AddScoreLimitTime);
                 Score = (int)countScore;
@@ -262,8 +263,12 @@ public class CharacterUIController : MonoBehaviour
     {
         IsAddScore = true;
         AddScoreValue = _Value;
-        Debug.Log(AddScoreValue);
         preScore = Score;
         countScore = Score;
+    }
+
+    public void PassScoreToResult()
+    {
+        PlayerPrefs.SetInt("Score",Score);
     }
 }
