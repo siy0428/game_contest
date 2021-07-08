@@ -51,6 +51,7 @@ public class GameSceneManager : MonoBehaviour
         if(!pc.PlayersData[player_id].IsAlive2)
         {
             GameOver();
+            Debug.Log("操作しているプレイヤーが死んだ！GAME OVER");
             return;
         }
 
@@ -71,6 +72,7 @@ public class GameSceneManager : MonoBehaviour
         }
         //シーンの遷移
         Result();
+        Debug.Log("他のプレイヤーを倒した!!CLEAR");
     }
 
     /// <summary>
