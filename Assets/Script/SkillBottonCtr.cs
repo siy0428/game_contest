@@ -41,7 +41,6 @@ public class SkillBottonCtr : MonoBehaviour
         }
         if(_PlayerCtr.PlayersData[_PlayerCtr.ControlPlayerID].SkillIDs[0] == SkillID.Boom && _PlayerCtr.SkillDataCtr.EnableUseBoom && Sbc.GetCanShot(_PlayerCtr.ControlPlayerID))
         {
-            Debug.Log("ASF");
             _PlayerCtr.SkillDataCtr.EnableUseBoom = false;
             Sbc.ShootKeyDown_Skill(_PlayerCtr, _PlayerCtr.ControlPlayerID, _PlayerCtr.SkillDataCtr.KumaBoomBulletObj, _PlayerCtr.PlayersData[_PlayerCtr.ControlPlayerID].ShootPos);
             SkillIntoCD = true;

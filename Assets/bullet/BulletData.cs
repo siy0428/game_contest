@@ -120,7 +120,29 @@ public class BulletData : MonoBehaviour
 
     private void DefaultMove()
     {
-        transform.position += m_Dir * BulletSpeed * Time.deltaTime;
+        if (!aimed)
+        {
+            m_Dir = m_Target - transform.position;
+            m_Dir.Normalize();
+
+            //–Ú•W‚Ì•ÎˆÚŠp“x‚ð‹‚ß‚é
+            m_TargetAngle = 360.0f - Mathf.Atan2(m_Dir.x, m_Dir.y) * Mathf.Rad2Deg;
+            aimed = true;
+        }
+
+
+        //Œü‚«‚É‚æ‚èAŒvŽZŽ®‚ð·•Ê‰»
+        if (m_Dir.x > 0)
+        {
+            transform.eulerAngles = new Vector3(0, 0, 90 + m_TargetAngle);
+
+        }
+        else
+        {
+            transform.eulerAngles = new Vector3(0, 0, 90 + m_TargetAngle);
+        }
+
+        transform.Translate(Vector3.right * Time.deltaTime * BulletSpeed);
     }
 
     bool aimed = false;
@@ -217,17 +239,80 @@ public class BulletData : MonoBehaviour
 
     private void HunterMove()
     {
-        transform.position += m_Dir * BulletSpeed * Time.deltaTime;
+        if (!aimed)
+        {
+            m_Dir = m_Target - transform.position;
+            m_Dir.Normalize();
+
+            //–Ú•W‚Ì•ÎˆÚŠp“x‚ð‹‚ß‚é
+            m_TargetAngle = 360.0f - Mathf.Atan2(m_Dir.x, m_Dir.y) * Mathf.Rad2Deg;
+            aimed = true;
+        }
+
+        //Œü‚«‚É‚æ‚èAŒvŽZŽ®‚ð·•Ê‰»
+        if (m_Dir.x > 0)
+        {
+            transform.eulerAngles = new Vector3(0, 0, 90 + m_TargetAngle);
+
+        }
+        else
+        {
+            transform.eulerAngles = new Vector3(0, 0, 90 + m_TargetAngle);
+        }
+
+        transform.Translate(Vector3.right * Time.deltaTime * BulletSpeed);
     }
 
     private void APMove()
     {
-        transform.position += m_Dir * BulletSpeed * Time.deltaTime;
+        if (!aimed)
+        {
+            m_Dir = m_Target - transform.position;
+            m_Dir.Normalize();
+
+            //–Ú•W‚Ì•ÎˆÚŠp“x‚ð‹‚ß‚é
+            m_TargetAngle = 360.0f - Mathf.Atan2(m_Dir.x, m_Dir.y) * Mathf.Rad2Deg;
+            aimed = true;
+        }
+
+        //Œü‚«‚É‚æ‚èAŒvŽZŽ®‚ð·•Ê‰»
+        if (m_Dir.x > 0)
+        {
+            transform.eulerAngles = new Vector3(0, 0, 90 + m_TargetAngle);
+
+        }
+        else
+        {
+            transform.eulerAngles = new Vector3(0, 0, 90 + m_TargetAngle);
+        }
+
+        transform.Translate(Vector3.right * Time.deltaTime * BulletSpeed);
     }
 
     private void BoomMove()
     {
-        transform.position += m_Dir * BulletSpeed * Time.deltaTime;
+        if (!aimed)
+        {
+            m_Dir = m_Target - transform.position;
+            m_Dir.Normalize();
+
+            //–Ú•W‚Ì•ÎˆÚŠp“x‚ð‹‚ß‚é
+            m_TargetAngle = 360.0f - Mathf.Atan2(m_Dir.x, m_Dir.y) * Mathf.Rad2Deg;
+            aimed = true;
+        }
+
+        //Œü‚«‚É‚æ‚èAŒvŽZŽ®‚ð·•Ê‰»
+        if (m_Dir.x > 0)
+        {
+            transform.eulerAngles = new Vector3(0, 0, 90 + m_TargetAngle);
+
+        }
+        else
+        {
+            transform.eulerAngles = new Vector3(0, 0, 90 + m_TargetAngle);
+        }
+
+        transform.Translate(Vector3.right * Time.deltaTime * BulletSpeed);
     }
 
     public void SetTarget(Vector3 _Target)
