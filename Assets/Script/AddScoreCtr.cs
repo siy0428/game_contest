@@ -61,7 +61,7 @@ public class AddScoreCtr : MonoBehaviour
 
     public void SetStartPos(Vector3 _Pos)
     {
-        Debug.Log(_Pos);
+        //Debug.Log(_Pos);
         Vector2 newpos = Vector2.zero;
         GetComponent<RectTransform>().SetParent(canvasObj.transform);
         var screenPos = RectTransformUtility.WorldToScreenPoint(Camera.main, _Pos);
