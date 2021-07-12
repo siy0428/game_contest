@@ -52,7 +52,7 @@ public class CharacterUIController : MonoBehaviour
     private int preScore = 0;
 
     public float AddScoreTimer = 0.0f;
-
+    
     // Start is called before the first frame update
     void Awake()
     {
@@ -270,6 +270,5 @@ public class CharacterUIController : MonoBehaviour
     public void PassScoreToResult()
     {
         PlayerPrefs.SetInt("Score",Score);
-        PlayerPrefs.Save();
     }
 }

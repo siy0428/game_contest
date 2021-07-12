@@ -17,7 +17,7 @@ public class LeftBottom : ObjectUnchor
         int bottom_id = 0;
         int left_id = 0;
         int count = 0;
-        var players = pc.Players;
+        var players = pc.GetAppPlayers();
         foreach (var player in players)
         {
             if (players[count].transform.position.y > players[bottom_id].transform.position.y)

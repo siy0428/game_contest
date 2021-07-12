@@ -149,6 +149,7 @@ MonoBehaviour:
   IsJump: 0
   JumpedTimes: 0
   IsAlive: 0
+  IsAlive2: 0
   StartPoStartPositon: {x: 0, y: 0, z: 0}
   PlayersForward: {x: 0, y: 0, z: 0}
   Bullet: {fileID: 6546303353339061648, guid: 91f3ae446e15b5c41bf62bd6c96080f3, type: 3}
@@ -164,7 +165,7 @@ MonoBehaviour:
   ShootSensorDir: {x: 1, y: 0}
   ShootFixPostion: {x: 0.5, y: 0.25, z: 0}
   Offset: {x: 0, y: 0, z: 0}
-  AvatarObj: {fileID: 21300000, guid: 815e7b8e10767a540aee96d6d4103955, type: 3}
+  AvatarObj: {fileID: 21300000, guid: 7fb1f10247ebe0e4e9d8a04b1473ab76, type: 3}
   AttackIconObj: {fileID: -3434423769935831825, guid: e27b8589df343f4489d0989a386683ff, type: 3}
   AttackMaskImObj: {fileID: 2857645534148245744, guid: 76f07a04e7afc9a44990d74c6bdedf3d, type: 3}
   SkillIconObj: {fileID: -3308940200514882895, guid: e27b8589df343f4489d0989a386683ff, type: 3}
@@ -182,7 +183,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3cf8c3306a437fb4a86c4033f6d29a57, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sk: {fileID: 0}
 --- !u!1 &1284534314753861115
 GameObject:
   m_ObjectHideFlags: 0
