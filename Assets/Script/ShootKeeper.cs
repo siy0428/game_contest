@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class ShootKeeper : MonoBehaviour
 {
-
     public bool doShoot = false;
 
     public ShootBottonCtr shootbottonctr;
@@ -18,6 +17,8 @@ public class ShootKeeper : MonoBehaviour
     private bool isShot = false;
     private bool isShotPerFrame = false;
 
+    private TimeBodyManager tbm;
+
     public void SetParama(Vector3 _TargetPos, int ID)
     {
         TargetPos = _TargetPos;
@@ -28,6 +29,7 @@ public class ShootKeeper : MonoBehaviour
     void Start()
     {
         shootOrigin = transform.parent.gameObject.GetComponent<Player>();
+        tbm = FindObjectOfType<TimeBodyManager>();
     }
 
     // Update is called once per frame
@@ -39,6 +41,12 @@ public class ShootKeeper : MonoBehaviour
         }
 
         isShotPerFrame = false;
+
+        //ãtçƒê∂íÜÇÕíeÇî≠éÀÇµÇ»Ç¢
+        if(tbm.GetIsUse())
+        {
+            return;
+        }
 
         if (doShoot && !isShot)
         {

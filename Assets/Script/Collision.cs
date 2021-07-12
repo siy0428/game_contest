@@ -101,11 +101,12 @@ public class Collision : MonoBehaviour
                     {
                         PlayerCtr.PlayersData[collider.gameObject.GetComponent<Player>().PlayerID].IsAlive2 = false;
                         collider.gameObject.SetActive(false);
-                        
-                        //if (PlayerID != PlayerCtr.ControlPlayerID)
-                        //{
-                        //    lm.LoopAgain(); //同じループの生成
-                        //}
+
+                        if (PlayerID != PlayerCtr.ControlPlayerID)
+                        {
+                            //lm.LoopAgain(); //同じループの生成
+                            lm.SetIsAgain(true);
+                        }
                     }
                     else
                     {
