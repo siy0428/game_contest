@@ -10,6 +10,8 @@ public class Loop : MonoBehaviour
     protected int defeat_count;
     [SerializeField]
     protected float time_limit;
+    [SerializeField]
+    private bool player_add = false;
 
     protected int enemy_count;    //1ループで出現する敵の数
     protected EnemyCreate ec;
@@ -34,6 +36,15 @@ public class Loop : MonoBehaviour
 
     }
 
+    public void AddPlayer()
+    {
+        //プレイヤー追加処理
+        if (player_add)
+        {
+            pc.AddDisplayPlayer();
+        }
+    }
+
     /// <summary>
     /// インスペクタで設定した座標に敵を生成
     /// </summary>
@@ -45,7 +56,6 @@ public class Loop : MonoBehaviour
         foreach (var player in pc.PlayersData)
         {
             player.RespawnPosition();
-            //player.gameObject.SetActive(true);
         }
 
         foreach (var spawn in spawns)

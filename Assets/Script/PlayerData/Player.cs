@@ -158,13 +158,13 @@ public class Player : MonoBehaviour
         return false;
     }
 
-    public void Hurt(float _Demage)
+    public void Hurt(float _Demage,bool IsAddScore = false,GameObject obj = null)
     {
 
         if(SkillIDs[0] != SkillID.Stealth)
         {
             HP -= _Demage;
-            GetComponentInChildren<LostLifeCtr>().AddLostLife((int)_Demage);
+            GetComponentInChildren<LostLifeCtr>().AddLostLife((int)_Demage);           
         }
         else
         {
@@ -174,6 +174,14 @@ public class Player : MonoBehaviour
                 HP -= _Demage;
                 GetComponentInChildren<LostLifeCtr>().AddLostLife((int)_Demage);
             }
+        }
+
+        if(IsAddScore)
+        {
+            CharacterUIController cuc = FindObjectOfType<CharacterUIController>();
+            int s = (int)_Demage;
+            cuc.AddScore(s * 100);
+            obj.GetComponent<AddScoreCtr>().SetAddScore(s * 100);
         }
     }
 

@@ -41,17 +41,20 @@ public class CharacterUIController : MonoBehaviour
     private bool IsAddScore = false;
 
     public float AddScoreLimitTime = 0.5f;
+    public float AddScoreLimitTime2 = 0.5f;
 
     private int AddScoreValue = 0;
 
     [SerializeField]
     private int Score = 0;
+    private float countScore = 0.0f;
 
     private int preScore = 0;
 
     public float AddScoreTimer = 0.0f;
+
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         PlayerCtr = FindObjectOfType<PlayerController>();
 
@@ -64,22 +67,22 @@ public class CharacterUIController : MonoBehaviour
     void Update()
     {
         if(IsAddScore)
-        {
-            preScore = Score;
+        {            
             float dt = Time.deltaTime;
             AddScoreTimer += dt;
-            if(AddScoreTimer >= AddScoreLimitTime)
+            if(AddScoreTimer >= AddScoreLimitTime + AddScoreLimitTime2)
             {
                 AddScoreTimer = 0.0f;
                 IsAddScore = false;
                 Score = preScore + AddScoreValue;
             }
-            else
+            else if(AddScoreTimer >= AddScoreLimitTime)
             {
-                Score += (int)(AddScoreValue * (dt / AddScoreLimitTime));
+                countScore += AddScoreValue * (dt / AddScoreLimitTime);
+                Score = (int)countScore;
             }
-            
-            //ScoreObj.get
+
+            ScoreObj.GetComponent<TextMeshProUGUI>().text = Score.ToString();
         }
     }
 
@@ -108,6 +111,8 @@ public class CharacterUIController : MonoBehaviour
         AddScoreValue = 0;
 
         preScore = 0;
+
+        countScore = 0;
 
         AddScoreTimer = 0.0f;
 
@@ -258,5 +263,13 @@ public class CharacterUIController : MonoBehaviour
     {
         IsAddScore = true;
         AddScoreValue = _Value;
+        preScore = Score;
+        countScore = Score;
+    }
+
+    public void PassScoreToResult()
+    {
+        PlayerPrefs.SetInt("Score",Score);
+        PlayerPrefs.Save();
     }
 }

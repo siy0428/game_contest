@@ -20,7 +20,7 @@ public class LoopFinish : Loop
     {
         GameSceneManager.instance.Result();
 
-        Debug.Log("クリア!!");
+        Debug.Log("最後まで到達!!CLEAR");
         //敵リストの削除
         em.AllDestroyEnemy();
 

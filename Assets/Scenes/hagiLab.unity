@@ -626,7 +626,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   canvas: {fileID: 2041686686}
   targetTfm: {fileID: 75480355}
-  player: {fileID: 0}
+  player: {fileID: 75480351}
   offset: {x: 0, y: 0, z: 0}
 --- !u!114 &333073647
 MonoBehaviour:
@@ -2394,7 +2394,7 @@ MonoBehaviour:
   StartBehaviourRecord: 1
   StartFallBack: 0
   FallBackSpeed: 5
-  SkillDataCtr: {fileID: 0}
+  SkillDataCtr: {fileID: 900299463}
   Timer: 0
   JumpFocre: 1
   PlayersData: []
@@ -2515,8 +2515,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   canvas: {fileID: 563771460}
-  targetTfm: {fileID: 0}
-  player: {fileID: 0}
+  targetTfm: {fileID: 468725019}
+  player: {fileID: 468725015}
   offset: {x: 0, y: 0, z: 0}
 --- !u!114 &689109707
 MonoBehaviour:
@@ -3792,8 +3792,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   InBox: {fileID: 7540531129001430421, guid: 54a77107361b8654eb109ec4a0b71609, type: 3}
   Players:
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 468725015}
+  - {fileID: 75480351}
 --- !u!4 &1105489627
 Transform:
   m_ObjectHideFlags: 0

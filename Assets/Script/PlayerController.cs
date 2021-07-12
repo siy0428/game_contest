@@ -57,7 +57,7 @@ public class PlayerController : MonoBehaviour
     public int DisPlayPlayerNums = 2;
 
     // Start is called before the first frame update
-    public void Start()
+    public void Awake()
     {
         //スクリプト取得
         GetBottonCtr();
@@ -76,7 +76,7 @@ public class PlayerController : MonoBehaviour
             //    Players[i].GetComponent<SpriteRenderer>().sortingOrder = 0;
             //}
 
-            if(i < DisPlayPlayerNums)
+            if (i < DisPlayPlayerNums)
             {
                 Players[i].SetActive(true);
             }
@@ -93,7 +93,7 @@ public class PlayerController : MonoBehaviour
     {
         if (!StartFallBack)
         {
-            for(int i = 0; i < Players.Count; i++)
+            for (int i = 0; i < Players.Count; i++)
             {
                 //最初のループ内相手が動いていないので、下記の操作をジャンプする
                 if (PlayersData[i].PlayerID != ControlPlayerID && PlayersData[i].SavedBehaviour.GetBehaviourData().Count > 1)
@@ -317,6 +317,25 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    public List<Player> GetAppPlayers()
+    {
+        List<Player> players = new List<Player>();
+
+        for(int i = 0; i < PlayersData.Count; i++)
+        {
+            if(i < DisPlayPlayerNums)
+            {
+                players.Add(PlayersData[i]);
+            }
+            else
+            {
+                return players;
+            }
+        }
+
+        return players;
+    }
+
     //スクリプト取得
     void GetBottonCtr()
     {
@@ -374,13 +393,13 @@ public class PlayerController : MonoBehaviour
         {
             if (!PlayersData[ID].OnBox)
             {
-                Players[ID].GetComponent<Rigidbody2D>().velocity = new Vector3(Players[ID].GetComponent<Rigidbody2D>().velocity.x - SkillDataCtr.JumpSmarshDir.x * SkillDataCtr.JumpSmarshAngular * Time.deltaTime, Players[ID].GetComponent<Rigidbody2D>().velocity.y - SkillDataCtr.JumpSmarshDir.y* 0.5f * SkillDataCtr.JumpSmarshAngular * Time.deltaTime, 0.0f);         
+                Players[ID].GetComponent<Rigidbody2D>().velocity = new Vector3(Players[ID].GetComponent<Rigidbody2D>().velocity.x - SkillDataCtr.JumpSmarshDir.x * SkillDataCtr.JumpSmarshAngular * Time.deltaTime, Players[ID].GetComponent<Rigidbody2D>().velocity.y - SkillDataCtr.JumpSmarshDir.y * 0.5f * SkillDataCtr.JumpSmarshAngular * Time.deltaTime, 0.0f);
             }
             else
-            {                
+            {
                 Players[ID].GetComponent<Rigidbody2D>().velocity = new Vector3(0.0f, -0.01f, 0.0f);
             }
-            if(SkillDataCtr.JumpSmarsh())
+            if (SkillDataCtr.JumpSmarsh())
             {
                 Players[ID].GetComponent<Rigidbody2D>().velocity = new Vector3(0.0f, -0.01f, 0.0f);
             }
@@ -406,8 +425,18 @@ public class PlayerController : MonoBehaviour
                 PlayersData[i].EnableMoveJump2 = true;
                 Players[i].GetComponentInChildren<LostLifeCtr>().LostLifeReset();
                 Players[i].GetComponent<Transform>().position = PlayersData[i].StartPoStartPositon;
-                //保存データの更新
-                PlayersData[i].SavedBehaviour = new PlayerBehaviourData(PlayersData[i].RecordBehaviour);
+                if(i == ControlPlayerID)
+                {
+                    //保存データの更新
+                    PlayersData[i].SavedBehaviour = new PlayerBehaviourData(PlayersData[i].RecordBehaviour);
+                }
+                else
+                {
+                    for (int j = 0; j < PlayersData[i].SavedBehaviour.GetBehaviourData().Count; j++)
+                    {
+                        PlayersData[i].SavedBehaviour.GetBehaviourData()[j].Used = false;
+                    }
+                }
 
                 //記録データの削除
                 PlayersData[i].RecordBehaviour.ClearData();
@@ -418,7 +447,6 @@ public class PlayerController : MonoBehaviour
             {
                 Players[i].SetActive(false);
             }
-
         }
 
         ChaUICtr.ChangeHP(PlayersData[ControlPlayerID].PlayerID);
@@ -430,7 +458,7 @@ public class PlayerController : MonoBehaviour
 
         ShootCtr.m_BulletsList.Clear();
         ShootCtr.ShootCDTimer = 0.0f;
-       
+
         SkillCtr.SkillKeyDown = 0;
         SkillCtr.SkillTimer = 0.0f;
         SkillCtr.SkillCDTimer = 0.0f;
@@ -510,7 +538,7 @@ public class PlayerController : MonoBehaviour
         switch (PlayersData[ControlPlayerID].SkillIDs[0])
         {
             case SkillID.JUMPSMARSH:
-                if(SkillDataCtr.UseJumpSmarsh)
+                if (SkillDataCtr.UseJumpSmarsh)
                 {
                     rate = 1.0f;
                 }
@@ -521,21 +549,21 @@ public class PlayerController : MonoBehaviour
                 break;
             case SkillID.Cut:
                 rate = 1.0f - SkillCtr.SkillCDTimer / SkillCtr.SkillCD;
-                if(!SkillDataCtr.UseCut)
+                if (!SkillDataCtr.UseCut)
                 {
                     rate = 0;
                 }
                 break;
             case SkillID.Stealth:
                 rate = 1.0f - SkillDataCtr.StealthCDTimer / SkillDataCtr.StealthCDTime;
-                if(!SkillDataCtr.UseStealth && !SkillCtr.SkillIntoCD)
+                if (!SkillDataCtr.UseStealth && !SkillCtr.SkillIntoCD)
                 {
                     rate = 0;
                 }
                 break;
             case SkillID.Boom:
                 rate = 1.0f - SkillDataCtr.BoomCDTimer / SkillDataCtr.BoomCD;
-                if(SkillDataCtr.EnableUseBoom && PlayersData[ControlPlayerID].CanShoot)
+                if (SkillDataCtr.EnableUseBoom && PlayersData[ControlPlayerID].CanShoot)
                 {
                     rate = 0;
                 }
@@ -551,7 +579,7 @@ public class PlayerController : MonoBehaviour
         float rate = 0.0f;
 
         rate = 1.0f - PlayersData[ControlPlayerID].ShootTimer / PlayersData[ControlPlayerID].ShootCD;
-        if(PlayersData[ControlPlayerID].CanShoot && !PlayersData[ControlPlayerID].ShootIntoCD)
+        if (PlayersData[ControlPlayerID].CanShoot && !PlayersData[ControlPlayerID].ShootIntoCD)
         {
             rate = 0;
         }
@@ -562,7 +590,7 @@ public class PlayerController : MonoBehaviour
     public bool BreakStealth(int ID)
     {
 
-        if(PlayersData[ID].SkillIDs[0] == SkillID.Stealth && SkillDataCtr.UseStealth)
+        if (PlayersData[ID].SkillIDs[0] == SkillID.Stealth && SkillDataCtr.UseStealth)
         {
             return true;
             //SkillDataCtr.UseStealth = false;
@@ -573,5 +601,10 @@ public class PlayerController : MonoBehaviour
             //}
         }
         return false;
+    }
+
+    public void AddDisplayPlayer()
+    {
+        DisPlayPlayerNums = Mathf.Min(DisPlayPlayerNums + 1, Players.Count);
     }
 }
