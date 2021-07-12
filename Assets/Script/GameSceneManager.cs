@@ -47,13 +47,13 @@ public class GameSceneManager : MonoBehaviour
         //現在操作しているプレイヤーのID
         int player_id = pc.ControlPlayerID;
 
-        //操作しているプレイヤーが死んだ場合は次のゲームオーバーシーンへ遷移
-        if(!pc.PlayersData[player_id].IsAlive2)
-        {
-            GameOver();
-            Debug.Log("操作しているプレイヤーが死んだ！GAME OVER");
-            return;
-        }
+        ////操作しているプレイヤーが死んだ場合は次のゲームオーバーシーンへ遷移
+        //if(!pc.PlayersData[player_id].IsAlive2)
+        //{
+        //    GameOver();
+        //    Debug.Log("操作しているプレイヤーが死んだ！GAME OVER");
+        //    return;
+        //}
 
         //他のプレイヤーを全て倒した場合シーン遷移
         foreach (var player in pc.GetAppPlayers())

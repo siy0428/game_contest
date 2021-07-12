@@ -8,6 +8,7 @@ public class LoopManager : MonoBehaviour
     private Loop[] loops;
 
     private bool isRewindStart; //逆再生を開始したかどうか
+    private bool isAgain;
     private int loop_id;        //現在のループの段階
     private int defeat_player;  //操作しているプレイヤーが倒した敵の数
     private float time;         //ループごとの時間制限
@@ -20,6 +21,7 @@ public class LoopManager : MonoBehaviour
         pc = FindObjectOfType<PlayerController>();
         tbm = FindObjectOfType<TimeBodyManager>();
         isRewindStart = false;
+        isAgain = false;
         loop_id = 0;
         defeat_player = 0;
         loops[loop_id].Create();            //1つ目のループ生成
@@ -36,16 +38,18 @@ public class LoopManager : MonoBehaviour
         }
 
         //制限時間後の判定
-        Finish();
+        if (Finish())
+        {
+            time -= Time.deltaTime;
+        }
 
-        time -= Time.deltaTime;
     }
 
     /// <summary>
     /// 時間経過後の処理
     /// </summary>
     /// <returns>クリアした場合trueが帰ってくる</returns>
-    private void Finish()
+    private bool Finish()
     {
         //タイムオーバーであれば
         if (time <= 0.0f)
@@ -60,10 +64,11 @@ public class LoopManager : MonoBehaviour
             //逆再生中であれば次のループに移行しない
             if (tbm.GetIsUse())
             {
-                return;
+                return false;
             }
 
             //目標撃破数に到達していた場合次のループ
+            //if (defeat_player >= loops[loop_id].GetDefeatCount())
             if (defeat_player >= loops[loop_id].GetDefeatCount())
             {
                 loops[loop_id].AddPlayer();
@@ -72,6 +77,7 @@ public class LoopManager : MonoBehaviour
                 defeat_player = 0;
                 loops[loop_id].Create();            //次のループ生成
                 time = loops[loop_id].GetTime();    //次のループの時間取得
+                Debug.Log("次のループ");
             }
 
             //撃破目標に到達出来なかった場合同じループ
@@ -81,7 +87,40 @@ public class LoopManager : MonoBehaviour
             }
 
             isRewindStart = false;
+
+            return false;
         }
+
+        //同じループの再生
+        if (isAgain)
+        {
+            //まだ逆再生を開始していない場合
+            if (!isRewindStart)
+            {
+                tbm.SetIsUse(true);
+                isRewindStart = true;
+            }
+
+            //逆再生中であれば次のループに移行しない
+            if (tbm.GetIsUse())
+            {
+                return false;
+            }
+
+            LoopAgain();
+
+            isRewindStart = false;
+            isAgain = false;
+
+            return false;
+        }
+
+        return true;
+    }
+
+    public void SetIsAgain(bool again)
+    {
+        isAgain = again;
     }
 
     /// <summary>
@@ -133,7 +172,6 @@ public class LoopManager : MonoBehaviour
     /// </summary>
     public void LoopAgain()
     {
-        loops[loop_id].AddPlayer();
         pc.PlayerWithoutLoop();             //同じプレイヤーの操作処理
         defeat_player = 0;
         loops[loop_id].Create();            //同じループの生成

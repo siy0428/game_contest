@@ -69,7 +69,7 @@ public class AddScoreCtr : MonoBehaviour
         StartPos = newpos;
         currentPos = StartPos;
         GetComponent<RectTransform>().localScale = new Vector3(5,5,1);
-        Debug.Log(newpos);
+        //Debug.Log(newpos);
     }
 
     public void SetAddScore(int _Value)
