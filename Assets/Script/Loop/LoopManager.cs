@@ -68,7 +68,6 @@ public class LoopManager : MonoBehaviour
             }
 
             //目標撃破数に到達していた場合次のループ
-            //if (defeat_player >= loops[loop_id].GetDefeatCount())
             if (defeat_player >= loops[loop_id].GetDefeatCount())
             {
                 loops[loop_id].AddPlayer();
