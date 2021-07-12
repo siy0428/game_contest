@@ -158,7 +158,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 40}
-  m_SizeDelta: {x: 450, y: 450}
+  m_SizeDelta: {x: 4303.507, y: 1225.8394}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &195440383
 MonoBehaviour:
@@ -293,8 +293,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -180}
-  m_SizeDelta: {x: 450, y: 450}
+  m_AnchoredPosition: {x: 0, y: -396}
+  m_SizeDelta: {x: 2967.6904, y: 1326.8077}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &556821091
 MonoBehaviour:
@@ -334,32 +334,24 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 556821089}
   m_CullTransparentMesh: 1
---- !u!1001 &693254955
+--- !u!1001 &589454081
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 8559760012204936791, guid: b0241445a9491f94d83f866991d89c68, type: 3}
-      propertyPath: IconImageObj
-      value: 
-      objectReference: {fileID: 836666745780438502, guid: cb1d24273aa7f9b47bdc77ee8d753f1c, type: 3}
-    - target: {fileID: 8559760012329874165, guid: b0241445a9491f94d83f866991d89c68, type: 3}
-      propertyPath: IconImageObj
-      value: 
-      objectReference: {fileID: 836666745780438502, guid: cb1d24273aa7f9b47bdc77ee8d753f1c, type: 3}
     - target: {fileID: 8559760012424240907, guid: b0241445a9491f94d83f866991d89c68, type: 3}
       propertyPath: m_RootOrder
       value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 8559760012424240907, guid: b0241445a9491f94d83f866991d89c68, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 936
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8559760012424240907, guid: b0241445a9491f94d83f866991d89c68, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 422
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8559760012424240907, guid: b0241445a9491f94d83f866991d89c68, type: 3}
       propertyPath: m_LocalPosition.z
@@ -397,14 +389,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: TileBackGround
       objectReference: {fileID: 0}
-    - target: {fileID: 8559760012474496741, guid: b0241445a9491f94d83f866991d89c68, type: 3}
-      propertyPath: IconImageObj
-      value: 
-      objectReference: {fileID: 836666745780438502, guid: cb1d24273aa7f9b47bdc77ee8d753f1c, type: 3}
-    - target: {fileID: 8559760013016491448, guid: b0241445a9491f94d83f866991d89c68, type: 3}
-      propertyPath: IconImageObj
-      value: 
-      objectReference: {fileID: 836666745780438502, guid: cb1d24273aa7f9b47bdc77ee8d753f1c, type: 3}
+    - target: {fileID: 8559760013594385763, guid: b0241445a9491f94d83f866991d89c68, type: 3}
+      propertyPath: scrollingSpeed
+      value: 80
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b0241445a9491f94d83f866991d89c68, type: 3}
 --- !u!1 &743209232
@@ -947,7 +935,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1919878611}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 936, y: 422, z: -10}
+  m_LocalPosition: {x: 0, y: 0, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
