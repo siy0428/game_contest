@@ -410,6 +410,7 @@ public class PlayerController : MonoBehaviour
     {
         //データを初期値に戻る
         Timer = 0.0f;
+
         for (int i = 0; i < Players.Count; i++)
         {
             if (i < DisPlayPlayerNums)
