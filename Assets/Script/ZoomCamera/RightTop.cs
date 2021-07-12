@@ -17,7 +17,7 @@ public class RightTop : ObjectUnchor
         int top_id = 0;
         int right_id = 0;
         int count = 0;
-        var players = pc.Players;
+        var players = pc.GetAppPlayers();
         foreach (var player in players)
         {
             if (players[count].transform.position.y < players[top_id].transform.position.y)

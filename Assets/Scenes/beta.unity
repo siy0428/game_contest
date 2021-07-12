@@ -4243,7 +4243,7 @@ MonoBehaviour:
   spawns:
   - {x: 237.34, y: 35.121, z: 0}
   defeat_count: 0
-  time_limit: 5
+  time_limit: 10
   player_add: 0
 --- !u!4 &736465875
 Transform:
