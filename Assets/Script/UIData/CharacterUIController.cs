@@ -61,6 +61,16 @@ public class CharacterUIController : MonoBehaviour
         ShootCtr = FindObjectOfType<ShootBottonCtr>();
 
         SkillCtr = FindObjectOfType<SkillBottonCtr>();
+
+        if(PlayerPrefs.HasKey("Score"))
+        {
+            Score = PlayerPrefs.GetInt("Score");
+            ScoreObj.GetComponent<TextMeshProUGUI>().text = Score.ToString();
+        }
+        else
+        {
+            Score = 0;
+        }
     }
 
     // Update is called once per frame
