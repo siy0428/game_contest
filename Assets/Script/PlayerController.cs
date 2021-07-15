@@ -32,6 +32,8 @@ public class PlayerController : MonoBehaviour
 
     private CharacterUIController ChaUICtr;
 
+    private BGCtr BgCtr;
+
     //スキルの設定データを取得用
     public SkillData SkillDataCtr;
 
@@ -343,6 +345,7 @@ public class PlayerController : MonoBehaviour
         ShootCtr = FindObjectOfType<ShootBottonCtr>();
         SkillCtr = FindObjectOfType<SkillBottonCtr>();
         ChaUICtr = FindObjectOfType<CharacterUIController>();
+        BgCtr = FindObjectOfType<BGCtr>();
     }
 
     //ジャンプ操作
@@ -472,7 +475,7 @@ public class PlayerController : MonoBehaviour
         ControlPlayerID %= Players.Count;
 
         ChaUICtr.ChangeUI(ControlPlayerID);
-
+        BgCtr.Reset();
         //新しい記録準備完了
         StartBehaviourRecord = true;
     }
@@ -528,6 +531,7 @@ public class PlayerController : MonoBehaviour
         SkillDataCtr.UseCut = false;
         SkillDataCtr.StealthReset();
         SkillDataCtr.BoomReset();
+        BgCtr.Reset();
 
         StartBehaviourRecord = true;
     }

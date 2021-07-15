@@ -16,6 +16,7 @@ public class BGCtr : MonoBehaviour
     private Transform Cam;
     private Vector3 prevCamePos;
 
+    private Vector3[] bgsStartPos;
     private void Awake()
     {
         Cam = Camera.main.transform;
@@ -25,6 +26,11 @@ public class BGCtr : MonoBehaviour
     void Start()
     {
         prevCamePos = CamStartPos;
+        bgsStartPos = new Vector3[bgs.Length];
+        for (int i = 0; i < bgs.Length; i++)
+        {
+            bgsStartPos[i] = bgs[i].position;
+        }
     }
 
     // Update is called once per frame
@@ -32,7 +38,6 @@ public class BGCtr : MonoBehaviour
     {
         float parallaxX = (prevCamePos.x - Cam.position.x) * parallaxScaleX;
         float parallaxY = (prevCamePos.y - Cam.position.y) * parallaxScaleY;
-
         for (int i = 0; i < bgs.Length; i++)
         {
             float bgTargetPosX = bgs[i].position.x + parallaxX * (i * parallaxReductionFactorX + 1);
@@ -45,5 +50,13 @@ public class BGCtr : MonoBehaviour
         }
 
         prevCamePos = Cam.position;
+    }
+
+    public void Reset()
+    {
+        for (int i = 0; i < bgs.Length; i++)
+        {
+            bgs[i].position = bgsStartPos[i];
+        }
     }
 }
