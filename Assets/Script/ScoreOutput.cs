@@ -13,6 +13,7 @@ public class ScoreOutput : MonoBehaviour
         if (PlayerPrefs.HasKey("Score"))
         {
             GetComponent<TextMeshProUGUI>().text = PlayerPrefs.GetInt("Score", 0).ToString();
+            PlayerPrefs.DeleteKey("Score");
         }
         else
         {
