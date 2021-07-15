@@ -28,22 +28,24 @@ public class SkillBottonCtr : MonoBehaviour
     public void SkillBottonIsDown(InputAction.CallbackContext obj)
     {
         SkillKeyDown = 1;
-        DownKeyRecord();
-        if(_PlayerCtr.PlayersData[_PlayerCtr.ControlPlayerID].SkillIDs[0] == SkillID.Cut)
+        if(_PlayerCtr.PlayersData[_PlayerCtr.ControlPlayerID].SkillIDs[0] == SkillID.Cut && _PlayerCtr.SkillDataCtr.EnableUseCut)
         {
             _PlayerCtr.SkillDataCtr.EnableUseCut = false;
+            DownKeyRecord();
         }
-        if (_PlayerCtr.PlayersData[_PlayerCtr.ControlPlayerID].SkillIDs[0] == SkillID.Stealth)
+        if (_PlayerCtr.PlayersData[_PlayerCtr.ControlPlayerID].SkillIDs[0] == SkillID.Stealth && _PlayerCtr.SkillDataCtr.EnableUseStealth)
         {
             _PlayerCtr.SkillDataCtr.UseStealth = true;
             _PlayerCtr.PlayersData[_PlayerCtr.ControlPlayerID].EnableMoveJump2 = false;
             _PlayerCtr.SkillDataCtr.EnableUseStealth = false;
+            DownKeyRecord();
         }
         if(_PlayerCtr.PlayersData[_PlayerCtr.ControlPlayerID].SkillIDs[0] == SkillID.Boom && _PlayerCtr.SkillDataCtr.EnableUseBoom && Sbc.GetCanShot(_PlayerCtr.ControlPlayerID))
         {
             _PlayerCtr.SkillDataCtr.EnableUseBoom = false;
             Sbc.ShootKeyDown_Skill(_PlayerCtr, _PlayerCtr.ControlPlayerID, _PlayerCtr.SkillDataCtr.KumaBoomBulletObj, _PlayerCtr.PlayersData[_PlayerCtr.ControlPlayerID].ShootPos);
             SkillIntoCD = true;
+            DownKeyRecord();
         }
     }
 
